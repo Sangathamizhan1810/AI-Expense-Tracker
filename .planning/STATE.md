@@ -20,10 +20,10 @@ See: `.planning/PROJECT.md` (updated 2026-10-23)
 
 ## Current Position
 
-Phase: 5 of 6 (Interactive Visual Analytics Dashboard) — COMPLETED  
-Plan: 1 of 1 in Phase 5 complete (PLAN-05-01)  
-Status: Phase 5 executed & verified; ready for Phase 6 planning  
-Last activity: 2026-10-23 — Executed Phase 5: Analytics helpers, Dashboard Blueprint, Chart.js Donut/Line/Bar charts, financial KPI summary cards, calendar month switching, and test suite (34/34 passing tests).
+Phase: 6 of 6 (Spending Insights Engine, UAT & Documentation)  
+Plan: 0 of 2 in Phase 6 (PLAN-06-01 & PLAN-06-02 ready)  
+Status: Plans created, ready for execution  
+Last activity: 2026-10-23 — Created detailed Phase 6 execution plans (PLAN-06-01: rule-based insights engine, month-over-month comparisons, savings tips; PLAN-06-02: 13-case test suite, architecture documentation & Mermaid diagrams).
 
 Progress: [████████░░] 80%
 
@@ -44,7 +44,7 @@ Progress: [████████░░] 80%
 | 3. NLP & ML Categorization | 2/2 | Complete |
 | 4. Budget & Alert Engine | 1/1 | Complete |
 | 5. Interactive Analytics Dashboard | 1/1 | Complete |
-| 6. Insights Engine & Verification | 0/2 | Pending |
+| 6. Insights Engine & Verification | 0/2 | Ready to execute |
 
 ## Accumulated Context
 

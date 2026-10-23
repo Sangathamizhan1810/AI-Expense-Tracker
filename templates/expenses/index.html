@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+
+{% block title %}Expenses Management{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <!-- ── Page Header ────────────────────────────────── -->
+    <div class="page-header">
+        <div class="page-header-text">
+            <h1>Expense Tracker</h1>
+            <p>Review, filter, and manage your logged personal transactions.</p>
+        </div>
+        <div class="page-header-actions">
+            <a href="{{ url_for('expenses.export_csv', category=selected_category, start_date=start_date, end_date=end_date, sort=sort_by, order=sort_order) }}" class="btn btn--secondary">
+                <span>📥</span> Export CSV
+            </a>
+            <a href="{{ url_for('expenses.add') }}" class="btn btn--primary">
+                <span>+</span> Add Expense
+            </a>
+        </div>
+    </div>
+
+    <!-- ── Summary KPI Cards ──────────────────────────── -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-content">
+                <span class="kpi-label">Filtered Spend</span>
+                <span class="kpi-value text-accent">₹{{ "%.2f"|format(summary.total_amount) }}</span>
+            </div>
+            <div class="kpi-icon">₹</div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-content">
+                <span class="kpi-label">Total Transactions</span>
+                <span class="kpi-value">{{ summary.total_count }}</span>
+            </div>
+            <div class="kpi-icon">📊</div>
+        </div>
+    </div>
+
+    <!-- ── Filter Toolbar ─────────────────────────────── -->
+    <div class="filter-card">
+        <form action="{{ url_for('expenses.index') }}" method="GET" class="filter-form">
+            <!-- Category Filter -->
+            <div class="filter-group">
+                <label for="filter-category">Category</label>
+                <select name="category" id="filter-category" class="form-input">
+                    <option value="">All Categories</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.id }}" {% if selected_category|string == cat.id|string %}selected{% endif %}>
+                            {{ cat.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Start Date -->
+            <div class="filter-group">
+                <label for="filter-start">From Date</label>
+                <input
+                    type="date"
+                    id="filter-start"
+                    name="start_date"
+                    class="form-input"
+                    value="{{ start_date }}"
+                >
+            </div>
+
+            <!-- End Date -->
+            <div class="filter-group">
+                <label for="filter-end">To Date</label>
+                <input
+                    type="date"
+                    id="filter-end"
+                    name="end_date"
+                    class="form-input"
+                    value="{{ end_date }}"
+                >
+            </div>
+
+            <!-- Sort By -->
+            <div class="filter-group">
+                <label for="filter-sort">Sort Order</label>
+                <select name="sort" id="filter-sort" class="form-input">
+                    <option value="date" {% if sort_by == 'date' and sort_order != 'asc' %}selected{% endif %}>Newest First</option>
+                    <option value="date" data-order="asc" {% if sort_by == 'date' and sort_order == 'asc' %}selected{% endif %}>Oldest First</option>
+                    <option value="amount" {% if sort_by == 'amount' and sort_order != 'asc' %}selected{% endif %}>Highest Amount</option>
+                    <option value="amount" data-order="asc" {% if sort_by == 'amount' and sort_order == 'asc' %}selected{% endif %}>Lowest Amount</option>
+                </select>
+                <input type="hidden" name="order" id="filter-order" value="{{ sort_order }}">
+            </div>
+
+            <!-- Actions -->
+            <div class="filter-actions">
+                <button type="submit" class="btn btn--primary">
+                    Apply
+                </button>
+                <a href="{{ url_for('expenses.index') }}" class="btn btn--secondary" title="Reset Filters">
+                    Reset
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- ── Expenses Data Table ────────────────────────── -->
+    <div class="table-card">
+        {% if expenses %}
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th style="text-align: right;">Amount</th>
+                            <th style="text-align: right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for exp in expenses %}
+                            <tr>
+                                <td style="white-space: nowrap; color: var(--text-secondary);">
+                                    {{ exp.expense_date }}
+                                </td>
+                                <td>
+                                    <span class="badge badge--{{ exp.category_name|lower }}">
+                                        <span class="badge-dot"></span>
+                                        {{ exp.category_name }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if exp.note %}
+                                        <span>{{ exp.note }}</span>
+                                    {% else %}
+                                        <span class="text-muted" style="font-style: italic;">No description</span>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align: right;" class="amount-cell">
+                                    ₹{{ "%.2f"|format(exp.amount) }}
+                                </td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="{{ url_for('expenses.edit', id=exp.id) }}" class="action-btn" title="Edit expense">
+                                            ✏️ Edit
+                                        </a>
+                                        <button
+                                            type="button"
+                                            class="action-btn action-btn--delete"
+                                            onclick="openDeleteModal('{{ exp.id }}', '{{ exp.category_name }}', '{{ exp.amount }}', '{{ exp.expense_date }}')"
+                                            title="Delete expense"
+                                        >
+                                            🗑️ Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <!-- Empty State -->
+            <div class="empty-state">
+                <div class="empty-state-icon">💸</div>
+                <h3>No Expenses Found</h3>
+                <p>
+                    {% if selected_category or start_date or end_date %}
+                        No expenses match your active filter criteria. Try adjusting or resetting filters.
+                    {% else %}
+                        You haven't logged any expenses yet. Record your first transaction to start tracking!
+                    {% endif %}
+                </p>
+                <div style="display: flex; gap: var(--space-sm); justify-content: center;">
+                    {% if selected_category or start_date or end_date %}
+                        <a href="{{ url_for('expenses.index') }}" class="btn btn--secondary">Reset Filters</a>
+                    {% endif %}
+                    <a href="{{ url_for('expenses.add') }}" class="btn btn--primary">+ Add First Expense</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- ── Delete Confirmation Modal ────────────────────── -->
+<div class="modal-overlay" id="delete-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+        <div class="modal-icon">⚠️</div>
+        <h3 id="modal-title">Delete Expense</h3>
+        <p>
+            Are you sure you want to delete this <strong id="modal-category"></strong> expense of <strong id="modal-amount"></strong> from <span id="modal-date"></span>? This action cannot be undone.
+        </p>
+        <form id="delete-form" method="POST" action="">
+            <div class="modal-actions">
+                <button type="button" class="btn btn--secondary" onclick="closeDeleteModal()">
+                    Cancel
+                </button>
+                <button type="submit" class="btn btn--danger">
+                    Yes, Delete
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Sort dropdown order synchronization
+    document.addEventListener('DOMContentLoaded', function () {
+        const sortSelect = document.getElementById('filter-sort');
+        const orderInput = document.getElementById('filter-order');
+
+        if (sortSelect && orderInput) {
+            sortSelect.addEventListener('change', function () {
+                const selectedOpt = sortSelect.options[sortSelect.selectedIndex];
+                const orderAttr = selectedOpt.getAttribute('data-order');
+                orderInput.value = orderAttr ? orderAttr : 'desc';
+            });
+        }
+    });
+
+    // Delete Modal controls
+    function openDeleteModal(id, category, amount, date) {
+        const modal = document.getElementById('delete-modal');
+        const form = document.getElementById('delete-form');
+        document.getElementById('modal-category').textContent = category;
+        document.getElementById('modal-amount').textContent = '₹' + parseFloat(amount).toFixed(2);
+        document.getElementById('modal-date').textContent = date;
+        form.action = "{{ url_for('expenses.index') }}" + id + "/delete";
+        modal.classList.add('active');
+    }
+
+    function closeDeleteModal() {
+        const modal = document.getElementById('delete-modal');
+        modal.classList.remove('active');
+    }
+
+    // Close modal on Escape key or backdrop click
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeDeleteModal();
+    });
+
+    document.getElementById('delete-modal')?.addEventListener('click', function (e) {
+        if (e.target === this) closeDeleteModal();
+    });
+</script>
+{% endblock %}

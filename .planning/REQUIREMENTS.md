@@ -7,19 +7,19 @@
 
 ### Authentication & User Isolation
 
-- [ ] **AUTH-01**: User can register securely with name, email, and password.
-- [ ] **AUTH-02**: Passwords are securely hashed using Werkzeug / bcrypt before storage.
-- [ ] **AUTH-03**: User can log in and out, with session maintained across requests.
-- [ ] **AUTH-04**: Complete data isolation—each user can only view, edit, or delete their own transactions, categories, and budgets.
+- [x] **AUTH-01**: User can register securely with name, email, and password.
+- [x] **AUTH-02**: Passwords are securely hashed using Werkzeug / bcrypt before storage.
+- [x] **AUTH-03**: User can log in and out, with session maintained across requests.
+- [x] **AUTH-04**: Complete data isolation—each user can only view, edit, or delete their own transactions, categories, and budgets.
 
 ### Expense Management
 
-- [ ] **EXP-01**: User can record an expense manually with amount (₹), date, category, and optional notes.
-- [ ] **EXP-02**: User can view a paginated/tabular list of all expenses with sorting by date or amount.
-- [ ] **EXP-03**: User can edit any previously recorded expense.
-- [ ] **EXP-04**: User can delete an existing expense with confirmation.
-- [ ] **EXP-05**: User can filter expenses by date range and category.
-- [ ] **EXP-06**: User can export filtered or complete expenses to a CSV file.
+- [x] **EXP-01**: User can record an expense manually with amount (₹), date, category, and optional notes.
+- [x] **EXP-02**: User can view a paginated/tabular list of all expenses with sorting by date or amount.
+- [x] **EXP-03**: User can edit any previously recorded expense.
+- [x] **EXP-04**: User can delete an existing expense with confirmation.
+- [x] **EXP-05**: User can filter expenses by date range and category.
+- [x] **EXP-06**: User can export filtered or complete expenses to a CSV file.
 
 ### AI Natural Language Categorization
 
@@ -69,16 +69,16 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 1 | Pending |
-| AUTH-02 | Phase 1 | Pending |
-| AUTH-03 | Phase 1 | Pending |
-| AUTH-04 | Phase 1 | Pending |
-| EXP-01 | Phase 2 | Pending |
-| EXP-02 | Phase 2 | Pending |
-| EXP-03 | Phase 2 | Pending |
-| EXP-04 | Phase 2 | Pending |
-| EXP-05 | Phase 2 | Pending |
-| EXP-06 | Phase 2 | Pending |
+| AUTH-01 | Phase 1 | Complete |
+| AUTH-02 | Phase 1 | Complete |
+| AUTH-03 | Phase 1 | Complete |
+| AUTH-04 | Phase 1 | Complete |
+| EXP-01 | Phase 2 | Complete |
+| EXP-02 | Phase 2 | Complete |
+| EXP-03 | Phase 2 | Complete |
+| EXP-04 | Phase 2 | Complete |
+| EXP-05 | Phase 2 | Complete |
+| EXP-06 | Phase 2 | Complete |
 | NLP-01 | Phase 3 | Pending |
 | NLP-02 | Phase 3 | Pending |
 | NLP-03 | Phase 3 | Pending |

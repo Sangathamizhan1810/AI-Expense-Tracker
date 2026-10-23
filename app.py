@@ -40,19 +40,25 @@ def create_app():
     from auth import auth_bp
     app.register_blueprint(auth_bp)
 
+    from expenses import expenses_bp
+    app.register_blueprint(expenses_bp)
+
     # ── Routes ──────────────────────────────────────────────
     from utils.auth_helpers import login_required
+    from flask import redirect, url_for
 
     @app.route('/')
     def index():
         """Landing page / home."""
+        if g.get('user'):
+            return redirect(url_for('expenses.index'))
         return render_template('index.html')
 
     @app.route('/dashboard')
     @login_required
     def dashboard():
-        """Protected dashboard placeholder (Phase 2 will implement full view)."""
-        return render_template('index.html')
+        """Redirect to expenses management view."""
+        return redirect(url_for('expenses.index'))
 
     # ── Context Processor ───────────────────────────────────
 

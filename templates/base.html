@@ -31,7 +31,8 @@
 
             <div class="nav-menu" id="nav-menu">
                 {% if current_user %}
-                    <a href="{{ url_for('index') }}" class="nav-link">Dashboard</a>
+                    <a href="{{ url_for('expenses.index') }}" class="nav-link">Expenses</a>
+                    <a href="{{ url_for('expenses.add') }}" class="nav-link nav-link--cta" style="padding: var(--space-xs) var(--space-md); font-size: var(--font-size-xs);">+ Add Expense</a>
                     <div class="nav-user">
                         <span class="nav-user-name">{{ current_user['name'] }}</span>
                         <a href="{{ url_for('auth.logout') }}" class="nav-link nav-link--logout">Logout</a>

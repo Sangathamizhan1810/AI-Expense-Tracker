@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}{{ action_title }}{% endblock %}
+
+{% block content %}
+<div class="page-container" style="max-width: 600px;">
+    <!-- ── Header & Breadcrumb ────────────────────────── -->
+    <div style="margin-bottom: var(--space-xl);">
+        <a href="{{ url_for('expenses.index') }}" class="nav-link" style="display: inline-flex; align-items: center; gap: 6px; margin-bottom: var(--space-sm); font-size: var(--font-size-sm);">
+            <span>&larr;</span> Back to Expenses
+        </a>
+        <h1 style="font-size: var(--font-size-3xl);">{{ action_title }}</h1>
+        <p class="text-muted">
+            {% if is_edit %}
+                Update the details of your recorded transaction.
+            {% else %}
+                Log a new manual transaction with amount, category, and date.
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- ── Form Card ──────────────────────────────────── -->
+    <div class="card">
+        <form method="POST" novalidate>
+            <!-- Amount -->
+            <div class="form-group">
+                <label for="amount" class="form-label">Amount (₹) *</label>
+                <div class="input-group">
+                    <span class="input-prefix">₹</span>
+                    <input
+                        type="number"
+                        id="amount"
+                        name="amount"
+                        class="form-input"
+                        placeholder="0.00"
+                        step="0.01"
+                        min="0.01"
+                        value="{{ expense.amount if expense and expense.amount is defined else '' }}"
+                        required
+                        autofocus
+                    >
+                </div>
+            </div>
+
+            <!-- Category -->
+            <div class="form-group">
+                <label for="category_id" class="form-label">Category *</label>
+                <select id="category_id" name="category_id" class="form-input" required>
+                    <option value="" disabled {% if not expense or not expense.category_id %}selected{% endif %}>
+                        Select a category...
+                    </option>
+                    {% for cat in categories %}
+                        <option
+                            value="{{ cat.id }}"
+                            {% if expense and expense.category_id == cat.id %}selected{% endif %}
+                        >
+                            {{ cat.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Expense Date -->
+            <div class="form-group">
+                <label for="expense_date" class="form-label">Date *</label>
+                <input
+                    type="date"
+                    id="expense_date"
+                    name="expense_date"
+                    class="form-input"
+                    value="{{ expense.expense_date if expense and expense.expense_date else '' }}"
+                    required
+                >
+            </div>
+
+            <!-- Note / Description -->
+            <div class="form-group">
+                <label for="note" class="form-label">Note / Description (Optional)</label>
+                <textarea
+                    id="note"
+                    name="note"
+                    class="form-input"
+                    rows="3"
+                    placeholder="e.g. Weekly grocery run, Swiggy order, Metro smart card recharge..."
+                    maxlength="255"
+                >{{ expense.note if expense and expense.note else '' }}</textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: var(--space-md); margin-top: var(--space-xl);">
+                <button type="submit" class="btn btn--primary btn--lg" style="flex: 1;">
+                    <span>{{ button_text }}</span>
+                </button>
+                <a href="{{ url_for('expenses.index') }}" class="btn btn--secondary btn--lg">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

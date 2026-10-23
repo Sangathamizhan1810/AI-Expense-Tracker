@@ -130,7 +130,7 @@ class Phase1TestCase(unittest.TestCase):
         self.assertIn(b'Logout', res_ok.data)
 
         # Access protected route now that we are logged in
-        res_dash = self.client.get('/dashboard')
+        res_dash = self.client.get('/dashboard', follow_redirects=True)
         self.assertEqual(res_dash.status_code, 200)
 
         # Logout

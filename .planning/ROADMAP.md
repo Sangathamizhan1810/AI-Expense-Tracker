@@ -7,7 +7,7 @@ A phased journey to build the AI-Based Expense Tracker information system from f
 ## Phases
 
 - [x] **Phase 1: Foundation, Database Architecture & Authentication** - Flask application skeleton, SQLite schema, secure password hashing, and user authentication flow.
-- [ ] **Phase 2: Core Expense Management & Export** - CRUD operations for expenses, category mapping, search/filter, and CSV export.
+- [x] **Phase 2: Core Expense Management & Export** - CRUD operations for expenses, category mapping, search/filter, and CSV export.
 - [ ] **Phase 3: NLP & Machine Learning Categorization** - Labelled training dataset, scikit-learn TF-IDF + Logistic Regression classifier pipeline, regex amount extraction, and sentence-based expense entry.
 - [ ] **Phase 4: Budget Management & Alert Engine** - Monthly category budget setup, real-time threshold computation, 80% warning alerts, and 100% overspending notifications.
 - [ ] **Phase 5: Interactive Visual Analytics Dashboard** - Financial summary KPIs and Chart.js visualizations (Category Doughnut, Monthly Trend Line, Budget vs. Actual Bar).
@@ -46,8 +46,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: Expense CRUD routes and interactive forms with real-time field validation.
-- [ ] 02-02: Expense table view, category/date filtering, and CSV export endpoint.
+- [x] 02-01: Expense CRUD routes and interactive forms with real-time field validation.
+- [x] 02-02: Expense table view, category/date filtering, and CSV export endpoint.
 
 ---
 

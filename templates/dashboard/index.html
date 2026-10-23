@@ -140,6 +140,95 @@
 
     </div>
 
+    <!-- ── AI Spending Insights & Recommendations (INS-01, INS-02, INS-03, INS-04) ── -->
+    <div class="insights-section glass-panel" style="padding: var(--space-xl); border-radius: var(--radius-lg); margin-bottom: var(--space-xl); border-color: rgba(99, 102, 241, 0.25); background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-lg); flex-wrap: wrap; gap: var(--space-xs);">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 1.5rem;">✨</span>
+                <div>
+                    <h2 style="font-size: 1.25rem; font-weight: 800; margin: 0; color: var(--text-primary);">
+                        AI Spending Insights & Recommendations
+                    </h2>
+                    <p class="text-muted" style="margin: 0; font-size: var(--font-size-xs);">
+                        Automated deterministic analysis comparing {{ insights.month_label }} with {{ insights.prev_month_label }}
+                    </p>
+                </div>
+            </div>
+            <span class="badge" style="background: rgba(99, 102, 241, 0.18); color: var(--accent-start); font-size: var(--font-size-xs); font-weight: 600; padding: 4px 10px; border-radius: 999px;">
+                Deterministic AI
+            </span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-lg);">
+            
+            <!-- Column 1: Month-over-Month Observations (INS-01, INS-02, INS-04) -->
+            <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: var(--space-xs);">
+                    <span style="font-size: 1.1rem;">📊</span>
+                    <h3 style="font-size: var(--font-size-sm); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); margin: 0;">
+                        Key Observations
+                    </h3>
+                </div>
+
+                {% if insights.observations %}
+                    {% for obs in insights.observations %}
+                        <div class="insight-pill glass-panel" style="padding: var(--space-md); border-radius: var(--radius-md); display: flex; align-items: flex-start; gap: var(--space-sm); background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06);">
+                            <span style="font-size: 1.25rem; line-height: 1;">{{ obs.icon }}</span>
+                            <div style="flex: 1;">
+                                <div style="font-size: var(--font-size-xs); font-weight: 700; color: var(--text-primary); margin-bottom: 2px;">
+                                    {{ obs.title }}
+                                </div>
+                                <div style="font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.4;">
+                                    {{ obs.text }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="glass-panel" style="padding: var(--space-md); border-radius: var(--radius-md); color: var(--text-muted); font-size: var(--font-size-xs);">
+                        No spending observations available for this period.
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Column 2: Actionable Savings Tips (INS-03) -->
+            <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: var(--space-xs);">
+                    <span style="font-size: 1.1rem;">💡</span>
+                    <h3 style="font-size: var(--font-size-sm); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); margin: 0;">
+                        Actionable Recommendations
+                    </h3>
+                </div>
+
+                {% if insights.savings_tips %}
+                    {% for tip in insights.savings_tips %}
+                        <div class="tip-card glass-panel" style="padding: var(--space-md); border-radius: var(--radius-md); display: flex; align-items: flex-start; gap: var(--space-sm); background: rgba(255, 255, 255, 0.03); border-left: 3px solid {% if tip.priority == 'high' %}var(--danger){% elif tip.priority == 'medium' %}var(--warning){% else %}var(--accent-start){% endif %};">
+                            <span style="font-size: 1.25rem; line-height: 1;">{{ tip.icon }}</span>
+                            <div style="flex: 1;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                                    <span style="font-size: var(--font-size-xs); font-weight: 700; color: var(--text-primary);">
+                                        {{ tip.title }}
+                                    </span>
+                                    <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 1px 6px; border-radius: 999px; background: {% if tip.priority == 'high' %}rgba(239, 68, 68, 0.2); color: var(--danger);{% elif tip.priority == 'medium' %}rgba(245, 158, 11, 0.2); color: var(--warning);{% else %}rgba(99, 102, 241, 0.2); color: var(--accent-start);{% endif %}">
+                                        {{ tip.priority }}
+                                    </span>
+                                </div>
+                                <div style="font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.4;">
+                                    {{ tip.text }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="glass-panel" style="padding: var(--space-md); border-radius: var(--radius-md); color: var(--text-muted); font-size: var(--font-size-xs);">
+                        No budget recommendations active. Configure budgets to receive personalized alerts.
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
     <!-- ── Empty State Prompt (if no transactions & no budgets) ── -->
     {% if kpis.total_spent == 0 and kpis.active_budgets_count == 0 %}
     <div class="glass-panel" style="padding: var(--space-2xl); border-radius: var(--radius-lg); text-align: center; margin-bottom: var(--space-xl); background: rgba(99, 102, 241, 0.06); border: 1px dashed rgba(99, 102, 241, 0.3);">

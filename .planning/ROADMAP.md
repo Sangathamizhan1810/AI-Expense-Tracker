@@ -114,8 +114,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 06-01: Spending insights engine and UI cards with month-over-month calculation logic.
-- [ ] 06-02: Comprehensive test suite verification (Cases 1–13), report documentation artifacts, and Mermaid diagrams.
+- [x] 06-01: Spending insights engine and UI cards with month-over-month calculation logic.
+- [x] 06-02: Comprehensive test suite verification (Cases 1–13), report documentation artifacts, and Mermaid diagrams.
 
 ---
 
@@ -126,9 +126,9 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |---|---|---|---|
-| 1. Foundation, Database & Auth | 0/2 | Not started | - |
-| 2. Core Expense Management | 0/2 | Not started | - |
-| 3. NLP & ML Categorization | 0/2 | Not started | - |
-| 4. Budget & Alert Engine | 0/1 | Not started | - |
-| 5. Interactive Analytics Dashboard | 0/1 | Not started | - |
-| 6. Insights Engine & Verification | 0/2 | Not started | - |
+| 1. Foundation, Database & Auth | 2/2 | Complete | 2026-10-23 |
+| 2. Core Expense Management | 2/2 | Complete | 2026-10-23 |
+| 3. NLP & ML Categorization | 2/2 | Complete | 2026-10-23 |
+| 4. Budget & Alert Engine | 1/1 | Complete | 2026-10-23 |
+| 5. Interactive Analytics Dashboard | 1/1 | Complete | 2026-10-23 |
+| 6. Insights Engine & Verification | 2/2 | Complete | 2026-10-23 |

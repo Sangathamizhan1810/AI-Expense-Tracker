@@ -11,6 +11,7 @@ from flask import Blueprint, render_template, request, jsonify, g
 
 from utils.auth_helpers import login_required
 from utils.analytics_helpers import get_full_dashboard_payload
+from utils.insights_helpers import generate_spending_insights
 
 dashboard_bp = Blueprint('dashboard', __name__, url_prefix='/dashboard')
 
@@ -20,8 +21,8 @@ dashboard_bp = Blueprint('dashboard', __name__, url_prefix='/dashboard')
 @login_required
 def index():
     """
-    Render visual analytics dashboard with pre-calculated financial KPIs
-    and pre-injected JSON state for instant Chart.js rendering.
+    Render visual analytics dashboard with pre-calculated financial KPIs,
+    AI spending insights, and pre-injected JSON state for instant Chart.js rendering.
     """
     user_id = g.user['id']
     month = request.args.get('month', '').strip()
@@ -29,6 +30,8 @@ def index():
         month = datetime.now().strftime('%Y-%m')
 
     payload = get_full_dashboard_payload(user_id, month)
+    insights = generate_spending_insights(user_id, month)
+    payload['insights'] = insights
 
     return render_template(
         'dashboard/index.html',
@@ -37,6 +40,7 @@ def index():
         category_distribution=payload['category_distribution'],
         spending_trends=payload['spending_trends'],
         budget_vs_actual=payload['budget_vs_actual'],
+        insights=insights,
         dashboard_json=json.dumps(payload)
     )
 
@@ -45,7 +49,7 @@ def index():
 @login_required
 def api_analytics():
     """
-    JSON API endpoint returning full analytics payload for a given month.
+    JSON API endpoint returning full analytics and insights payload for a given month.
     Supports dynamic AJAX calendar switching without page reload.
     """
     user_id = g.user['id']
@@ -54,6 +58,8 @@ def api_analytics():
         month = datetime.now().strftime('%Y-%m')
 
     payload = get_full_dashboard_payload(user_id, month)
+    payload['insights'] = generate_spending_insights(user_id, month)
+
     return jsonify({
         'success': True,
         'data': payload

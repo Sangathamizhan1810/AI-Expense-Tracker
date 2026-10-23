@@ -45,10 +45,10 @@
 
 ### AI Spending Insights
 
-- [ ] **INS-01**: Rule-based engine analyzes current vs. previous month spending trends per category.
-- [ ] **INS-02**: Generates up to three dynamic plain-language observations (e.g., "Food spending is 40% higher than last month") based strictly on calculated figures.
-- [ ] **INS-03**: Generates actionable savings tips based on budget utilization.
-- [ ] **INS-04**: Graceful state handling showing "Not enough data yet" for new accounts without prior-month history.
+- [x] **INS-01**: Rule-based engine analyzes current vs. previous month spending trends per category.
+- [x] **INS-02**: Generates up to three dynamic plain-language observations (e.g., "Food spending is 40% higher than last month") based strictly on calculated figures.
+- [x] **INS-03**: Generates actionable savings tips based on budget utilization.
+- [x] **INS-04**: Graceful state handling showing "Not enough data yet" for new accounts without prior-month history.
 
 ## v2 Requirements (Deferred)
 
@@ -92,10 +92,10 @@
 | DASH-02 | Phase 5 | Complete |
 | DASH-03 | Phase 5 | Complete |
 | DASH-04 | Phase 5 | Complete |
-| INS-01 | Phase 6 | Pending |
-| INS-02 | Phase 6 | Pending |
-| INS-03 | Phase 6 | Pending |
-| INS-04 | Phase 6 | Pending |
+| INS-01 | Phase 6 | Complete |
+| INS-02 | Phase 6 | Complete |
+| INS-03 | Phase 6 | Complete |
+| INS-04 | Phase 6 | Complete |
 
 **Coverage:**
 - v1 requirements: 26 total

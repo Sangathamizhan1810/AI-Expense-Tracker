@@ -1299,6 +1299,187 @@ textarea.form-input {
     color: var(--text-secondary);
 }
 
+/* ── Budget Management & Alert Engine ─────────────── */
+.budget-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+}
+
+.budget-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.budget-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.budget-card--warning {
+    border-color: rgba(245, 158, 11, 0.4);
+}
+
+.budget-card--warning:hover {
+    border-color: var(--warning);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+
+.budget-card--exceeded {
+    border-color: rgba(239, 68, 68, 0.5);
+}
+
+.budget-card--exceeded:hover {
+    border-color: var(--danger);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.25);
+}
+
+.budget-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+}
+
+.budget-progress-section {
+    margin: var(--space-md) 0 var(--space-lg);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    margin-bottom: var(--space-xs);
+}
+
+.progress-pct {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+}
+
+.progress-track {
+    width: 100%;
+    height: 10px;
+    background: rgba(15, 23, 42, 0.7);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 400ms ease;
+}
+
+.progress-fill--normal {
+    background: linear-gradient(90deg, #10b981, #22c55e);
+}
+
+.progress-fill--warning {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+}
+
+.progress-fill--exceeded {
+    background: linear-gradient(90deg, #ef4444, #f87171);
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+}
+
+.progress-fill--unset {
+    background: var(--text-muted);
+    opacity: 0.3;
+}
+
+.budget-stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+    padding: var(--space-sm) 0;
+    border-top: 1px solid var(--border-subtle);
+    font-size: var(--font-size-xs);
+}
+
+.budget-stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.budget-stat-label {
+    color: var(--text-muted);
+    margin-bottom: 2px;
+}
+
+.budget-stat-val {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.budget-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-xs);
+    margin-top: var(--space-md);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--border-subtle);
+}
+
+/* Alert Banners */
+.alert-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+}
+
+.alert-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    animation: fadeIn 250ms ease;
+}
+
+.alert-banner--warning {
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: #fde68a;
+}
+
+.alert-banner--exceeded {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    color: #fecaca;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);
+}
+
+.alert-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.alert-icon {
+    font-size: 1.25rem;
+}
+
 /* ── Footer ────────────────────────────────────────── */
 .footer {
     padding: var(--space-xl) var(--space-lg);

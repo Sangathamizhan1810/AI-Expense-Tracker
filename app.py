@@ -43,6 +43,9 @@ def create_app():
     from expenses import expenses_bp
     app.register_blueprint(expenses_bp)
 
+    from budgets import budgets_bp
+    app.register_blueprint(budgets_bp)
+
     # ── Routes ──────────────────────────────────────────────
     from utils.auth_helpers import login_required
     from flask import redirect, url_for
@@ -64,8 +67,16 @@ def create_app():
 
     @app.context_processor
     def inject_user():
-        """Make current user available in all templates."""
-        return dict(current_user=g.get('user', None))
+        """Make current user and alert state available in all templates."""
+        user = g.get('user', None)
+        alert_count = 0
+        if user:
+            from utils.budget_helpers import get_active_alerts
+            try:
+                alert_count = len(get_active_alerts(user['id']))
+            except Exception:
+                alert_count = 0
+        return dict(current_user=user, active_alert_count=alert_count)
 
     return app
 

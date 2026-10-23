@@ -32,7 +32,8 @@ def require_login():
         return redirect(url_for('auth.login', next=request.path))
 
 
-@expenses_bp.route('/')
+@expenses_bp.route('', strict_slashes=False)
+@expenses_bp.route('/', strict_slashes=False)
 def index():
     """Display expense table with dynamic filtering and summary KPIs."""
     category_id = request.args.get('category')

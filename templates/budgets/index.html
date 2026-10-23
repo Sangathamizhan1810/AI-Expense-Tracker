@@ -1,0 +1,321 @@
+{% extends "base.html" %}
+
+{% block title %}Budget Management & Alerts{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <!-- ── Header & Month Selector ────────────────────── -->
+    <div class="page-header">
+        <div class="page-header-text">
+            <h1>Budget Planner & Alerts</h1>
+            <p>Set monthly spending limits, track category utilization, and get instant warning alerts.</p>
+        </div>
+        <div class="page-header-actions">
+            <!-- Month Selector Form -->
+            <form action="{{ url_for('budgets.index') }}" method="GET" style="display: flex; align-items: center; gap: var(--space-xs);">
+                <input
+                    type="month"
+                    name="month"
+                    id="month-picker"
+                    class="form-input"
+                    value="{{ month }}"
+                    onchange="this.form.submit()"
+                    style="padding: 0.5rem 0.85rem; font-size: var(--font-size-sm); cursor: pointer;"
+                >
+            </form>
+            <button type="button" class="btn btn--primary" onclick="openBudgetModal('', '', '{{ month }}')">
+                <span>+</span> Set Budget Limit
+            </button>
+        </div>
+    </div>
+
+    <!-- ── Active Alert Banners ───────────────────────── -->
+    {% if alerts %}
+        <div class="alert-container">
+            {% for a in alerts %}
+                {% if a.status == 'exceeded' %}
+                    <div class="alert-banner alert-banner--exceeded" role="alert">
+                        <div class="alert-content">
+                            <span class="alert-icon">🚨</span>
+                            <div>
+                                <strong>Overspending Alert:</strong>
+                                You have exceeded your <strong>{{ a.category_name }}</strong> budget by
+                                <span style="font-weight: 700;">₹{{ "%.2f"|format(a.overage_amount) }}</span>
+                                ({{ a.percentage }}% utilized).
+                            </div>
+                        </div>
+                        <button type="button" class="action-btn" onclick="openBudgetModal('{{ a.category_id }}', '{{ a.limit_amount }}', '{{ month }}')" style="border-color: currentColor; color: inherit;">
+                            Adjust Limit
+                        </button>
+                    </div>
+                {% elif a.status == 'warning' %}
+                    <div class="alert-banner alert-banner--warning" role="alert">
+                        <div class="alert-content">
+                            <span class="alert-icon">⚠️</span>
+                            <div>
+                                <strong>Warning ({{ a.percentage }}%):</strong>
+                                Spending in <strong>{{ a.category_name }}</strong> has reached
+                                ₹{{ "%.2f"|format(a.spent_amount) }} of ₹{{ "%.2f"|format(a.limit_amount) }}.
+                                Only ₹{{ "%.2f"|format(a.remaining_amount) }} remaining for this month!
+                            </div>
+                        </div>
+                        <button type="button" class="action-btn" onclick="openBudgetModal('{{ a.category_id }}', '{{ a.limit_amount }}', '{{ month }}')" style="border-color: currentColor; color: inherit;">
+                            Adjust Limit
+                        </button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- ── Overall Budget Health Summary ─────────────── -->
+    <div class="card" style="margin-bottom: var(--space-2xl);">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-md);">
+            <div>
+                <h3 style="font-size: var(--font-size-lg); margin-bottom: 2px;">Monthly Budget Overview ({{ month }})</h3>
+                <span class="text-muted" style="font-size: var(--font-size-xs);">
+                    {{ summary.configured_count }} of 8 categories configured
+                </span>
+            </div>
+            <div style="text-align: right;">
+                <span style="font-size: var(--font-size-xl); font-weight: 800; color: {% if summary.overall_percentage >= 100 %}var(--danger){% elif summary.overall_percentage >= 80 %}var(--warning){% else %}var(--text-accent){% endif %};">
+                    {{ summary.overall_percentage }}%
+                </span>
+                <span class="text-muted" style="font-size: var(--font-size-xs); display: block;">total utilized</span>
+            </div>
+        </div>
+
+        <!-- Overall Progress Track -->
+        <div class="progress-track" style="height: 12px; margin-bottom: var(--space-lg);">
+            <div
+                class="progress-fill {% if summary.overall_percentage >= 100 %}progress-fill--exceeded{% elif summary.overall_percentage >= 80 %}progress-fill--warning{% else %}progress-fill--normal{% endif %}"
+                style="width: {{ [summary.overall_percentage, 100]|min }}%;"
+            ></div>
+        </div>
+
+        <div class="kpi-grid" style="margin-bottom: 0;">
+            <div class="kpi-card" style="background: rgba(15, 23, 42, 0.4);">
+                <div class="kpi-content">
+                    <span class="kpi-label">Total Allocated</span>
+                    <span class="kpi-value text-accent">₹{{ "%.2f"|format(summary.total_budget) }}</span>
+                </div>
+                <div class="kpi-icon">🎯</div>
+            </div>
+            <div class="kpi-card" style="background: rgba(15, 23, 42, 0.4);">
+                <div class="kpi-content">
+                    <span class="kpi-label">Month Total Spent</span>
+                    <span class="kpi-value">₹{{ "%.2f"|format(summary.total_spent) }}</span>
+                </div>
+                <div class="kpi-icon">💳</div>
+            </div>
+            <div class="kpi-card" style="background: rgba(15, 23, 42, 0.4);">
+                <div class="kpi-content">
+                    <span class="kpi-label">Safe Remaining</span>
+                    <span class="kpi-value {% if summary.total_remaining < 0 %}text-danger{% else %}text-success{% endif %}">
+                        ₹{{ "%.2f"|format(summary.total_remaining) }}
+                    </span>
+                </div>
+                <div class="kpi-icon">🛡️</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Category Budget Cards Grid ────────────────── -->
+    <h2 style="font-size: var(--font-size-xl); margin-bottom: var(--space-lg);">Category Budgets</h2>
+    <div class="budget-grid">
+        {% for item in items %}
+            <div class="budget-card {% if item.status == 'exceeded' %}budget-card--exceeded{% elif item.status == 'warning' %}budget-card--warning{% endif %}">
+                <!-- Card Header -->
+                <div class="budget-card-header">
+                    <span class="badge badge--{{ item.category_name|lower }}">
+                        <span class="badge-dot"></span>
+                        {{ item.category_name }}
+                    </span>
+
+                    <!-- Status Pill -->
+                    {% if item.status == 'exceeded' %}
+                        <span class="badge" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4);">
+                            🚨 {{ item.percentage }}% Over
+                        </span>
+                    {% elif item.status == 'warning' %}
+                        <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4);">
+                            ⚠️ {{ item.percentage }}% Warning
+                        </span>
+                    {% elif item.status == 'normal' %}
+                        <span class="badge" style="background: rgba(34, 197, 94, 0.15); color: #4ade80;">
+                            ✓ {{ item.percentage }}%
+                        </span>
+                    {% else %}
+                        <span class="badge" style="background: rgba(148, 163, 184, 0.12); color: var(--text-muted);">
+                            No Limit Set
+                        </span>
+                    {% endif %}
+                </div>
+
+                <!-- Progress Section -->
+                <div class="budget-progress-section">
+                    <div class="progress-header">
+                        <span>Spent: ₹{{ "%.2f"|format(item.spent_amount) }}</span>
+                        {% if item.limit_amount %}
+                            <span class="progress-pct {% if item.status == 'exceeded' %}text-danger{% elif item.status == 'warning' %}text-warning{% else %}text-accent{% endif %}">
+                                {{ item.percentage }}%
+                            </span>
+                        {% else %}
+                            <span class="progress-pct text-muted">--</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="progress-track">
+                        {% if item.limit_amount %}
+                            <div
+                                class="progress-fill {% if item.status == 'exceeded' %}progress-fill--exceeded{% elif item.status == 'warning' %}progress-fill--warning{% else %}progress-fill--normal{% endif %}"
+                                style="width: {{ [item.percentage, 100]|min }}%;"
+                            ></div>
+                        {% else %}
+                            <div class="progress-fill progress-fill--unset" style="width: 0%;"></div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Budget Details Stats -->
+                <div class="budget-stats-row">
+                    <div class="budget-stat">
+                        <span class="budget-stat-label">Monthly Limit</span>
+                        <span class="budget-stat-val">
+                            {% if item.limit_amount %}
+                                ₹{{ "%.2f"|format(item.limit_amount) }}
+                            {% else %}
+                                <span class="text-muted" style="font-weight: 400;">Not set</span>
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <div class="budget-stat" style="text-align: right;">
+                        <span class="budget-stat-label">
+                            {% if item.status == 'exceeded' %}Over Limit By{% else %}Remaining{% endif %}
+                        </span>
+                        <span class="budget-stat-val {% if item.status == 'exceeded' %}text-danger{% elif item.remaining_amount is not none and item.remaining_amount >= 0 %}text-success{% else %}text-muted{% endif %}">
+                            {% if item.status == 'exceeded' %}
+                                +₹{{ "%.2f"|format(item.overage_amount) }}
+                            {% elif item.remaining_amount is not none %}
+                                ₹{{ "%.2f"|format(item.remaining_amount) }}
+                            {% else %}
+                                --
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Card Actions -->
+                <div class="budget-actions">
+                    <button
+                        type="button"
+                        class="action-btn"
+                        onclick="openBudgetModal('{{ item.category_id }}', '{{ item.limit_amount or '' }}', '{{ month }}')"
+                    >
+                        ✏️ {% if item.limit_amount %}Edit Limit{% else %}Set Limit{% endif %}
+                    </button>
+
+                    {% if item.budget_id %}
+                        <form action="{{ url_for('budgets.remove_budget', id=item.budget_id, month=month) }}" method="POST" style="display: inline;" onsubmit="return confirm('Remove budget limit for {{ item.category_name }}?')">
+                            <button type="submit" class="action-btn action-btn--delete" title="Remove budget limit">
+                                🗑️
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- ── Set / Edit Budget Modal ──────────────────────── -->
+<div class="modal-overlay" id="budget-modal" role="dialog" aria-modal="true" aria-labelledby="budget-modal-title">
+    <div class="modal-card" style="text-align: left; max-width: 440px;">
+        <h3 id="budget-modal-title" style="margin-bottom: var(--space-xs);">Set Category Budget</h3>
+        <p class="text-muted" style="margin-bottom: var(--space-lg); font-size: var(--font-size-xs);">
+            Configure your target spending threshold for <strong id="modal-month-display">{{ month }}</strong>.
+        </p>
+
+        <form action="{{ url_for('budgets.set_budget') }}" method="POST">
+            <input type="hidden" name="month" id="modal-month" value="{{ month }}">
+
+            <div class="form-group">
+                <label for="modal-category" class="form-label">Category *</label>
+                <select name="category_id" id="modal-category" class="form-input" required>
+                    {% for cat in categories %}
+                        <option value="{{ cat.id }}">{{ cat.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="modal-limit" class="form-label">Monthly Limit (₹) *</label>
+                <div class="input-group">
+                    <span class="input-prefix">₹</span>
+                    <input
+                        type="number"
+                        name="limit_amount"
+                        id="modal-limit"
+                        class="form-input"
+                        placeholder="5000.00"
+                        step="0.01"
+                        min="0.01"
+                        required
+                        autofocus
+                    >
+                </div>
+                <span class="text-muted" style="font-size: var(--font-size-xs); margin-top: 4px; display: block;">
+                    You will receive an amber alert at 80% and a red alert if exceeded.
+                </span>
+            </div>
+
+            <div class="modal-actions" style="margin-top: var(--space-xl); justify-content: flex-end;">
+                <button type="button" class="btn btn--secondary" onclick="closeBudgetModal()">
+                    Cancel
+                </button>
+                <button type="submit" class="btn btn--primary">
+                    Save Budget Limit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function openBudgetModal(categoryId, limitAmount, month) {
+        const modal = document.getElementById('budget-modal');
+        const catSelect = document.getElementById('modal-category');
+        const limitInput = document.getElementById('modal-limit');
+        const monthInput = document.getElementById('modal-month');
+        const monthDisplay = document.getElementById('modal-month-display');
+
+        if (categoryId) {
+            catSelect.value = categoryId;
+        }
+        limitInput.value = limitAmount ? parseFloat(limitAmount) : '';
+        if (month) {
+            monthInput.value = month;
+            monthDisplay.textContent = month;
+        }
+
+        modal.classList.add('active');
+        limitInput.focus();
+    }
+
+    function closeBudgetModal() {
+        const modal = document.getElementById('budget-modal');
+        modal.classList.remove('active');
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeBudgetModal();
+    });
+
+    document.getElementById('budget-modal')?.addEventListener('click', function (e) {
+        if (e.target === this) closeBudgetModal();
+    });
+</script>
+{% endblock %}

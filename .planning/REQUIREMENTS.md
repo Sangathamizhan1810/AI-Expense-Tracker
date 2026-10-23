@@ -31,10 +31,10 @@
 
 ### Budgets & Alerts
 
-- [ ] **BUD-01**: User can set monthly spending limits for each category.
-- [ ] **BUD-02**: System automatically sums current month's expenses per category against the budget limit.
-- [ ] **BUD-03**: Visual warning badge / banner displayed when category spending reaches 80% of budget.
-- [ ] **BUD-04**: Critical alert triggered and highlighted when spending exceeds 100% of budget.
+- [x] **BUD-01**: User can set monthly spending limits for each category.
+- [x] **BUD-02**: System automatically sums current month's expenses per category against the budget limit.
+- [x] **BUD-03**: Visual warning badge / banner displayed when category spending reaches 80% of budget.
+- [x] **BUD-04**: Critical alert triggered and highlighted when spending exceeds 100% of budget.
 
 ### Dashboard & Visualizations
 
@@ -84,10 +84,10 @@
 | NLP-03 | Phase 3 | Complete |
 | NLP-04 | Phase 3 | Complete |
 | NLP-05 | Phase 3 | Complete |
-| BUD-01 | Phase 4 | Pending |
-| BUD-02 | Phase 4 | Pending |
-| BUD-03 | Phase 4 | Pending |
-| BUD-04 | Phase 4 | Pending |
+| BUD-01 | Phase 4 | Complete |
+| BUD-02 | Phase 4 | Complete |
+| BUD-03 | Phase 4 | Complete |
+| BUD-04 | Phase 4 | Complete |
 | DASH-01 | Phase 5 | Pending |
 | DASH-02 | Phase 5 | Pending |
 | DASH-03 | Phase 5 | Pending |

@@ -32,6 +32,12 @@
             <div class="nav-menu" id="nav-menu">
                 {% if current_user %}
                     <a href="{{ url_for('expenses.index') }}" class="nav-link">Expenses</a>
+                    <a href="{{ url_for('budgets.index') }}" class="nav-link" style="position: relative;">
+                        <span>Budgets</span>
+                        {% if active_alert_count > 0 %}
+                            <span style="background: var(--danger); color: white; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 999px; margin-left: 4px;">{{ active_alert_count }}</span>
+                        {% endif %}
+                    </a>
                     <a href="{{ url_for('expenses.add') }}" class="nav-link nav-link--cta" style="padding: var(--space-xs) var(--space-md); font-size: var(--font-size-xs);">+ Add Expense</a>
                     <div class="nav-user">
                         <span class="nav-user-name">{{ current_user['name'] }}</span>

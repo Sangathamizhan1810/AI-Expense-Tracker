@@ -1,6 +1,6 @@
 ---
 gsd_state_version: '1.0'
-status: executing
+status: planning
 progress:
   total_phases: 6
   completed_phases: 3
@@ -20,11 +20,10 @@ See: `.planning/PROJECT.md` (updated 2026-10-23)
 
 ## Current Position
 
-Phase: 3 of 6 (NLP & Machine Learning Categorization) — COMPLETED  
-Next Phase: 4 of 6 (Budget Management & Alert Engine)  
-Plans: 6 of 10 total plans completed (01-01, 01-02, 02-01, 02-02, 03-01, 03-02)  
-Status: Phase 3 complete, ready for Phase 4 planning  
-Last activity: 2026-10-23 — Executed Phase 3: Curated dataset of 1,470 samples across 8 categories, trained TF-IDF + Logistic Regression model with 100% test accuracy, sub-millisecond CPU inference (0.54ms), regex amount extractor, live debounce preview API, and AI Quick-Add 1-click recording interface. All 22 tests passing.
+Phase: 4 of 6 (Budget Management & Alert Engine)  
+Plan: 0 of 1 in current phase (PLAN-04-01 ready)  
+Status: Plan created, ready for execution  
+Last activity: 2026-10-23 — Created detailed execution plan for Phase 4 (PLAN-04-01: monthly budget limits, real-time spend tracking, 80% warning badges, and 100% critical overspending alerts).
 
 Progress: [██████░░░░] 60%
 
@@ -43,7 +42,7 @@ Progress: [██████░░░░] 60%
 | 1. Foundation, Database & Auth | 2/2 | Complete |
 | 2. Core Expense Management | 2/2 | Complete |
 | 3. NLP & ML Categorization | 2/2 | Complete |
-| 4. Budget & Alert Engine | 0/1 | Pending |
+| 4. Budget & Alert Engine | 0/1 | Ready to execute |
 | 5. Interactive Analytics Dashboard | 0/1 | Pending |
 | 6. Insights Engine & Verification | 0/2 | Pending |
 
@@ -53,9 +52,9 @@ Progress: [██████░░░░] 60%
 
 Decisions are logged in `PROJECT.md` Key Decisions table:
 - Stack: Python Flask + SQLite + Vanilla JS + Chart.js
-- ML: scikit-learn TF-IDF (1-2 ngrams) + Logistic Regression (offline, 0.54ms latency, zero-cost, serialized to `model.joblib`)
+- ML: scikit-learn TF-IDF + Logistic Regression (offline, 0.54ms latency, zero-cost, serialized to `model.joblib`)
 - NLP Parsing: Multi-pattern Indian regex engine (prefix, suffix, end, standalone) + text residue cleaning
-- Quick-Add UX: Debounced real-time preview box displaying amount, confidence pill, predicted category badge, and manual dropdown override
+- Budgets: Monthly tracking using `YYYY-MM`, `UNIQUE(user_id, category_id, month)` in SQLite, 80% warning amber badge, 100% critical red alert
 - Auth: Werkzeug pbkdf2:sha256 hashing, Flask sessions, @login_required decorator, safe local redirect checks
 - DB: Raw sqlite3 (no ORM), application factory pattern, SQLite PRAGMA foreign_keys = ON
 - Expenses: Strict `WHERE user_id = ?` query isolation, parameterized filtering, safe sorting whitelist, standard RFC 4180 CSV export

@@ -8,7 +8,7 @@ A phased journey to build the AI-Based Expense Tracker information system from f
 
 - [x] **Phase 1: Foundation, Database Architecture & Authentication** - Flask application skeleton, SQLite schema, secure password hashing, and user authentication flow.
 - [x] **Phase 2: Core Expense Management & Export** - CRUD operations for expenses, category mapping, search/filter, and CSV export.
-- [ ] **Phase 3: NLP & Machine Learning Categorization** - Labelled training dataset, scikit-learn TF-IDF + Logistic Regression classifier pipeline, regex amount extraction, and sentence-based expense entry.
+- [x] **Phase 3: NLP & Machine Learning Categorization** - Labelled training dataset, scikit-learn TF-IDF + Logistic Regression classifier pipeline, regex amount extraction, and sentence-based expense entry.
 - [ ] **Phase 4: Budget Management & Alert Engine** - Monthly category budget setup, real-time threshold computation, 80% warning alerts, and 100% overspending notifications.
 - [ ] **Phase 5: Interactive Visual Analytics Dashboard** - Financial summary KPIs and Chart.js visualizations (Category Doughnut, Monthly Trend Line, Budget vs. Actual Bar).
 - [ ] **Phase 6: Spending Insights Engine, UAT & Documentation** - Deterministic rule-based insights, savings tips, comprehensive test case verification (Cases 1–13), and Mermaid architectural diagrams.
@@ -64,8 +64,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: Curate dataset, build and evaluate scikit-learn TF-IDF + Logistic Regression pipeline, and generate `model.joblib`.
-- [ ] 03-02: Build regex amount extractor, prediction API endpoint, and natural language expense quick-add UI.
+- [x] 03-01: Curate dataset, build and evaluate scikit-learn TF-IDF + Logistic Regression pipeline, and generate `model.joblib`.
+- [x] 03-02: Build regex amount extractor, prediction API endpoint, and natural language expense quick-add UI.
 
 ---
 

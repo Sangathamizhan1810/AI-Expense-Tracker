@@ -39,6 +39,64 @@
         </div>
     </div>
 
+    <!-- ── AI Quick-Add Card ──────────────────────────── -->
+    <div class="ai-card">
+        <div class="ai-header">
+            <div class="ai-title">
+                <span>✨</span>
+                <span>AI Quick-Add</span>
+                <span class="ai-tag">Natural Language</span>
+            </div>
+            <span class="text-muted" style="font-size: var(--font-size-xs);">
+                Try typing: <em>"Swiggy 250"</em>, <em>"₹500 petrol"</em>, or <em>"metro recharge 50"</em>
+            </span>
+        </div>
+
+        <form action="{{ url_for('expenses.ai_quick_add') }}" method="POST" class="ai-form" id="ai-quick-form">
+            <div class="ai-input-row">
+                <div class="ai-input-wrapper">
+                    <span class="ai-input-icon">🪄</span>
+                    <input
+                        type="text"
+                        name="sentence"
+                        id="ai-sentence-input"
+                        class="ai-input"
+                        placeholder="Log expense with natural language sentence... (e.g. 'Swiggy 250')"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+                <button type="submit" class="btn btn--primary" id="ai-submit-btn">
+                    <span>Log Expense</span>
+                    <span aria-hidden="true">&rarr;</span>
+                </button>
+            </div>
+
+            <!-- Dynamic Live Preview Box -->
+            <div class="ai-preview-box" id="ai-preview-box">
+                <div class="ai-preview-details">
+                    <span class="ai-amount-pill" id="ai-preview-amount">₹0.00</span>
+                    <span class="badge" id="ai-preview-cat-badge">
+                        <span class="badge-dot"></span>
+                        <span id="ai-preview-cat-text">Food</span>
+                    </span>
+                    <span class="ai-conf-pill ai-conf--high" id="ai-preview-conf">95% confident</span>
+                    <span class="ai-preview-note" id="ai-preview-note">Description</span>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                    <select name="category_id" id="ai-override-cat" class="form-input" style="padding: 0.35rem 0.75rem; font-size: var(--font-size-xs); width: auto;">
+                        <option value="" disabled selected>Change category...</option>
+                        {% for cat in categories %}
+                            <option value="{{ cat.id }}">{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="text-muted" style="font-size: var(--font-size-xs);">Press Enter to save</span>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <!-- ── Filter Toolbar ─────────────────────────────── -->
     <div class="filter-card">
         <form action="{{ url_for('expenses.index') }}" method="GET" class="filter-form">
@@ -206,7 +264,7 @@
 
 {% block extra_js %}
 <script>
-    // Sort dropdown order synchronization
+    // Sort dropdown order synchronization & AI Quick-Add Live Preview
     document.addEventListener('DOMContentLoaded', function () {
         const sortSelect = document.getElementById('filter-sort');
         const orderInput = document.getElementById('filter-order');
@@ -216,6 +274,77 @@
                 const selectedOpt = sortSelect.options[sortSelect.selectedIndex];
                 const orderAttr = selectedOpt.getAttribute('data-order');
                 orderInput.value = orderAttr ? orderAttr : 'desc';
+            });
+        }
+
+        // ── AI Quick-Add Live Preview ────────────────────
+        const aiInput = document.getElementById('ai-sentence-input');
+        const previewBox = document.getElementById('ai-preview-box');
+        const previewAmount = document.getElementById('ai-preview-amount');
+        const previewCatBadge = document.getElementById('ai-preview-cat-badge');
+        const previewCatText = document.getElementById('ai-preview-cat-text');
+        const previewConf = document.getElementById('ai-preview-conf');
+        const previewNote = document.getElementById('ai-preview-note');
+        const overrideCatSelect = document.getElementById('ai-override-cat');
+
+        let debounceTimer = null;
+
+        if (aiInput && previewBox) {
+            aiInput.addEventListener('input', function () {
+                clearTimeout(debounceTimer);
+                const query = aiInput.value.trim();
+
+                if (query.length < 3) {
+                    previewBox.classList.remove('active');
+                    return;
+                }
+
+                debounceTimer = setTimeout(function () {
+                    fetch("{{ url_for('expenses.ai_parse') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ sentence: query })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success && data.parsed) {
+                            const p = data.parsed;
+                            if (p.amount !== null && p.amount > 0) {
+                                previewAmount.textContent = '₹' + p.amount.toFixed(2);
+                            } else {
+                                previewAmount.textContent = '₹ --';
+                            }
+
+                            // Category badge
+                            const catLower = p.category_name.toLowerCase();
+                            previewCatBadge.className = 'badge badge--' + catLower;
+                            previewCatText.textContent = p.category_name;
+
+                            // Confidence pill
+                            const confPct = Math.round(p.confidence * 100);
+                            previewConf.textContent = confPct + '% confidence';
+                            previewConf.className = 'ai-conf-pill ' + (
+                                confPct >= 80 ? 'ai-conf--high' :
+                                confPct >= 50 ? 'ai-conf--medium' : 'ai-conf--low'
+                            );
+
+                            // Note
+                            previewNote.textContent = p.description || p.raw_input;
+
+                            // Sync category dropdown
+                            if (overrideCatSelect && p.category_id) {
+                                overrideCatSelect.value = p.category_id;
+                            }
+
+                            previewBox.classList.add('active');
+                        }
+                    })
+                    .catch(err => {
+                        console.error('AI Parse failed:', err);
+                    });
+                }, 200);
             });
         }
     });

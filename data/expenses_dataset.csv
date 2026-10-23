@@ -1,0 +1,1471 @@
+text,category
+swiggy,Food
+swiggy order,Food
+paid for swiggy,Food
+swiggy charges,Food
+swiggy bill,Food
+spent on swiggy,Food
+zomato,Food
+zomato order,Food
+paid for zomato,Food
+zomato charges,Food
+zomato bill,Food
+spent on zomato,Food
+restaurant,Food
+restaurant order,Food
+paid for restaurant,Food
+restaurant charges,Food
+restaurant bill,Food
+spent on restaurant,Food
+cafe,Food
+cafe order,Food
+paid for cafe,Food
+cafe charges,Food
+cafe bill,Food
+spent on cafe,Food
+coffee,Food
+coffee order,Food
+paid for coffee,Food
+coffee charges,Food
+coffee bill,Food
+spent on coffee,Food
+chai,Food
+chai order,Food
+paid for chai,Food
+chai charges,Food
+chai bill,Food
+spent on chai,Food
+tea stall,Food
+tea stall order,Food
+paid for tea stall,Food
+tea stall charges,Food
+tea stall bill,Food
+spent on tea stall,Food
+samosa,Food
+samosa order,Food
+paid for samosa,Food
+samosa charges,Food
+samosa bill,Food
+spent on samosa,Food
+breakfast,Food
+breakfast order,Food
+paid for breakfast,Food
+breakfast charges,Food
+breakfast bill,Food
+spent on breakfast,Food
+lunch,Food
+lunch order,Food
+paid for lunch,Food
+lunch charges,Food
+lunch bill,Food
+spent on lunch,Food
+dinner,Food
+dinner order,Food
+paid for dinner,Food
+dinner charges,Food
+dinner bill,Food
+spent on dinner,Food
+biryani,Food
+biryani order,Food
+paid for biryani,Food
+biryani charges,Food
+biryani bill,Food
+spent on biryani,Food
+pizza,Food
+pizza order,Food
+paid for pizza,Food
+pizza charges,Food
+pizza bill,Food
+spent on pizza,Food
+burger,Food
+burger order,Food
+paid for burger,Food
+burger charges,Food
+burger bill,Food
+spent on burger,Food
+mcdonalds,Food
+mcdonalds order,Food
+paid for mcdonalds,Food
+mcdonalds charges,Food
+mcdonalds bill,Food
+spent on mcdonalds,Food
+kfc,Food
+kfc order,Food
+paid for kfc,Food
+kfc charges,Food
+kfc bill,Food
+spent on kfc,Food
+subway,Food
+subway order,Food
+paid for subway,Food
+subway charges,Food
+subway bill,Food
+spent on subway,Food
+dominos,Food
+dominos order,Food
+paid for dominos,Food
+dominos charges,Food
+dominos bill,Food
+spent on dominos,Food
+starbucks,Food
+starbucks order,Food
+paid for starbucks,Food
+starbucks charges,Food
+starbucks bill,Food
+spent on starbucks,Food
+bakery,Food
+bakery order,Food
+paid for bakery,Food
+bakery charges,Food
+bakery bill,Food
+spent on bakery,Food
+cake,Food
+cake order,Food
+paid for cake,Food
+cake charges,Food
+cake bill,Food
+spent on cake,Food
+pastry,Food
+pastry order,Food
+paid for pastry,Food
+pastry charges,Food
+pastry bill,Food
+spent on pastry,Food
+ice cream,Food
+ice cream order,Food
+paid for ice cream,Food
+ice cream charges,Food
+ice cream bill,Food
+spent on ice cream,Food
+dosa,Food
+dosa order,Food
+paid for dosa,Food
+dosa charges,Food
+dosa bill,Food
+spent on dosa,Food
+idli,Food
+idli order,Food
+paid for idli,Food
+idli charges,Food
+idli bill,Food
+spent on idli,Food
+thali,Food
+thali order,Food
+paid for thali,Food
+thali charges,Food
+thali bill,Food
+spent on thali,Food
+noodles,Food
+noodles order,Food
+paid for noodles,Food
+noodles charges,Food
+noodles bill,Food
+spent on noodles,Food
+shawarma,Food
+shawarma order,Food
+paid for shawarma,Food
+shawarma charges,Food
+shawarma bill,Food
+spent on shawarma,Food
+chaat,Food
+chaat order,Food
+paid for chaat,Food
+chaat charges,Food
+chaat bill,Food
+spent on chaat,Food
+groceries,Food
+groceries order,Food
+paid for groceries,Food
+groceries charges,Food
+groceries bill,Food
+spent on groceries,Food
+dmart,Food
+dmart order,Food
+paid for dmart,Food
+dmart charges,Food
+dmart bill,Food
+spent on dmart,Food
+blinkit,Food
+blinkit order,Food
+paid for blinkit,Food
+blinkit charges,Food
+blinkit bill,Food
+spent on blinkit,Food
+zepto,Food
+zepto order,Food
+paid for zepto,Food
+zepto charges,Food
+zepto bill,Food
+spent on zepto,Food
+instamart,Food
+instamart order,Food
+paid for instamart,Food
+instamart charges,Food
+instamart bill,Food
+spent on instamart,Food
+bigbasket,Food
+bigbasket order,Food
+paid for bigbasket,Food
+bigbasket charges,Food
+bigbasket bill,Food
+spent on bigbasket,Food
+vegetables,Food
+vegetables order,Food
+paid for vegetables,Food
+vegetables charges,Food
+vegetables bill,Food
+spent on vegetables,Food
+fruits,Food
+fruits order,Food
+paid for fruits,Food
+fruits charges,Food
+fruits bill,Food
+spent on fruits,Food
+milk,Food
+milk order,Food
+paid for milk,Food
+milk charges,Food
+milk bill,Food
+spent on milk,Food
+bread,Food
+bread order,Food
+paid for bread,Food
+bread charges,Food
+bread bill,Food
+spent on bread,Food
+eggs,Food
+eggs order,Food
+paid for eggs,Food
+eggs charges,Food
+eggs bill,Food
+spent on eggs,Food
+paneer,Food
+paneer order,Food
+paid for paneer,Food
+paneer charges,Food
+paneer bill,Food
+spent on paneer,Food
+sweets,Food
+sweets order,Food
+paid for sweets,Food
+sweets charges,Food
+sweets bill,Food
+spent on sweets,Food
+mithai,Food
+mithai order,Food
+paid for mithai,Food
+mithai charges,Food
+mithai bill,Food
+spent on mithai,Food
+haldiram,Food
+haldiram order,Food
+paid for haldiram,Food
+haldiram charges,Food
+haldiram bill,Food
+spent on haldiram,Food
+tiffin service,Food
+tiffin service order,Food
+paid for tiffin service,Food
+tiffin service charges,Food
+tiffin service bill,Food
+spent on tiffin service,Food
+dhaba food,Food
+dhaba food order,Food
+paid for dhaba food,Food
+dhaba food charges,Food
+dhaba food bill,Food
+spent on dhaba food,Food
+snacks,Food
+snacks order,Food
+paid for snacks,Food
+snacks charges,Food
+snacks bill,Food
+spent on snacks,Food
+uber,Travel
+uber order,Travel
+paid for uber,Travel
+uber charges,Travel
+uber bill,Travel
+spent on uber,Travel
+ola,Travel
+ola order,Travel
+paid for ola,Travel
+ola charges,Travel
+ola bill,Travel
+spent on ola,Travel
+rapido,Travel
+rapido order,Travel
+paid for rapido,Travel
+rapido charges,Travel
+rapido bill,Travel
+spent on rapido,Travel
+cab,Travel
+cab order,Travel
+paid for cab,Travel
+cab charges,Travel
+cab bill,Travel
+spent on cab,Travel
+taxi,Travel
+taxi order,Travel
+paid for taxi,Travel
+taxi charges,Travel
+taxi bill,Travel
+spent on taxi,Travel
+auto,Travel
+auto order,Travel
+paid for auto,Travel
+auto charges,Travel
+auto bill,Travel
+spent on auto,Travel
+rickshaw,Travel
+rickshaw order,Travel
+paid for rickshaw,Travel
+rickshaw charges,Travel
+rickshaw bill,Travel
+spent on rickshaw,Travel
+metro,Travel
+metro order,Travel
+paid for metro,Travel
+metro charges,Travel
+metro bill,Travel
+spent on metro,Travel
+subway train,Travel
+subway train order,Travel
+paid for subway train,Travel
+subway train charges,Travel
+subway train bill,Travel
+spent on subway train,Travel
+bus ticket,Travel
+bus ticket order,Travel
+paid for bus ticket,Travel
+bus ticket charges,Travel
+bus ticket bill,Travel
+spent on bus ticket,Travel
+redbus,Travel
+redbus order,Travel
+paid for redbus,Travel
+redbus charges,Travel
+redbus bill,Travel
+spent on redbus,Travel
+flight,Travel
+flight order,Travel
+paid for flight,Travel
+flight charges,Travel
+flight bill,Travel
+spent on flight,Travel
+indigo,Travel
+indigo order,Travel
+paid for indigo,Travel
+indigo charges,Travel
+indigo bill,Travel
+spent on indigo,Travel
+air india,Travel
+air india order,Travel
+paid for air india,Travel
+air india charges,Travel
+air india bill,Travel
+spent on air india,Travel
+train ticket,Travel
+train ticket order,Travel
+paid for train ticket,Travel
+train ticket charges,Travel
+train ticket bill,Travel
+spent on train ticket,Travel
+irctc,Travel
+irctc order,Travel
+paid for irctc,Travel
+irctc charges,Travel
+irctc bill,Travel
+spent on irctc,Travel
+petrol,Travel
+petrol order,Travel
+paid for petrol,Travel
+petrol charges,Travel
+petrol bill,Travel
+spent on petrol,Travel
+fuel,Travel
+fuel order,Travel
+paid for fuel,Travel
+fuel charges,Travel
+fuel bill,Travel
+spent on fuel,Travel
+diesel,Travel
+diesel order,Travel
+paid for diesel,Travel
+diesel charges,Travel
+diesel bill,Travel
+spent on diesel,Travel
+cng gas,Travel
+cng gas order,Travel
+paid for cng gas,Travel
+cng gas charges,Travel
+cng gas bill,Travel
+spent on cng gas,Travel
+fastag recharge,Travel
+fastag recharge order,Travel
+paid for fastag recharge,Travel
+fastag recharge charges,Travel
+fastag recharge bill,Travel
+spent on fastag recharge,Travel
+toll plaza,Travel
+toll plaza order,Travel
+paid for toll plaza,Travel
+toll plaza charges,Travel
+toll plaza bill,Travel
+spent on toll plaza,Travel
+parking fee,Travel
+parking fee order,Travel
+paid for parking fee,Travel
+parking fee charges,Travel
+parking fee bill,Travel
+spent on parking fee,Travel
+bike servicing,Travel
+bike servicing order,Travel
+paid for bike servicing,Travel
+bike servicing charges,Travel
+bike servicing bill,Travel
+spent on bike servicing,Travel
+car repair,Travel
+car repair order,Travel
+paid for car repair,Travel
+car repair charges,Travel
+car repair bill,Travel
+spent on car repair,Travel
+car wash,Travel
+car wash order,Travel
+paid for car wash,Travel
+car wash charges,Travel
+car wash bill,Travel
+spent on car wash,Travel
+engine oil,Travel
+engine oil order,Travel
+paid for engine oil,Travel
+engine oil charges,Travel
+engine oil bill,Travel
+spent on engine oil,Travel
+puncture repair,Travel
+puncture repair order,Travel
+paid for puncture repair,Travel
+puncture repair charges,Travel
+puncture repair bill,Travel
+spent on puncture repair,Travel
+scooter charge,Travel
+scooter charge order,Travel
+paid for scooter charge,Travel
+scooter charge charges,Travel
+scooter charge bill,Travel
+spent on scooter charge,Travel
+ev charging,Travel
+ev charging order,Travel
+paid for ev charging,Travel
+ev charging charges,Travel
+ev charging bill,Travel
+spent on ev charging,Travel
+cycle rent,Travel
+cycle rent order,Travel
+paid for cycle rent,Travel
+cycle rent charges,Travel
+cycle rent bill,Travel
+spent on cycle rent,Travel
+airport cab,Travel
+airport cab order,Travel
+paid for airport cab,Travel
+airport cab charges,Travel
+airport cab bill,Travel
+spent on airport cab,Travel
+railway ticket,Travel
+railway ticket order,Travel
+paid for railway ticket,Travel
+railway ticket charges,Travel
+railway ticket bill,Travel
+spent on railway ticket,Travel
+local train pass,Travel
+local train pass order,Travel
+paid for local train pass,Travel
+local train pass charges,Travel
+local train pass bill,Travel
+spent on local train pass,Travel
+commute,Travel
+commute order,Travel
+paid for commute,Travel
+commute charges,Travel
+commute bill,Travel
+spent on commute,Travel
+amazon,Shopping
+amazon order,Shopping
+paid for amazon,Shopping
+amazon charges,Shopping
+amazon bill,Shopping
+spent on amazon,Shopping
+flipkart,Shopping
+flipkart order,Shopping
+paid for flipkart,Shopping
+flipkart charges,Shopping
+flipkart bill,Shopping
+spent on flipkart,Shopping
+myntra,Shopping
+myntra order,Shopping
+paid for myntra,Shopping
+myntra charges,Shopping
+myntra bill,Shopping
+spent on myntra,Shopping
+zara,Shopping
+zara order,Shopping
+paid for zara,Shopping
+zara charges,Shopping
+zara bill,Shopping
+spent on zara,Shopping
+h&m,Shopping
+h&m order,Shopping
+paid for h&m,Shopping
+h&m charges,Shopping
+h&m bill,Shopping
+spent on h&m,Shopping
+clothes,Shopping
+clothes order,Shopping
+paid for clothes,Shopping
+clothes charges,Shopping
+clothes bill,Shopping
+spent on clothes,Shopping
+shirt,Shopping
+shirt order,Shopping
+paid for shirt,Shopping
+shirt charges,Shopping
+shirt bill,Shopping
+spent on shirt,Shopping
+tshirt,Shopping
+tshirt order,Shopping
+paid for tshirt,Shopping
+tshirt charges,Shopping
+tshirt bill,Shopping
+spent on tshirt,Shopping
+jeans,Shopping
+jeans order,Shopping
+paid for jeans,Shopping
+jeans charges,Shopping
+jeans bill,Shopping
+spent on jeans,Shopping
+trousers,Shopping
+trousers order,Shopping
+paid for trousers,Shopping
+trousers charges,Shopping
+trousers bill,Shopping
+spent on trousers,Shopping
+shoes,Shopping
+shoes order,Shopping
+paid for shoes,Shopping
+shoes charges,Shopping
+shoes bill,Shopping
+spent on shoes,Shopping
+sneakers,Shopping
+sneakers order,Shopping
+paid for sneakers,Shopping
+sneakers charges,Shopping
+sneakers bill,Shopping
+spent on sneakers,Shopping
+sandals,Shopping
+sandals order,Shopping
+paid for sandals,Shopping
+sandals charges,Shopping
+sandals bill,Shopping
+spent on sandals,Shopping
+footwear,Shopping
+footwear order,Shopping
+paid for footwear,Shopping
+footwear charges,Shopping
+footwear bill,Shopping
+spent on footwear,Shopping
+nike,Shopping
+nike order,Shopping
+paid for nike,Shopping
+nike charges,Shopping
+nike bill,Shopping
+spent on nike,Shopping
+bata,Shopping
+bata order,Shopping
+paid for bata,Shopping
+bata charges,Shopping
+bata bill,Shopping
+spent on bata,Shopping
+jacket,Shopping
+jacket order,Shopping
+paid for jacket,Shopping
+jacket charges,Shopping
+jacket bill,Shopping
+spent on jacket,Shopping
+hoodie,Shopping
+hoodie order,Shopping
+paid for hoodie,Shopping
+hoodie charges,Shopping
+hoodie bill,Shopping
+spent on hoodie,Shopping
+wallet,Shopping
+wallet order,Shopping
+paid for wallet,Shopping
+wallet charges,Shopping
+wallet bill,Shopping
+spent on wallet,Shopping
+handbag,Shopping
+handbag order,Shopping
+paid for handbag,Shopping
+handbag charges,Shopping
+handbag bill,Shopping
+spent on handbag,Shopping
+backpack,Shopping
+backpack order,Shopping
+paid for backpack,Shopping
+backpack charges,Shopping
+backpack bill,Shopping
+spent on backpack,Shopping
+watch,Shopping
+watch order,Shopping
+paid for watch,Shopping
+watch charges,Shopping
+watch bill,Shopping
+spent on watch,Shopping
+titan,Shopping
+titan order,Shopping
+paid for titan,Shopping
+titan charges,Shopping
+titan bill,Shopping
+spent on titan,Shopping
+sunglasses,Shopping
+sunglasses order,Shopping
+paid for sunglasses,Shopping
+sunglasses charges,Shopping
+sunglasses bill,Shopping
+spent on sunglasses,Shopping
+cosmetics,Shopping
+cosmetics order,Shopping
+paid for cosmetics,Shopping
+cosmetics charges,Shopping
+cosmetics bill,Shopping
+spent on cosmetics,Shopping
+lipstick,Shopping
+lipstick order,Shopping
+paid for lipstick,Shopping
+lipstick charges,Shopping
+lipstick bill,Shopping
+spent on lipstick,Shopping
+perfume,Shopping
+perfume order,Shopping
+paid for perfume,Shopping
+perfume charges,Shopping
+perfume bill,Shopping
+spent on perfume,Shopping
+deodorant,Shopping
+deodorant order,Shopping
+paid for deodorant,Shopping
+deodorant charges,Shopping
+deodorant bill,Shopping
+spent on deodorant,Shopping
+shampoo,Shopping
+shampoo order,Shopping
+paid for shampoo,Shopping
+shampoo charges,Shopping
+shampoo bill,Shopping
+spent on shampoo,Shopping
+bedsheet,Shopping
+bedsheet order,Shopping
+paid for bedsheet,Shopping
+bedsheet charges,Shopping
+bedsheet bill,Shopping
+spent on bedsheet,Shopping
+curtains,Shopping
+curtains order,Shopping
+paid for curtains,Shopping
+curtains charges,Shopping
+curtains bill,Shopping
+spent on curtains,Shopping
+electronics,Shopping
+electronics order,Shopping
+paid for electronics,Shopping
+electronics charges,Shopping
+electronics bill,Shopping
+spent on electronics,Shopping
+headphones,Shopping
+headphones order,Shopping
+paid for headphones,Shopping
+headphones charges,Shopping
+headphones bill,Shopping
+spent on headphones,Shopping
+mobile charger,Shopping
+mobile charger order,Shopping
+paid for mobile charger,Shopping
+mobile charger charges,Shopping
+mobile charger bill,Shopping
+spent on mobile charger,Shopping
+cable,Shopping
+cable order,Shopping
+paid for cable,Shopping
+cable charges,Shopping
+cable bill,Shopping
+spent on cable,Shopping
+earphones,Shopping
+earphones order,Shopping
+paid for earphones,Shopping
+earphones charges,Shopping
+earphones bill,Shopping
+spent on earphones,Shopping
+cookware,Shopping
+cookware order,Shopping
+paid for cookware,Shopping
+cookware charges,Shopping
+cookware bill,Shopping
+spent on cookware,Shopping
+utensils,Shopping
+utensils order,Shopping
+paid for utensils,Shopping
+utensils charges,Shopping
+utensils bill,Shopping
+spent on utensils,Shopping
+electricity bill,Bills
+electricity bill order,Bills
+paid for electricity bill,Bills
+electricity bill charges,Bills
+electricity bill bill,Bills
+spent on electricity bill,Bills
+power bill,Bills
+power bill order,Bills
+paid for power bill,Bills
+power bill charges,Bills
+power bill bill,Bills
+spent on power bill,Bills
+bescom,Bills
+bescom order,Bills
+paid for bescom,Bills
+bescom charges,Bills
+bescom bill,Bills
+spent on bescom,Bills
+tneb,Bills
+tneb order,Bills
+paid for tneb,Bills
+tneb charges,Bills
+tneb bill,Bills
+spent on tneb,Bills
+water bill,Bills
+water bill order,Bills
+paid for water bill,Bills
+water bill charges,Bills
+water bill bill,Bills
+spent on water bill,Bills
+municipal tax,Bills
+municipal tax order,Bills
+paid for municipal tax,Bills
+municipal tax charges,Bills
+municipal tax bill,Bills
+spent on municipal tax,Bills
+broadband bill,Bills
+broadband bill order,Bills
+paid for broadband bill,Bills
+broadband bill charges,Bills
+broadband bill bill,Bills
+spent on broadband bill,Bills
+wifi recharge,Bills
+wifi recharge order,Bills
+paid for wifi recharge,Bills
+wifi recharge charges,Bills
+wifi recharge bill,Bills
+spent on wifi recharge,Bills
+airtel fiber,Bills
+airtel fiber order,Bills
+paid for airtel fiber,Bills
+airtel fiber charges,Bills
+airtel fiber bill,Bills
+spent on airtel fiber,Bills
+jio fiber,Bills
+jio fiber order,Bills
+paid for jio fiber,Bills
+jio fiber charges,Bills
+jio fiber bill,Bills
+spent on jio fiber,Bills
+act broadband,Bills
+act broadband order,Bills
+paid for act broadband,Bills
+act broadband charges,Bills
+act broadband bill,Bills
+spent on act broadband,Bills
+mobile recharge,Bills
+mobile recharge order,Bills
+paid for mobile recharge,Bills
+mobile recharge charges,Bills
+mobile recharge bill,Bills
+spent on mobile recharge,Bills
+postpaid bill,Bills
+postpaid bill order,Bills
+paid for postpaid bill,Bills
+postpaid bill charges,Bills
+postpaid bill bill,Bills
+spent on postpaid bill,Bills
+prepaid data,Bills
+prepaid data order,Bills
+paid for prepaid data,Bills
+prepaid data charges,Bills
+prepaid data bill,Bills
+spent on prepaid data,Bills
+cylinder refill,Bills
+cylinder refill order,Bills
+paid for cylinder refill,Bills
+cylinder refill charges,Bills
+cylinder refill bill,Bills
+spent on cylinder refill,Bills
+cooking gas,Bills
+cooking gas order,Bills
+paid for cooking gas,Bills
+cooking gas charges,Bills
+cooking gas bill,Bills
+spent on cooking gas,Bills
+lpg gas,Bills
+lpg gas order,Bills
+paid for lpg gas,Bills
+lpg gas charges,Bills
+lpg gas bill,Bills
+spent on lpg gas,Bills
+piped gas,Bills
+piped gas order,Bills
+paid for piped gas,Bills
+piped gas charges,Bills
+piped gas bill,Bills
+spent on piped gas,Bills
+house rent,Bills
+house rent order,Bills
+paid for house rent,Bills
+house rent charges,Bills
+house rent bill,Bills
+spent on house rent,Bills
+flat maintenance,Bills
+flat maintenance order,Bills
+paid for flat maintenance,Bills
+flat maintenance charges,Bills
+flat maintenance bill,Bills
+spent on flat maintenance,Bills
+society charges,Bills
+society charges order,Bills
+paid for society charges,Bills
+society charges charges,Bills
+society charges bill,Bills
+spent on society charges,Bills
+dth recharge,Bills
+dth recharge order,Bills
+paid for dth recharge,Bills
+dth recharge charges,Bills
+dth recharge bill,Bills
+spent on dth recharge,Bills
+tatasky,Bills
+tatasky order,Bills
+paid for tatasky,Bills
+tatasky charges,Bills
+tatasky bill,Bills
+spent on tatasky,Bills
+dish tv,Bills
+dish tv order,Bills
+paid for dish tv,Bills
+dish tv charges,Bills
+dish tv bill,Bills
+spent on dish tv,Bills
+cable connection,Bills
+cable connection order,Bills
+paid for cable connection,Bills
+cable connection charges,Bills
+cable connection bill,Bills
+spent on cable connection,Bills
+utility payment,Bills
+utility payment order,Bills
+paid for utility payment,Bills
+utility payment charges,Bills
+utility payment bill,Bills
+spent on utility payment,Bills
+water tanker,Bills
+water tanker order,Bills
+paid for water tanker,Bills
+water tanker charges,Bills
+water tanker bill,Bills
+spent on water tanker,Bills
+property tax,Bills
+property tax order,Bills
+paid for property tax,Bills
+property tax charges,Bills
+property tax bill,Bills
+spent on property tax,Bills
+netflix subscription,Entertainment
+netflix subscription order,Entertainment
+paid for netflix subscription,Entertainment
+netflix subscription charges,Entertainment
+netflix subscription bill,Entertainment
+spent on netflix subscription,Entertainment
+hotstar disney,Entertainment
+hotstar disney order,Entertainment
+paid for hotstar disney,Entertainment
+hotstar disney charges,Entertainment
+hotstar disney bill,Entertainment
+spent on hotstar disney,Entertainment
+amazon prime video,Entertainment
+amazon prime video order,Entertainment
+paid for amazon prime video,Entertainment
+amazon prime video charges,Entertainment
+amazon prime video bill,Entertainment
+spent on amazon prime video,Entertainment
+spotify music,Entertainment
+spotify music order,Entertainment
+paid for spotify music,Entertainment
+spotify music charges,Entertainment
+spotify music bill,Entertainment
+spent on spotify music,Entertainment
+apple music,Entertainment
+apple music order,Entertainment
+paid for apple music,Entertainment
+apple music charges,Entertainment
+apple music bill,Entertainment
+spent on apple music,Entertainment
+youtube premium,Entertainment
+youtube premium order,Entertainment
+paid for youtube premium,Entertainment
+youtube premium charges,Entertainment
+youtube premium bill,Entertainment
+spent on youtube premium,Entertainment
+pvr cinemas,Entertainment
+pvr cinemas order,Entertainment
+paid for pvr cinemas,Entertainment
+pvr cinemas charges,Entertainment
+pvr cinemas bill,Entertainment
+spent on pvr cinemas,Entertainment
+inox movies,Entertainment
+inox movies order,Entertainment
+paid for inox movies,Entertainment
+inox movies charges,Entertainment
+inox movies bill,Entertainment
+spent on inox movies,Entertainment
+bookmyshow ticket,Entertainment
+bookmyshow ticket order,Entertainment
+paid for bookmyshow ticket,Entertainment
+bookmyshow ticket charges,Entertainment
+bookmyshow ticket bill,Entertainment
+spent on bookmyshow ticket,Entertainment
+movie popcorn,Entertainment
+movie popcorn order,Entertainment
+paid for movie popcorn,Entertainment
+movie popcorn charges,Entertainment
+movie popcorn bill,Entertainment
+spent on movie popcorn,Entertainment
+gaming ps5,Entertainment
+gaming ps5 order,Entertainment
+paid for gaming ps5,Entertainment
+gaming ps5 charges,Entertainment
+gaming ps5 bill,Entertainment
+spent on gaming ps5,Entertainment
+playstation store,Entertainment
+playstation store order,Entertainment
+paid for playstation store,Entertainment
+playstation store charges,Entertainment
+playstation store bill,Entertainment
+spent on playstation store,Entertainment
+steam game,Entertainment
+steam game order,Entertainment
+paid for steam game,Entertainment
+steam game charges,Entertainment
+steam game bill,Entertainment
+spent on steam game,Entertainment
+nintendo switch,Entertainment
+nintendo switch order,Entertainment
+paid for nintendo switch,Entertainment
+nintendo switch charges,Entertainment
+nintendo switch bill,Entertainment
+spent on nintendo switch,Entertainment
+concert pass,Entertainment
+concert pass order,Entertainment
+paid for concert pass,Entertainment
+concert pass charges,Entertainment
+concert pass bill,Entertainment
+spent on concert pass,Entertainment
+live show,Entertainment
+live show order,Entertainment
+paid for live show,Entertainment
+live show charges,Entertainment
+live show bill,Entertainment
+spent on live show,Entertainment
+standup comedy show,Entertainment
+standup comedy show order,Entertainment
+paid for standup comedy show,Entertainment
+standup comedy show charges,Entertainment
+standup comedy show bill,Entertainment
+spent on standup comedy show,Entertainment
+bowling alley,Entertainment
+bowling alley order,Entertainment
+paid for bowling alley,Entertainment
+bowling alley charges,Entertainment
+bowling alley bill,Entertainment
+spent on bowling alley,Entertainment
+amusement park,Entertainment
+amusement park order,Entertainment
+paid for amusement park,Entertainment
+amusement park charges,Entertainment
+amusement park bill,Entertainment
+spent on amusement park,Entertainment
+water park,Entertainment
+water park order,Entertainment
+paid for water park,Entertainment
+water park charges,Entertainment
+water park bill,Entertainment
+spent on water park,Entertainment
+museum ticket,Entertainment
+museum ticket order,Entertainment
+paid for museum ticket,Entertainment
+museum ticket charges,Entertainment
+museum ticket bill,Entertainment
+spent on museum ticket,Entertainment
+pub drinks,Entertainment
+pub drinks order,Entertainment
+paid for pub drinks,Entertainment
+pub drinks charges,Entertainment
+pub drinks bill,Entertainment
+spent on pub drinks,Entertainment
+brewery beer,Entertainment
+brewery beer order,Entertainment
+paid for brewery beer,Entertainment
+brewery beer charges,Entertainment
+brewery beer bill,Entertainment
+spent on brewery beer,Entertainment
+club entry,Entertainment
+club entry order,Entertainment
+paid for club entry,Entertainment
+club entry charges,Entertainment
+club entry bill,Entertainment
+spent on club entry,Entertainment
+arcade games,Entertainment
+arcade games order,Entertainment
+paid for arcade games,Entertainment
+arcade games charges,Entertainment
+arcade games bill,Entertainment
+spent on arcade games,Entertainment
+apollo pharmacy,Health
+apollo pharmacy order,Health
+paid for apollo pharmacy,Health
+apollo pharmacy charges,Health
+apollo pharmacy bill,Health
+spent on apollo pharmacy,Health
+medplus chemist,Health
+medplus chemist order,Health
+paid for medplus chemist,Health
+medplus chemist charges,Health
+medplus chemist bill,Health
+spent on medplus chemist,Health
+medicines,Health
+medicines order,Health
+paid for medicines,Health
+medicines charges,Health
+medicines bill,Health
+spent on medicines,Health
+tablets,Health
+tablets order,Health
+paid for tablets,Health
+tablets charges,Health
+tablets bill,Health
+spent on tablets,Health
+cough syrup,Health
+cough syrup order,Health
+paid for cough syrup,Health
+cough syrup charges,Health
+cough syrup bill,Health
+spent on cough syrup,Health
+doctor consultation,Health
+doctor consultation order,Health
+paid for doctor consultation,Health
+doctor consultation charges,Health
+doctor consultation bill,Health
+spent on doctor consultation,Health
+clinic fee,Health
+clinic fee order,Health
+paid for clinic fee,Health
+clinic fee charges,Health
+clinic fee bill,Health
+spent on clinic fee,Health
+hospital opd,Health
+hospital opd order,Health
+paid for hospital opd,Health
+hospital opd charges,Health
+hospital opd bill,Health
+spent on hospital opd,Health
+blood test,Health
+blood test order,Health
+paid for blood test,Health
+blood test charges,Health
+blood test bill,Health
+spent on blood test,Health
+pathology lab,Health
+pathology lab order,Health
+paid for pathology lab,Health
+pathology lab charges,Health
+pathology lab bill,Health
+spent on pathology lab,Health
+dental cleaning,Health
+dental cleaning order,Health
+paid for dental cleaning,Health
+dental cleaning charges,Health
+dental cleaning bill,Health
+spent on dental cleaning,Health
+tooth pain dentist,Health
+tooth pain dentist order,Health
+paid for tooth pain dentist,Health
+tooth pain dentist charges,Health
+tooth pain dentist bill,Health
+spent on tooth pain dentist,Health
+eye checkup,Health
+eye checkup order,Health
+paid for eye checkup,Health
+eye checkup charges,Health
+eye checkup bill,Health
+spent on eye checkup,Health
+spectacles lenses,Health
+spectacles lenses order,Health
+paid for spectacles lenses,Health
+spectacles lenses charges,Health
+spectacles lenses bill,Health
+spent on spectacles lenses,Health
+lenskart,Health
+lenskart order,Health
+paid for lenskart,Health
+lenskart charges,Health
+lenskart bill,Health
+spent on lenskart,Health
+vitamins capsules,Health
+vitamins capsules order,Health
+paid for vitamins capsules,Health
+vitamins capsules charges,Health
+vitamins capsules bill,Health
+spent on vitamins capsules,Health
+supplements whey,Health
+supplements whey order,Health
+paid for supplements whey,Health
+supplements whey charges,Health
+supplements whey bill,Health
+spent on supplements whey,Health
+first aid bandaid,Health
+first aid bandaid order,Health
+paid for first aid bandaid,Health
+first aid bandaid charges,Health
+first aid bandaid bill,Health
+spent on first aid bandaid,Health
+pain relief spray,Health
+pain relief spray order,Health
+paid for pain relief spray,Health
+pain relief spray charges,Health
+pain relief spray bill,Health
+spent on pain relief spray,Health
+physiotherapy session,Health
+physiotherapy session order,Health
+paid for physiotherapy session,Health
+physiotherapy session charges,Health
+physiotherapy session bill,Health
+spent on physiotherapy session,Health
+dermatologist skin,Health
+dermatologist skin order,Health
+paid for dermatologist skin,Health
+dermatologist skin charges,Health
+dermatologist skin bill,Health
+spent on dermatologist skin,Health
+pediatrician baby,Health
+pediatrician baby order,Health
+paid for pediatrician baby,Health
+pediatrician baby charges,Health
+pediatrician baby bill,Health
+spent on pediatrician baby,Health
+health insurance,Health
+health insurance order,Health
+paid for health insurance,Health
+health insurance charges,Health
+health insurance bill,Health
+spent on health insurance,Health
+xray scan,Health
+xray scan order,Health
+paid for xray scan,Health
+xray scan charges,Health
+xray scan bill,Health
+spent on xray scan,Health
+mri scan,Health
+mri scan order,Health
+paid for mri scan,Health
+mri scan charges,Health
+mri scan bill,Health
+spent on mri scan,Health
+ultrasound,Health
+ultrasound order,Health
+paid for ultrasound,Health
+ultrasound charges,Health
+ultrasound bill,Health
+spent on ultrasound,Health
+paracetamol dolo,Health
+paracetamol dolo order,Health
+paid for paracetamol dolo,Health
+paracetamol dolo charges,Health
+paracetamol dolo bill,Health
+spent on paracetamol dolo,Health
+thermometer,Health
+thermometer order,Health
+paid for thermometer,Health
+thermometer charges,Health
+thermometer bill,Health
+spent on thermometer,Health
+udemy course,Education
+udemy course order,Education
+paid for udemy course,Education
+udemy course charges,Education
+udemy course bill,Education
+spent on udemy course,Education
+coursera specialization,Education
+coursera specialization order,Education
+paid for coursera specialization,Education
+coursera specialization charges,Education
+coursera specialization bill,Education
+spent on coursera specialization,Education
+college tuition fee,Education
+college tuition fee order,Education
+paid for college tuition fee,Education
+college tuition fee charges,Education
+college tuition fee bill,Education
+spent on college tuition fee,Education
+school fees,Education
+school fees order,Education
+paid for school fees,Education
+school fees charges,Education
+school fees bill,Education
+spent on school fees,Education
+books purchase,Education
+books purchase order,Education
+paid for books purchase,Education
+books purchase charges,Education
+books purchase bill,Education
+spent on books purchase,Education
+textbook,Education
+textbook order,Education
+paid for textbook,Education
+textbook charges,Education
+textbook bill,Education
+spent on textbook,Education
+notebooks stationery,Education
+notebooks stationery order,Education
+paid for notebooks stationery,Education
+notebooks stationery charges,Education
+notebooks stationery bill,Education
+spent on notebooks stationery,Education
+exam registration fee,Education
+exam registration fee order,Education
+paid for exam registration fee,Education
+exam registration fee charges,Education
+exam registration fee bill,Education
+spent on exam registration fee,Education
+gate exam fee,Education
+gate exam fee order,Education
+paid for gate exam fee,Education
+gate exam fee charges,Education
+gate exam fee bill,Education
+spent on gate exam fee,Education
+cat exam,Education
+cat exam order,Education
+paid for cat exam,Education
+cat exam charges,Education
+cat exam bill,Education
+spent on cat exam,Education
+gre exam,Education
+gre exam order,Education
+paid for gre exam,Education
+gre exam charges,Education
+gre exam bill,Education
+spent on gre exam,Education
+toefl fee,Education
+toefl fee order,Education
+paid for toefl fee,Education
+toefl fee charges,Education
+toefl fee bill,Education
+spent on toefl fee,Education
+ielts coaching,Education
+ielts coaching order,Education
+paid for ielts coaching,Education
+ielts coaching charges,Education
+ielts coaching bill,Education
+spent on ielts coaching,Education
+library membership,Education
+library membership order,Education
+paid for library membership,Education
+library membership charges,Education
+library membership bill,Education
+spent on library membership,Education
+pens and pencils,Education
+pens and pencils order,Education
+paid for pens and pencils,Education
+pens and pencils charges,Education
+pens and pencils bill,Education
+spent on pens and pencils,Education
+scientific calculator,Education
+scientific calculator order,Education
+paid for scientific calculator,Education
+scientific calculator charges,Education
+scientific calculator bill,Education
+spent on scientific calculator,Education
+study materials photocopy,Education
+study materials photocopy order,Education
+paid for study materials photocopy,Education
+study materials photocopy charges,Education
+study materials photocopy bill,Education
+spent on study materials photocopy,Education
+coaching classes,Education
+coaching classes order,Education
+paid for coaching classes,Education
+coaching classes charges,Education
+coaching classes bill,Education
+spent on coaching classes,Education
+tuition tutor fee,Education
+tuition tutor fee order,Education
+paid for tuition tutor fee,Education
+tuition tutor fee charges,Education
+tuition tutor fee bill,Education
+spent on tuition tutor fee,Education
+educational workshop,Education
+educational workshop order,Education
+paid for educational workshop,Education
+educational workshop charges,Education
+educational workshop bill,Education
+spent on educational workshop,Education
+kindle ebook,Education
+kindle ebook order,Education
+paid for kindle ebook,Education
+kindle ebook charges,Education
+kindle ebook bill,Education
+spent on kindle ebook,Education
+coding bootcamp,Education
+coding bootcamp order,Education
+paid for coding bootcamp,Education
+coding bootcamp charges,Education
+coding bootcamp bill,Education
+spent on coding bootcamp,Education
+charity donation,Other
+charity donation order,Other
+paid for charity donation,Other
+charity donation charges,Other
+charity donation bill,Other
+spent on charity donation,Other
+orphanage trust,Other
+orphanage trust order,Other
+paid for orphanage trust,Other
+orphanage trust charges,Other
+orphanage trust bill,Other
+spent on orphanage trust,Other
+temple pooja,Other
+temple pooja order,Other
+paid for temple pooja,Other
+temple pooja charges,Other
+temple pooja bill,Other
+spent on temple pooja,Other
+dry cleaning suit,Other
+dry cleaning suit order,Other
+paid for dry cleaning suit,Other
+dry cleaning suit charges,Other
+dry cleaning suit bill,Other
+spent on dry cleaning suit,Other
+laundry washing,Other
+laundry washing order,Other
+paid for laundry washing,Other
+laundry washing charges,Other
+laundry washing bill,Other
+spent on laundry washing,Other
+iron press,Other
+iron press order,Other
+paid for iron press,Other
+iron press charges,Other
+iron press bill,Other
+spent on iron press,Other
+courier speed post,Other
+courier speed post order,Other
+paid for courier speed post,Other
+courier speed post charges,Other
+courier speed post bill,Other
+spent on courier speed post,Other
+dhl parcel,Other
+dhl parcel order,Other
+paid for dhl parcel,Other
+dhl parcel charges,Other
+dhl parcel bill,Other
+spent on dhl parcel,Other
+key maker duplicate,Other
+key maker duplicate order,Other
+paid for key maker duplicate,Other
+key maker duplicate charges,Other
+key maker duplicate bill,Other
+spent on key maker duplicate,Other
+shoe repair cobbler,Other
+shoe repair cobbler order,Other
+paid for shoe repair cobbler,Other
+shoe repair cobbler charges,Other
+shoe repair cobbler bill,Other
+spent on shoe repair cobbler,Other
+tailor alteration stitching,Other
+tailor alteration stitching order,Other
+paid for tailor alteration stitching,Other
+tailor alteration stitching charges,Other
+tailor alteration stitching bill,Other
+spent on tailor alteration stitching,Other
+notary stamp fee,Other
+notary stamp fee order,Other
+paid for notary stamp fee,Other
+notary stamp fee charges,Other
+notary stamp fee bill,Other
+spent on notary stamp fee,Other
+document printout,Other
+document printout order,Other
+paid for document printout,Other
+document printout charges,Other
+document printout bill,Other
+spent on document printout,Other
+hardware tools hammer,Other
+hardware tools hammer order,Other
+paid for hardware tools hammer,Other
+hardware tools hammer charges,Other
+hardware tools hammer bill,Other
+spent on hardware tools hammer,Other
+screw driver nails,Other
+screw driver nails order,Other
+paid for screw driver nails,Other
+screw driver nails charges,Other
+screw driver nails bill,Other
+spent on screw driver nails,Other
+pet dog grooming,Other
+pet dog grooming order,Other
+paid for pet dog grooming,Other
+pet dog grooming charges,Other
+pet dog grooming bill,Other
+spent on pet dog grooming,Other
+dog food pedigree,Other
+dog food pedigree order,Other
+paid for dog food pedigree,Other
+dog food pedigree charges,Other
+dog food pedigree bill,Other
+spent on dog food pedigree,Other
+vet clinic pet,Other
+vet clinic pet order,Other
+paid for vet clinic pet,Other
+vet clinic pet charges,Other
+vet clinic pet bill,Other
+spent on vet clinic pet,Other
+plant pot garden soil,Other
+plant pot garden soil order,Other
+paid for plant pot garden soil,Other
+plant pot garden soil charges,Other
+plant pot garden soil bill,Other
+spent on plant pot garden soil,Other
+flower bouquet,Other
+flower bouquet order,Other
+paid for flower bouquet,Other
+flower bouquet charges,Other
+flower bouquet bill,Other
+spent on flower bouquet,Other
+room freshener,Other
+room freshener order,Other
+paid for room freshener,Other
+room freshener charges,Other
+room freshener bill,Other
+spent on room freshener,Other
+pest control,Other
+pest control order,Other
+paid for pest control,Other
+pest control charges,Other
+pest control bill,Other
+spent on pest control,Other

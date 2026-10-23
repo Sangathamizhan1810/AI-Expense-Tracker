@@ -23,11 +23,11 @@
 
 ### AI Natural Language Categorization
 
-- [ ] **NLP-01**: Natural language entry interface accepting short sentences (e.g., "Swiggy 250", "bus ticket 30", "metro recharge 50").
-- [ ] **NLP-02**: Regular expression engine extracts numeric amount accurately from input strings.
-- [ ] **NLP-03**: Machine learning training script (`train_model.py`) trains a TF-IDF vectorizer + Logistic Regression classifier on ~300 labelled expense items across 8 categories (Food, Travel, Shopping, Bills, Entertainment, Health, Education, Other).
-- [ ] **NLP-04**: Classifier achieves $\ge 85\%$ test accuracy and saves pipeline as `model.joblib`.
-- [ ] **NLP-05**: Application inference returns predicted category with confidence score; falls back gracefully to "Other" if confidence $< 0.5$ or amount is missing, allowing manual user correction.
+- [x] **NLP-01**: Natural language entry interface accepting short sentences (e.g., "Swiggy 250", "bus ticket 30", "metro recharge 50").
+- [x] **NLP-02**: Regular expression engine extracts numeric amount accurately from input strings.
+- [x] **NLP-03**: Machine learning training script (`train_model.py`) trains a TF-IDF vectorizer + Logistic Regression classifier on ~300 labelled expense items across 8 categories (Food, Travel, Shopping, Bills, Entertainment, Health, Education, Other).
+- [x] **NLP-04**: Classifier achieves $\ge 85\%$ test accuracy and saves pipeline as `model.joblib`.
+- [x] **NLP-05**: Application inference returns predicted category with confidence score; falls back gracefully to "Other" if confidence $< 0.5$ or amount is missing, allowing manual user correction.
 
 ### Budgets & Alerts
 
@@ -79,11 +79,11 @@
 | EXP-04 | Phase 2 | Complete |
 | EXP-05 | Phase 2 | Complete |
 | EXP-06 | Phase 2 | Complete |
-| NLP-01 | Phase 3 | Pending |
-| NLP-02 | Phase 3 | Pending |
-| NLP-03 | Phase 3 | Pending |
-| NLP-04 | Phase 3 | Pending |
-| NLP-05 | Phase 3 | Pending |
+| NLP-01 | Phase 3 | Complete |
+| NLP-02 | Phase 3 | Complete |
+| NLP-03 | Phase 3 | Complete |
+| NLP-04 | Phase 3 | Complete |
+| NLP-05 | Phase 3 | Complete |
 | BUD-01 | Phase 4 | Pending |
 | BUD-02 | Phase 4 | Pending |
 | BUD-03 | Phase 4 | Pending |

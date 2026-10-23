@@ -8,7 +8,7 @@ and CSV export with complete user data isolation.
 import csv
 import io
 from datetime import datetime, date
-from flask import Blueprint, render_template, request, redirect, url_for, flash, g, Response, abort
+from flask import Blueprint, render_template, request, redirect, url_for, flash, g, Response, abort, jsonify
 
 from utils.expense_helpers import (
     get_categories,
@@ -19,6 +19,7 @@ from utils.expense_helpers import (
     get_expenses,
     get_expenses_summary
 )
+from utils.nlp_parser import parse_expense_sentence
 
 expenses_bp = Blueprint('expenses', __name__, url_prefix='/expenses')
 
@@ -108,12 +109,19 @@ def add():
                 is_edit=False
             )
 
+    init_expense = {
+        'expense_date': today,
+        'amount': request.args.get('amount', ''),
+        'category_id': int(request.args.get('category_id')) if request.args.get('category_id', '').isdigit() else '',
+        'note': request.args.get('note', '')
+    }
+
     return render_template(
         'expenses/form.html',
         action_title='Add New Expense',
         button_text='Save Expense',
         categories=categories,
-        expense={'expense_date': today},
+        expense=init_expense,
         is_edit=False
     )
 
@@ -238,3 +246,66 @@ def export_csv():
             'Cache-Control': 'no-cache'
         }
     )
+
+
+@expenses_bp.route('/ai-parse', methods=['POST'])
+def ai_parse():
+    """
+    Parse a natural language expense sentence via AJAX/Fetch API.
+    Returns JSON structure containing parsed amount, category, confidence, and date.
+    """
+    data = request.get_json(silent=True) or request.form
+    sentence = data.get('sentence', '').strip()
+
+    if not sentence:
+        return jsonify({'success': False, 'error': 'Please provide an expense description.'}), 400
+
+    parsed = parse_expense_sentence(sentence)
+    return jsonify({
+        'success': True,
+        'parsed': parsed
+    })
+
+
+@expenses_bp.route('/ai-quick-add', methods=['POST'])
+def ai_quick_add():
+    """
+    Process natural language sentence and immediately record expense if amount is present,
+    or redirect to pre-filled add form if amount is missing or category was overridden.
+    """
+    sentence = request.form.get('sentence', '').strip()
+    override_category_id = request.form.get('category_id')
+
+    if not sentence:
+        flash('Please enter a sentence to record an expense.', 'error')
+        return redirect(url_for('expenses.index'))
+
+    parsed = parse_expense_sentence(sentence)
+    amount = parsed['amount']
+    category_id = int(override_category_id) if override_category_id and override_category_id.isdigit() else parsed['category_id']
+    category_name = parsed['category_name']
+    note = parsed['description']
+    expense_date = request.form.get('expense_date') or parsed['expense_date']
+
+    if amount is None or amount <= 0:
+        flash(f"Could not automatically detect an amount in '{sentence}'. Please fill in the amount.", 'warning')
+        return redirect(url_for('expenses.add', note=note, category_id=category_id))
+
+    try:
+        create_expense(
+            user_id=g.user['id'],
+            category_id=category_id,
+            amount=amount,
+            expense_date=expense_date,
+            note=note
+        )
+        conf_pct = int(parsed['confidence'] * 100)
+        flash(
+            f"✨ AI Quick-Add: Recorded ₹{amount:.2f} for {category_name} ({conf_pct}% confidence)!",
+            'success'
+        )
+    except ValueError as e:
+        flash(str(e), 'error')
+
+    return redirect(url_for('expenses.index'))
+

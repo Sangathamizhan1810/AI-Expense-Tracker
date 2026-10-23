@@ -1,0 +1,32 @@
+{
+  "model_profile": "balanced",
+  "commit_docs": true,
+  "parallelization": true,
+  "search_gitignored": false,
+  "resolve_model_ids": false,
+  "context_window": 200000,
+  "phase_naming": "sequential",
+  "mode": "interactive",
+  "gates": {
+    "execute_next_plan": true,
+    "confirm_transition": true,
+    "confirm_milestone_scope": true
+  },
+  "git": {
+    "branching_strategy": "none",
+    "create_tag": true
+  },
+  "workflow": {
+    "research": true,
+    "plan_check": true,
+    "verifier": true,
+    "nyquist_validation": true,
+    "ai_integration_phase": true,
+    "agent_hint_routing": true,
+    "human_verify_mode": "end-of-phase",
+    "auto_advance": false,
+    "node_repair": true,
+    "ui_phase": true,
+    "code_review": true
+  }
+}

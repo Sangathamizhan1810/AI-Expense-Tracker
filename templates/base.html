@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-Based Expense Tracker — Track every rupee with smart AI categorization, budget alerts, and visual insights.">
+    <title>{% block title %}ExpenseAI{% endblock %} — AI Expense Tracker</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- ── Navigation ─────────────────────────────────── -->
+    <nav class="navbar" id="main-nav">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="nav-brand">
+                <span class="brand-icon">₹</span>
+                <span class="brand-text">ExpenseAI</span>
+            </a>
+
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+
+            <div class="nav-menu" id="nav-menu">
+                {% if current_user %}
+                    <a href="{{ url_for('index') }}" class="nav-link">Dashboard</a>
+                    <div class="nav-user">
+                        <span class="nav-user-name">{{ current_user['name'] }}</span>
+                        <a href="{{ url_for('auth.logout') }}" class="nav-link nav-link--logout">Logout</a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="nav-link">Sign In</a>
+                    <a href="{{ url_for('auth.register') }}" class="nav-link nav-link--cta">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- ── Flash Messages ─────────────────────────────── -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container" id="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash flash--{{ category }}" role="alert">
+                        <span class="flash-icon">
+                            {% if category == 'success' %}✓{% elif category == 'error' %}✕{% elif category == 'warning' %}⚠{% else %}ℹ{% endif %}
+                        </span>
+                        <span class="flash-text">{{ message }}</span>
+                        <button class="flash-close" onclick="this.parentElement.remove()" aria-label="Close">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- ── Main Content ───────────────────────────────── -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ── Footer ─────────────────────────────────────── -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 ExpenseAI — AI-Based Expense Tracker</p>
+        </div>
+    </footer>
+
+    <!-- Global JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

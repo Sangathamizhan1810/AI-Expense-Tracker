@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- ── Hero Section ──────────────────────────────── -->
+<section class="hero" id="hero">
+    <div class="hero-content">
+        <span class="hero-badge">🤖 AI-Powered Finance Tracking</span>
+        <h1 class="hero-title">
+            Track Every Rupee.<br>
+            <span class="gradient-text">Powered by AI.</span>
+        </h1>
+        <p class="hero-subtitle">
+            Log expenses in plain English, get automatic categorization,
+            real-time budget alerts, and actionable spending insights — all offline, all free.
+        </p>
+        <div class="hero-actions">
+            <a href="{{ url_for('auth.register') }}" class="btn btn--primary btn--lg" id="cta-register">
+                Get Started Free
+            </a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn--secondary btn--lg" id="cta-login">
+                Sign In →
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ── Features Section ─────────────────────────── -->
+<section class="features" id="features">
+    <div class="features-header">
+        <h2>Why <span class="gradient-text">ExpenseAI</span>?</h2>
+        <p>Three pillars that make personal finance effortless.</p>
+    </div>
+
+    <div class="features-grid">
+        <!-- Feature 1: Smart Categorization -->
+        <div class="card feature-card" id="feature-ai">
+            <div class="feature-icon feature-icon--ai">🧠</div>
+            <h3>Smart Categorization</h3>
+            <p>
+                Type <em>"Swiggy 250"</em> or <em>"bus ticket 30"</em> — 
+                our trained AI reads your sentence, extracts the amount,
+                and assigns the right category instantly.
+            </p>
+        </div>
+
+        <!-- Feature 2: Budget Alerts -->
+        <div class="card feature-card" id="feature-budget">
+            <div class="feature-icon feature-icon--budget">🔔</div>
+            <h3>Budget Alerts</h3>
+            <p>
+                Set monthly limits for Food, Travel, Shopping, and more. 
+                Get warned at 80% and alerted when you overshoot — 
+                so surprises end before the money does.
+            </p>
+        </div>
+
+        <!-- Feature 3: Visual Insights -->
+        <div class="card feature-card" id="feature-insights">
+            <div class="feature-icon feature-icon--insights">📊</div>
+            <h3>Visual Insights</h3>
+            <p>
+                Charts that tell your money's story — category breakdowns,
+                monthly trends, and plain-English observations 
+                powered by your own numbers, not guesses.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

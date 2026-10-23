@@ -41,6 +41,9 @@ env/
 .secrets
 
 # SQLite databases
+*.db
+*.sqlite
+*.sqlite3
 *.db-journal
 instance/
 

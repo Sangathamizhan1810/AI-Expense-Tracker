@@ -6,7 +6,7 @@ A phased journey to build the AI-Based Expense Tracker information system from f
 
 ## Phases
 
-- [ ] **Phase 1: Foundation, Database Architecture & Authentication** - Flask application skeleton, SQLite schema, secure password hashing, and user authentication flow.
+- [x] **Phase 1: Foundation, Database Architecture & Authentication** - Flask application skeleton, SQLite schema, secure password hashing, and user authentication flow.
 - [ ] **Phase 2: Core Expense Management & Export** - CRUD operations for expenses, category mapping, search/filter, and CSV export.
 - [ ] **Phase 3: NLP & Machine Learning Categorization** - Labelled training dataset, scikit-learn TF-IDF + Logistic Regression classifier pipeline, regex amount extraction, and sentence-based expense entry.
 - [ ] **Phase 4: Budget Management & Alert Engine** - Monthly category budget setup, real-time threshold computation, 80% warning alerts, and 100% overspending notifications.
@@ -29,8 +29,8 @@ A phased journey to build the AI-Based Expense Tracker information system from f
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: Flask app structure, SQLite models, database migrations/seeders for 8 core categories.
-- [ ] 01-02: Authentication routes, registration/login forms with modern CSS styling, session management, and auth guards.
+- [x] 01-01: Flask app structure, SQLite models, database migrations/seeders for 8 core categories.
+- [x] 01-02: Authentication routes, registration/login forms with modern CSS styling, session management, and auth guards.
 
 ---
 

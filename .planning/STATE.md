@@ -1,6 +1,6 @@
 ---
 gsd_state_version: '1.0'
-status: executing
+status: planning
 progress:
   total_phases: 6
   completed_phases: 2
@@ -20,11 +20,10 @@ See: `.planning/PROJECT.md` (updated 2026-10-23)
 
 ## Current Position
 
-Phase: 2 of 6 (Core Expense Management & Export) — COMPLETED  
-Next Phase: 3 of 6 (NLP & Machine Learning Categorization)  
-Plans: 4 of 10 total plans completed (01-01, 01-02, 02-01, 02-02)  
-Status: Phase 2 complete, ready for Phase 3 planning  
-Last activity: 2026-10-23 — Executed Phase 2: Expense CRUD helpers, blueprint endpoints, interactive form with ₹ currency prefix, dynamic multi-criteria filter toolbar, summary KPI cards, category badges, delete confirmation modal, RFC 4180 CSV export, and 11/11 automated tests passing.
+Phase: 3 of 6 (NLP & Machine Learning Categorization)  
+Plan: 0 of 2 in current phase (PLAN-03-01, PLAN-03-02 ready)  
+Status: Plans created, ready for execution  
+Last activity: 2026-10-23 — Created detailed execution plans for Phase 3 (PLAN-03-01: ML dataset/training pipeline/inference, PLAN-03-02: regex amount engine/AI Quick-Add UI). Installed scikit-learn and joblib.
 
 Progress: [████░░░░░░] 40%
 
@@ -33,7 +32,7 @@ Progress: [████░░░░░░] 40%
 **Velocity:**
 - Total plans completed: 4
 - Total phases completed: 2
-- Verification: 11/11 automated unit & integration tests passing (100% OK)
+- Verification: 11/11 automated tests passed across Phases 1 & 2
 
 **By Phase:**
 
@@ -41,7 +40,7 @@ Progress: [████░░░░░░] 40%
 |-------|-------|--------|
 | 1. Foundation, Database & Auth | 2/2 | Complete |
 | 2. Core Expense Management | 2/2 | Complete |
-| 3. NLP & ML Categorization | 0/2 | Pending |
+| 3. NLP & ML Categorization | 0/2 | Ready to execute |
 | 4. Budget & Alert Engine | 0/1 | Pending |
 | 5. Interactive Analytics Dashboard | 0/1 | Pending |
 | 6. Insights Engine & Verification | 0/2 | Pending |
@@ -53,6 +52,7 @@ Progress: [████░░░░░░] 40%
 Decisions are logged in `PROJECT.md` Key Decisions table:
 - Stack: Python Flask + SQLite + Vanilla JS + Chart.js
 - ML: scikit-learn TF-IDF + Logistic Regression (offline, <50ms, zero-cost)
+- NLP Parsing: Regex amount extraction + residual description tokenization
 - Insights: Deterministic calculations + template rules (no hallucinated numbers)
 - Auth: Werkzeug pbkdf2:sha256 hashing, Flask sessions, @login_required decorator, safe local redirect checks
 - DB: Raw sqlite3 (no ORM), application factory pattern, SQLite PRAGMA foreign_keys = ON

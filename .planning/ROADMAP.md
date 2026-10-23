@@ -97,7 +97,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 05-01: Dashboard aggregate data API, Chart.js integration, KPI cards, and responsive chart layout.
+- [x] 05-01: Dashboard aggregate data API, Chart.js integration, KPI cards, and responsive chart layout.
 
 ---
 

@@ -38,10 +38,10 @@
 
 ### Dashboard & Visualizations
 
-- [ ] **DASH-01**: Summary cards displaying total monthly spend, active budgets, remaining spend capacity, and top spending category.
-- [ ] **DASH-02**: Interactive Chart.js Donut/Pie chart illustrating category-wise spending distribution.
-- [ ] **DASH-03**: Monthly spending trend Line chart showing expense trajectory over time.
-- [ ] **DASH-04**: Budget vs. Actual Bar chart comparing current spend with allocated limits.
+- [x] **DASH-01**: Summary cards displaying total monthly spend, active budgets, remaining spend capacity, and top spending category.
+- [x] **DASH-02**: Interactive Chart.js Donut/Pie chart illustrating category-wise spending distribution.
+- [x] **DASH-03**: Monthly spending trend Line chart showing expense trajectory over time.
+- [x] **DASH-04**: Budget vs. Actual Bar chart comparing current spend with allocated limits.
 
 ### AI Spending Insights
 
@@ -88,10 +88,10 @@
 | BUD-02 | Phase 4 | Complete |
 | BUD-03 | Phase 4 | Complete |
 | BUD-04 | Phase 4 | Complete |
-| DASH-01 | Phase 5 | Pending |
-| DASH-02 | Phase 5 | Pending |
-| DASH-03 | Phase 5 | Pending |
-| DASH-04 | Phase 5 | Pending |
+| DASH-01 | Phase 5 | Complete |
+| DASH-02 | Phase 5 | Complete |
+| DASH-03 | Phase 5 | Complete |
+| DASH-04 | Phase 5 | Complete |
 | INS-01 | Phase 6 | Pending |
 | INS-02 | Phase 6 | Pending |
 | INS-03 | Phase 6 | Pending |

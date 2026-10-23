@@ -46,22 +46,18 @@ def create_app():
     from budgets import budgets_bp
     app.register_blueprint(budgets_bp)
 
+    from dashboard import dashboard_bp
+    app.register_blueprint(dashboard_bp)
+
     # ── Routes ──────────────────────────────────────────────
-    from utils.auth_helpers import login_required
     from flask import redirect, url_for
 
     @app.route('/')
     def index():
         """Landing page / home."""
         if g.get('user'):
-            return redirect(url_for('expenses.index'))
+            return redirect(url_for('dashboard.index'))
         return render_template('index.html')
-
-    @app.route('/dashboard')
-    @login_required
-    def dashboard():
-        """Redirect to expenses management view."""
-        return redirect(url_for('expenses.index'))
 
     # ── Context Processor ───────────────────────────────────
 

@@ -1571,6 +1571,23 @@ textarea.form-input {
         right: var(--space-md);
         max-width: none;
     }
+    .charts-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .chart-card {
+        grid-column: span 1 !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .charts-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .chart-card {
+        grid-column: span 12 !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1578,3 +1595,4 @@ textarea.form-input {
         padding: var(--space-lg);
     }
 }
+

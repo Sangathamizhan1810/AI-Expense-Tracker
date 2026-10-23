@@ -31,6 +31,7 @@
 
             <div class="nav-menu" id="nav-menu">
                 {% if current_user %}
+                    <a href="{{ url_for('dashboard.index') }}" class="nav-link">Dashboard</a>
                     <a href="{{ url_for('expenses.index') }}" class="nav-link">Expenses</a>
                     <a href="{{ url_for('budgets.index') }}" class="nav-link" style="position: relative;">
                         <span>Budgets</span>

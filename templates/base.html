@@ -90,12 +90,12 @@
 
             <!-- Sidebar Bottom Utilities -->
             <div class="sidebar-bottom">
-                <button type="button" class="sidebar-action-btn js-open-cmd" title="Open Natural Language Command Deck (Ctrl+K)">
+                <button type="button" class="sidebar-action-btn js-open-cmd" title="Open Quick Log Modal">
                     <svg class="sidebar-icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
                         <line x1="12" y1="5" x2="12" y2="19"/>
                         <line x1="5" y1="12" x2="19" y2="12"/>
                     </svg>
-                    <span class="sidebar-action-text">+ Log (Ctrl+K)</span>
+                    <span class="sidebar-action-text">+ Quick Log</span>
                 </button>
 
                 <div class="user-profile-row">
@@ -123,13 +123,12 @@
                         <span class="brand-glyph">₹</span>
                     </div>
                     <!-- Quick NLP Command Trigger -->
-                    <button type="button" class="cmd-trigger-btn js-open-cmd" aria-label="Open Command HUD">
-                        <svg style="width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24">
-                            <circle cx="11" cy="11" r="8"/>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    <button type="button" class="cmd-trigger-btn js-open-cmd" aria-label="Open Quick Log">
+                        <svg class="cmd-trigger-icon" viewBox="0 0 24 24" style="width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.2;">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
                         </svg>
-                        <span>Search or log expense...</span>
-                        <span class="cmd-kbd">Ctrl K</span>
+                        <span>Quick Log</span>
                     </button>
                 </div>
 
@@ -219,34 +218,78 @@
             </a>
         </nav>
 
-        <!-- Command Palette HUD Dialog (Ctrl+K) -->
-        <div class="cmd-palette-backdrop" id="cmd-palette-backdrop" role="dialog" aria-modal="true" aria-labelledby="cmd-palette-title">
+        <!-- Quick Expense Log Terminal Modal -->
+        <div class="cmd-palette-backdrop" id="cmd-palette-backdrop" role="dialog" aria-modal="true" aria-labelledby="quick-log-title">
             <div class="cmd-palette-panel">
+                <!-- Modal Header -->
+                <div class="cmd-palette-header">
+                    <div class="cmd-palette-title-group">
+                        <div class="cmd-palette-glyph">
+                            <svg viewBox="0 0 24 24" style="width: 15px; height: 15px; stroke: #38bdf8; fill: none; stroke-width: 2.2;">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 id="quick-log-title" class="cmd-palette-title">Quick Expense Entry</h3>
+                            <p class="cmd-palette-subtitle">Natural language detection & auto-categorization</p>
+                        </div>
+                    </div>
+                    <button type="button" class="cmd-palette-close js-close-cmd" aria-label="Close dialog">&times;</button>
+                </div>
+
+                <!-- Modal Form -->
                 <form id="cmd-palette-form" action="{{ url_for('expenses.ai_quick_add') }}" method="POST">
-                    <div class="cmd-palette-input-wrap">
-                        <svg style="width: 16px; height: 16px; stroke: var(--text-muted); fill: none; stroke-width: 2;" viewBox="0 0 24 24">
-                            <circle cx="11" cy="11" r="8"/>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                        </svg>
-                        <input
-                            type="text"
-                            name="sentence"
-                            id="cmd-palette-input"
-                            class="cmd-palette-input"
-                            placeholder="Type expense in plain English (e.g. Swiggy 350, Uber 420 to airport)..."
-                            autocomplete="off"
-                            required
-                        >
+                    <div class="cmd-palette-body">
+                        <!-- Input Field -->
+                        <div class="cmd-input-container">
+                            <svg class="cmd-input-icon" viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="8"/>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            </svg>
+                            <input
+                                type="text"
+                                name="sentence"
+                                id="cmd-palette-input"
+                                class="cmd-palette-input"
+                                placeholder="e.g. Swiggy 350 lunch, Uber 420 to office..."
+                                autocomplete="off"
+                                required
+                            >
+                            <button type="button" id="cmd-clear-btn" class="cmd-clear-btn" aria-label="Clear input" style="display: none;">&times;</button>
+                        </div>
+
+                        <!-- Quick Suggestion Chips -->
+                        <div class="cmd-suggestions">
+                            <span class="cmd-suggestions-label">Try:</span>
+                            <button type="button" class="cmd-suggest-chip js-suggest" data-text="Swiggy 350 lunch">Swiggy 350</button>
+                            <button type="button" class="cmd-suggest-chip js-suggest" data-text="Uber 420 airport">Uber 420</button>
+                            <button type="button" class="cmd-suggest-chip js-suggest" data-text="Grocery 1450 store">Grocery 1450</button>
+                            <button type="button" class="cmd-suggest-chip js-suggest" data-text="Electricity 2200 bill">Electricity 2200</button>
+                        </div>
+
+                        <!-- Live AI Detection Feedback Box -->
+                        <div class="cmd-preview-card">
+                            <div class="cmd-preview-card-header">
+                                <span class="cmd-preview-card-title">Live AI Detection</span>
+                                <span id="cmd-parse-status" class="cmd-status-badge">Awaiting input</span>
+                            </div>
+                            <div class="cmd-preview-strip" id="cmd-preview-strip">
+                                <span class="cmd-preview-placeholder">Type an amount and note above to see live category detection.</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Live AI Token Breakdown Strip -->
-                    <div class="cmd-preview-strip" id="cmd-preview-strip">
-                        <span style="color: var(--text-muted); font-size: 11px;">Type naturally (e.g. "Swiggy 350 lunch" or "Metro 40 to office")</span>
-                    </div>
-
+                    <!-- Modal Actions Footer (Zero Keyboard Shortcuts) -->
                     <div class="cmd-palette-footer">
-                        <span><kbd class="cmd-kbd">Enter</kbd> to record instantly</span>
-                        <span><kbd class="cmd-kbd">Esc</kbd> to close</span>
+                        <div class="cmd-footer-note">
+                            <span>Offline ML categorization</span>
+                        </div>
+                        <div class="cmd-footer-actions">
+                            <button type="button" class="btn btn--secondary js-close-cmd" style="padding: 0.45rem 1rem; font-size: 13px;">Cancel</button>
+                            <button type="submit" id="cmd-submit-btn" class="btn btn--primary" style="padding: 0.45rem 1.25rem; font-size: 13px; font-weight: 600;">
+                                Save Expense
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>

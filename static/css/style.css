@@ -5,23 +5,25 @@
 
 /* ── CSS Custom Properties (Architectural Dark Design Tokens) ─────────── */
 :root {
-    /* Background Palette (Architectural Dark) */
-    --bg-primary: #0c0e12;      /* Deep obsidian terminal ground */
-    --bg-ground: #0c0e12;
-    --bg-secondary: #12161f;    /* Panels, cards, tables */
-    --bg-surface: #12161f;
-    --bg-card: #12161f;
-    --bg-card-hover: #181e2b;
-    --bg-raised: #181e2b;       /* Elevated controls, active tabs */
-    --bg-hover: #222b3d;
-    --bg-input: #0f131a;
-    --bg-overlay: rgba(0, 0, 0, 0.78);
+    /* Background Palette (Architectural Dark — 4-Tier Luma Elevation Ladder) */
+    --bg-primary: #090b10;      /* Tier 0: Deep obsidian canvas ground */
+    --bg-ground: #090b10;
+    --bg-surface: #141924;      /* Tier 1: Elevated primary cards, panels, charts */
+    --bg-secondary: #141924;
+    --bg-card: #141924;
+    --bg-card-hover: #19202e;
+    --bg-inset: #0c0f16;        /* Tier 2: Recessed nested containers, inputs, observation boxes */
+    --bg-sunken: #0c0f16;
+    --bg-input: #0c0f16;
+    --bg-raised: #1c2436;       /* Tier 3: Elevated controls, tabs, chips */
+    --bg-hover: #222d42;
+    --bg-overlay: rgba(5, 7, 11, 0.82);
 
-    /* Hairline Crisp Borders (Zero heavy shadows at rest) */
-    --border-subtle: #1e2638;
-    --border-hairline: #1e2638;
+    /* Hairline Crisp Borders (Clear boundary contrast against #090b10 and #141924) */
+    --border-subtle: #1c2434;
+    --border-hairline: #222b3d;
     --border-accent: #2e3b52;
-    --border-control: #252f44;
+    --border-control: #28344c;
     --border-focus: #38bdf8;
 
     /* Precision Monochrome Accent */
@@ -2341,11 +2343,17 @@ textarea.form-input {
     border-radius: var(--radius-lg);
     margin-bottom: var(--space-xl);
     overflow: hidden;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.45);
 }
 
 .runway-cell {
     padding: var(--space-lg);
     border-right: 1px solid var(--border-hairline);
+    transition: background var(--transition-fast);
+}
+
+.runway-cell:hover {
+    background: rgba(255, 255, 255, 0.015);
 }
 
 .runway-cell:last-child {
@@ -2365,6 +2373,7 @@ textarea.form-input {
     border: 1px solid var(--border-hairline);
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.45);
 }
 
 .terminal-card-header {

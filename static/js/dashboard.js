@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (typeof Chart !== 'undefined') {
         Chart.defaults.color = '#94a3b8';
         Chart.defaults.font.family = "'Inter', system-ui, -apple-system, sans-serif";
-        Chart.defaults.plugins.tooltip.backgroundColor = '#12161f';
-        Chart.defaults.plugins.tooltip.borderColor = '#1e2638';
+        Chart.defaults.plugins.tooltip.backgroundColor = '#141924';
+        Chart.defaults.plugins.tooltip.borderColor = '#222b3d';
         Chart.defaults.plugins.tooltip.borderWidth = 1;
         Chart.defaults.plugins.tooltip.padding = 10;
         Chart.defaults.plugins.tooltip.cornerRadius = 4;
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     y: {
                         beginAtZero: true,
                         grid: {
-                            color: '#1e2638',
+                            color: '#222b3d',
                             drawTicks: false
                         },
                         ticks: {
@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         y: {
                             beginAtZero: true,
                             grid: {
-                                color: '#1e2638',
+                                color: '#222b3d',
                                 drawTicks: false
                             },
                             ticks: {

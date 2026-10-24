@@ -204,18 +204,19 @@ p {
     justify-content: center;
     width: 36px;
     height: 36px;
-    background: var(--accent-gradient);
+    background: #f8fafc;
     border-radius: var(--radius-md);
     font-size: var(--font-size-lg);
     font-weight: 800;
-    color: white;
+    font-family: var(--font-mono);
+    color: #090b10; /* Deep black glyph with strong contrast on light badge */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .brand-text {
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
 }
 
 .nav-menu {
@@ -1682,13 +1683,13 @@ textarea.form-input {
     justify-content: center;
     width: 28px;
     height: 28px;
-    background: var(--bg-raised);
-    border: 1px solid var(--border-control);
-    border-radius: var(--radius-sm);
-    color: var(--text-primary);
+    background: #f8fafc;
+    border-radius: 6px;
+    color: #090b10;
     font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 0.85rem;
+    font-weight: 800;
+    font-size: 0.9rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .brand-title {

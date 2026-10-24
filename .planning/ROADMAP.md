@@ -10,8 +10,9 @@ A phased journey to build the AI-Based Expense Tracker information system from f
 - [x] **Phase 2: Core Expense Management & Export** - CRUD operations for expenses, category mapping, search/filter, and CSV export.
 - [x] **Phase 3: NLP & Machine Learning Categorization** - Labelled training dataset, scikit-learn TF-IDF + Logistic Regression classifier pipeline, regex amount extraction, and sentence-based expense entry.
 - [x] **Phase 4: Budget Management & Alert Engine** - Monthly category budget setup, real-time threshold computation, 80% warning alerts, and 100% overspending notifications.
-- [ ] **Phase 5: Interactive Visual Analytics Dashboard** - Financial summary KPIs and Chart.js visualizations (Category Doughnut, Monthly Trend Line, Budget vs. Actual Bar).
-- [ ] **Phase 6: Spending Insights Engine, UAT & Documentation** - Deterministic rule-based insights, savings tips, comprehensive test case verification (Cases 1–13), and Mermaid architectural diagrams.
+- [x] **Phase 5: Interactive Visual Analytics Dashboard** - Financial summary KPIs and Chart.js visualizations (Category Doughnut, Monthly Trend Line, Budget vs. Actual Bar).
+- [x] **Phase 6: Spending Insights Engine, UAT & Documentation** - Deterministic rule-based insights, savings tips, comprehensive test case verification (Cases 1–13), and Mermaid architectural diagrams.
+- [x] **Phase 7: Immersive Anti-Slop UI Architecture & Multi-Device Terminal Overhaul** - Complete visual revamp to Concept A (Modern Financial Terminal) in Architectural Dark, removing AI slop tells (emojis, glassmorphism, rainbow charts) and establishing multi-device responsiveness (Mobile, Tablet, Desktop).
 
 ---
 
@@ -119,10 +120,28 @@ Plans:
 
 ---
 
+### Phase 7: Immersive Anti-Slop UI Architecture & Multi-Device Terminal Overhaul
+**Goal**: Overhaul all application templates and styles into Concept A (Modern Financial Terminal) in Architectural Dark, purging all "AI slop" tells (emojis, glassmorphism, rainbow charts) and establishing high-density, multi-device layouts (Mobile, Tablet, Desktop).  
+**Depends on**: Phase 5, Phase 6  
+**Requirements**: UI-01 (Architectural Dark & Design System), UI-02 (Multi-device Terminal Shell), UI-03 (High-density Dashboard & NLP HUD), UI-04 (Modern Ledger & Budget Screens)  
+**Success Criteria**:
+  1. Zero emojis in chrome, headings, badges, or buttons; clean geometric SVG icons only.
+  2. Zero glassmorphism/backdrop-blur; flat architectural surfaces with 1px hairlines.
+  3. Color budget strictly under 3% chroma; color reserved for data signals only.
+  4. Tabular numbers on all monetary figures with right-alignment.
+  5. Multi-device responsiveness validated across Mobile (375px), Tablet (820px), and Desktop (1440px).  
+**Plans**: 2 plans
+
+Plans:
+- [x] 07-01: Architectural Dark Design System, tokens, shell navigation, and global NLP HUD.
+- [x] 07-02: Financial Terminal screens (Dashboard, Expense Ledger, Budgets) and Chart.js palette refactor.
+
+---
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |---|---|---|---|
@@ -132,3 +151,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 4. Budget & Alert Engine | 1/1 | Complete | 2026-10-23 |
 | 5. Interactive Analytics Dashboard | 1/1 | Complete | 2026-10-23 |
 | 6. Insights Engine & Verification | 2/2 | Complete | 2026-10-23 |
+| 7. Immersive Anti-Slop UI & Multi-Device Terminal | 2/2 | Complete | 2026-10-24 |

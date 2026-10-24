@@ -5,21 +5,21 @@
 {% block content %}
 <div class="dashboard-page">
 
-    <!-- ── Dashboard Header & Controls ────────────────── -->
-    <div class="page-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xl);">
+    <!-- ── Terminal Top Control Header ─────────────────── -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: var(--space-md); margin-bottom: var(--space-xl); padding-bottom: var(--space-md); border-bottom: 1px solid var(--border-hairline);">
         <div>
-            <h1 class="page-title" style="margin-bottom: var(--space-xs);">
-                Financial Analytics
+            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 600; margin-bottom: 2px;">
+                Financial Analytics & Overview
+            </div>
+            <h1 style="font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; color: var(--text-primary); margin: 0;">
+                Monthly Cash Flow & Runway
             </h1>
-            <p class="text-muted" style="margin: 0; font-size: var(--font-size-sm);">
-                Visual insights, historical trajectories, and budget utilization for <strong style="color: var(--text-primary);">{{ kpis.month_label }}</strong>
-            </p>
         </div>
 
         <div style="display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap;">
             <!-- Month Picker Form -->
-            <form id="month-select-form" method="GET" action="{{ url_for('dashboard.index') }}" style="display: flex; align-items: center; gap: var(--space-xs);">
-                <button type="button" class="btn btn--secondary" id="prev-month-btn" style="padding: 0.5rem 0.75rem;" title="Previous Month">
+            <form id="month-select-form" method="GET" action="{{ url_for('dashboard.index') }}" style="display: flex; align-items: center; gap: 4px;">
+                <button type="button" class="btn btn--secondary" id="prev-month-btn" style="padding: 0.4rem 0.65rem; font-size: 12px;" title="Previous Month">
                     &larr;
                 </button>
                 <input
@@ -28,84 +28,78 @@
                     id="dashboard-month-input"
                     class="form-input"
                     value="{{ month }}"
-                    style="padding: 0.5rem 0.85rem; width: auto; font-size: var(--font-size-sm); cursor: pointer;"
+                    style="padding: 0.4rem 0.75rem; width: auto; font-size: 12px; cursor: pointer; font-family: var(--font-mono);"
                 >
-                <button type="button" class="btn btn--secondary" id="next-month-btn" style="padding: 0.5rem 0.75rem;" title="Next Month">
+                <button type="button" class="btn btn--secondary" id="next-month-btn" style="padding: 0.4rem 0.65rem; font-size: 12px;" title="Next Month">
                     &rarr;
                 </button>
             </form>
 
-            <a href="{{ url_for('expenses.index') }}" class="btn btn--secondary" style="font-size: var(--font-size-sm);">
-                View Expenses
+            <a href="{{ url_for('expenses.index') }}" class="btn btn--secondary" style="font-size: 12px; padding: 0.4rem 0.85rem;">
+                View Ledger
             </a>
-            <a href="{{ url_for('expenses.add') }}" class="btn btn--primary" style="font-size: var(--font-size-sm);">
-                + Add Expense
-            </a>
+            <button type="button" class="btn btn--primary js-open-cmd" style="font-size: 12px; padding: 0.4rem 0.85rem;">
+                + Quick Log
+            </button>
         </div>
     </div>
 
-    <!-- ── Financial KPI Cards (DASH-01) ───────────────── -->
-    <div class="kpi-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-md); margin-bottom: var(--space-xl);">
-        
-        <!-- KPI 1: Total Monthly Spend -->
-        <div class="kpi-card glass-panel" style="padding: var(--space-lg); border-radius: var(--radius-lg); position: relative; overflow: hidden;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-xs);">
-                <span class="text-muted" style="font-size: var(--font-size-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Total Spend</span>
-                <span style="font-size: 1.5rem; opacity: 0.8;">💳</span>
+    <!-- ── Financial Runway & Capacity Status Strip (DASH-01) ── -->
+    <div class="runway-strip">
+        <!-- Cell 1: Total Spend -->
+        <div class="runway-cell">
+            <div style="font-size: var(--font-size-xs); color: var(--text-muted); font-weight: 500; margin-bottom: 6px;">
+                Total Month Spend
             </div>
-            <div style="font-size: 1.85rem; font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-xs);">
+            <div class="num-tabular" style="font-size: 1.65rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">
                 ₹{{ "%.2f"|format(kpis.total_spent) }}
             </div>
-            <div style="font-size: var(--font-size-xs); color: var(--text-secondary); display: flex; align-items: center; gap: 6px;">
-                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-start);"></span>
-                <span>{{ kpis.expense_count }} recorded expense{{ 's' if kpis.expense_count != 1 else '' }}</span>
+            <div style="font-size: 11px; color: var(--text-secondary);">
+                {{ kpis.expense_count }} recorded transaction{{ 's' if kpis.expense_count != 1 else '' }}
             </div>
         </div>
 
-        <!-- KPI 2: Remaining Spend Capacity -->
-        <div class="kpi-card glass-panel" style="padding: var(--space-lg); border-radius: var(--radius-lg); position: relative; overflow: hidden;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-xs);">
-                <span class="text-muted" style="font-size: var(--font-size-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Budget Remaining</span>
-                <span style="font-size: 1.5rem; opacity: 0.8;">🎯</span>
+        <!-- Cell 2: Budget Runway Remaining -->
+        <div class="runway-cell">
+            <div style="font-size: var(--font-size-xs); color: var(--text-muted); font-weight: 500; margin-bottom: 6px;">
+                Available Headroom
             </div>
             {% if kpis.total_budget > 0 %}
                 {% if kpis.is_over_budget %}
-                    <div style="font-size: 1.85rem; font-weight: 800; color: var(--danger); margin-bottom: var(--space-xs);">
+                    <div class="num-tabular" style="font-size: 1.65rem; font-weight: 600; color: var(--danger); margin-bottom: 4px;">
                         -₹{{ "%.2f"|format(kpis.total_spent - kpis.total_budget) }}
                     </div>
-                    <div style="font-size: var(--font-size-xs); color: var(--danger); font-weight: 600;">
-                        ⚠️ Over limit (₹{{ "%.2f"|format(kpis.total_budget) }} total)
+                    <div style="font-size: 11px; color: var(--danger); font-weight: 500;">
+                        Exceeded (₹{{ "%.2f"|format(kpis.total_budget) }} limit)
                     </div>
                 {% else %}
-                    <div style="font-size: 1.85rem; font-weight: 800; color: var(--success); margin-bottom: var(--space-xs);">
+                    <div class="num-tabular" style="font-size: 1.65rem; font-weight: 600; color: var(--success); margin-bottom: 4px;">
                         ₹{{ "%.2f"|format(kpis.budget_remaining) }}
                     </div>
-                    <div style="font-size: var(--font-size-xs); color: var(--text-secondary);">
-                        of ₹{{ "%.2f"|format(kpis.total_budget) }} total budget
+                    <div style="font-size: 11px; color: var(--text-secondary);">
+                        of ₹{{ "%.2f"|format(kpis.total_budget) }} planned limit
                     </div>
                 {% endif %}
             {% else %}
-                <div style="font-size: 1.85rem; font-weight: 800; color: var(--text-muted); margin-bottom: var(--space-xs);">
-                    No Budget
+                <div class="num-tabular" style="font-size: 1.65rem; font-weight: 600; color: var(--text-muted); margin-bottom: 4px;">
+                    Uncapped
                 </div>
-                <div style="font-size: var(--font-size-xs);">
-                    <a href="{{ url_for('budgets.index', month=month) }}" style="color: var(--accent-start); text-decoration: underline;">
-                        + Set monthly budget
+                <div style="font-size: 11px;">
+                    <a href="{{ url_for('budgets.index', month=month) }}" style="color: var(--text-primary); text-decoration: underline;">
+                        + Set budget threshold
                     </a>
                 </div>
             {% endif %}
         </div>
 
-        <!-- KPI 3: Budget Utilization -->
-        <div class="kpi-card glass-panel" style="padding: var(--space-lg); border-radius: var(--radius-lg); position: relative; overflow: hidden;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-xs);">
-                <span class="text-muted" style="font-size: var(--font-size-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Budget Utilization</span>
-                <span style="font-size: 1.5rem; opacity: 0.8;">📊</span>
+        <!-- Cell 3: Budget Utilization -->
+        <div class="runway-cell">
+            <div style="font-size: var(--font-size-xs); color: var(--text-muted); font-weight: 500; margin-bottom: 6px;">
+                Budget Utilization
             </div>
-            <div style="font-size: 1.85rem; font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-xs);">
+            <div class="num-tabular" style="font-size: 1.65rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">
                 {{ kpis.budget_utilization }}%
             </div>
-            <!-- Mini progress bar -->
             {% set util_pct = [kpis.budget_utilization, 100]|min %}
             {% if kpis.budget_utilization >= 100 %}
                 {% set bar_bg = 'var(--danger)' %}
@@ -114,228 +108,186 @@
             {% else %}
                 {% set bar_bg = 'var(--success)' %}
             {% endif %}
-            <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; margin-bottom: 6px;">
-                <div style="height: 100%; width: {{ util_pct }}%; background: {{ bar_bg }}; border-radius: 999px;"></div>
+            <div style="width: 100%; height: 4px; background: var(--border-hairline); border-radius: 2px; overflow: hidden; margin-top: 6px; margin-bottom: 4px;">
+                <div style="height: 100%; width: {{ util_pct }}%; background: {{ bar_bg }};"></div>
             </div>
-            <div style="font-size: var(--font-size-xs); color: var(--text-secondary);">
-                {{ kpis.active_budgets_count }} categor{{ 'ies' if kpis.active_budgets_count != 1 else 'y' }} configured
+            <div style="font-size: 11px; color: var(--text-secondary);">
+                {{ kpis.active_budgets_count }} categor{{ 'ies' if kpis.active_budgets_count != 1 else 'y' }} monitored
             </div>
         </div>
 
-        <!-- KPI 4: Top Spending Category -->
-        <div class="kpi-card glass-panel" style="padding: var(--space-lg); border-radius: var(--radius-lg); position: relative; overflow: hidden;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-xs);">
-                <span class="text-muted" style="font-size: var(--font-size-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Top Category</span>
-                <span style="font-size: 1.5rem; opacity: 0.8;">🏆</span>
+        <!-- Cell 4: Top Category -->
+        <div class="runway-cell">
+            <div style="font-size: var(--font-size-xs); color: var(--text-muted); font-weight: 500; margin-bottom: 6px;">
+                Primary Outflow
             </div>
             {% if kpis.top_category %}
-                <div style="font-size: 1.65rem; font-weight: 800; color: var(--text-primary); margin-bottom: var(--space-xs); display: flex; align-items: center; gap: 8px;">
-                    <span>{{ kpis.top_category.icon }}</span>
-                    <span>{{ kpis.top_category.name }}</span>
+                <div style="font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    {{ kpis.top_category.name }}
                 </div>
-                <div style="font-size: var(--font-size-xs); color: var(--text-secondary);">
-                    <strong>₹{{ "%.2f"|format(kpis.top_category.amount) }}</strong> ({{ kpis.top_category.percentage }}% of spend)
+                <div class="num-tabular" style="font-size: 11px; color: var(--text-secondary);">
+                    ₹{{ "%.2f"|format(kpis.top_category.amount) }} ({{ kpis.top_category.percentage }}% share)
                 </div>
             {% else %}
-                <div style="font-size: 1.65rem; font-weight: 800; color: var(--text-muted); margin-bottom: var(--space-xs);">
+                <div style="font-size: 1.25rem; font-weight: 600; color: var(--text-muted); margin-bottom: 4px;">
                     None
                 </div>
-                <div style="font-size: var(--font-size-xs); color: var(--text-muted);">
-                    No spending in this month
+                <div style="font-size: 11px; color: var(--text-muted);">
+                    No outflows this period
                 </div>
             {% endif %}
-        </div>
-
-    </div>
-
-    <!-- ── AI Spending Insights & Recommendations (INS-01, INS-02, INS-03, INS-04) ── -->
-    <div class="insights-section glass-panel" style="padding: var(--space-xl); border-radius: var(--radius-lg); margin-bottom: var(--space-xl); border-color: rgba(99, 102, 241, 0.25); background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-lg); flex-wrap: wrap; gap: var(--space-xs);">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 1.5rem;">✨</span>
-                <div>
-                    <h2 style="font-size: 1.25rem; font-weight: 800; margin: 0; color: var(--text-primary);">
-                        AI Spending Insights & Recommendations
-                    </h2>
-                    <p class="text-muted" style="margin: 0; font-size: var(--font-size-xs);">
-                        Automated deterministic analysis comparing {{ insights.month_label }} with {{ insights.prev_month_label }}
-                    </p>
-                </div>
-            </div>
-            <span class="badge" style="background: rgba(99, 102, 241, 0.18); color: var(--accent-start); font-size: var(--font-size-xs); font-weight: 600; padding: 4px 10px; border-radius: 999px;">
-                Deterministic AI
-            </span>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-lg);">
-            
-            <!-- Column 1: Month-over-Month Observations (INS-01, INS-02, INS-04) -->
-            <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
-                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: var(--space-xs);">
-                    <span style="font-size: 1.1rem;">📊</span>
-                    <h3 style="font-size: var(--font-size-sm); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); margin: 0;">
-                        Key Observations
-                    </h3>
-                </div>
-
-                {% if insights.observations %}
-                    {% for obs in insights.observations %}
-                        <div class="insight-pill glass-panel" style="padding: var(--space-md); border-radius: var(--radius-md); display: flex; align-items: flex-start; gap: var(--space-sm); background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06);">
-                            <span style="font-size: 1.25rem; line-height: 1;">{{ obs.icon }}</span>
-                            <div style="flex: 1;">
-                                <div style="font-size: var(--font-size-xs); font-weight: 700; color: var(--text-primary); margin-bottom: 2px;">
-                                    {{ obs.title }}
-                                </div>
-                                <div style="font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.4;">
-                                    {{ obs.text }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <div class="glass-panel" style="padding: var(--space-md); border-radius: var(--radius-md); color: var(--text-muted); font-size: var(--font-size-xs);">
-                        No spending observations available for this period.
-                    </div>
-                {% endif %}
-            </div>
-
-            <!-- Column 2: Actionable Savings Tips (INS-03) -->
-            <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
-                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: var(--space-xs);">
-                    <span style="font-size: 1.1rem;">💡</span>
-                    <h3 style="font-size: var(--font-size-sm); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); margin: 0;">
-                        Actionable Recommendations
-                    </h3>
-                </div>
-
-                {% if insights.savings_tips %}
-                    {% for tip in insights.savings_tips %}
-                        {% if tip.priority == 'high' %}
-                            {% set tip_border = 'var(--danger)' %}
-                            {% set badge_bg = 'rgba(239, 68, 68, 0.2)' %}
-                            {% set badge_color = 'var(--danger)' %}
-                        {% elif tip.priority == 'medium' %}
-                            {% set tip_border = 'var(--warning)' %}
-                            {% set badge_bg = 'rgba(245, 158, 11, 0.2)' %}
-                            {% set badge_color = 'var(--warning)' %}
-                        {% else %}
-                            {% set tip_border = 'var(--accent-start)' %}
-                            {% set badge_bg = 'rgba(99, 102, 241, 0.2)' %}
-                            {% set badge_color = 'var(--accent-start)' %}
-                        {% endif %}
-                        <div class="tip-card glass-panel" style="padding: var(--space-md); border-radius: var(--radius-md); display: flex; align-items: flex-start; gap: var(--space-sm); background: rgba(255, 255, 255, 0.03); border-left: 3px solid {{ tip_border }};">
-                            <span style="font-size: 1.25rem; line-height: 1;">{{ tip.icon }}</span>
-                            <div style="flex: 1;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                                    <span style="font-size: var(--font-size-xs); font-weight: 700; color: var(--text-primary);">
-                                        {{ tip.title }}
-                                    </span>
-                                    <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 1px 6px; border-radius: 999px; background: {{ badge_bg }}; color: {{ badge_color }};">
-                                        {{ tip.priority }}
-                                    </span>
-                                </div>
-                                <div style="font-size: var(--font-size-xs); color: var(--text-secondary); line-height: 1.4;">
-                                    {{ tip.text }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <div class="glass-panel" style="padding: var(--space-md); border-radius: var(--radius-md); color: var(--text-muted); font-size: var(--font-size-xs);">
-                        No budget recommendations active. Configure budgets to receive personalized alerts.
-                    </div>
-                {% endif %}
-            </div>
-
         </div>
     </div>
 
     <!-- ── Empty State Prompt (if no transactions & no budgets) ── -->
     {% if kpis.total_spent == 0 and kpis.active_budgets_count == 0 %}
-    <div class="glass-panel" style="padding: var(--space-2xl); border-radius: var(--radius-lg); text-align: center; margin-bottom: var(--space-xl); background: rgba(99, 102, 241, 0.06); border: 1px dashed rgba(99, 102, 241, 0.3);">
-        <div style="font-size: 2.5rem; margin-bottom: var(--space-sm);">✨</div>
-        <h3 style="margin-bottom: var(--space-xs); color: var(--text-primary);">No Expenses or Budgets for {{ kpis.month_label }}</h3>
-        <p class="text-muted" style="max-width: 520px; margin: 0 auto var(--space-lg); font-size: var(--font-size-sm);">
-            Start tracking by adding an expense using natural language AI categorization, or configure a budget limit to monitor your health.
+    <div class="terminal-card" style="text-align: center; margin-bottom: var(--space-xl); padding: var(--space-2xl) var(--space-lg); border-style: dashed;">
+        <h3 style="margin-bottom: var(--space-xs); font-size: 1.1rem; color: var(--text-primary);">No Expenses or Budgets for {{ kpis.month_label }}</h3>
+        <p class="text-muted" style="max-width: 480px; margin: 0 auto var(--space-lg); font-size: var(--font-size-xs);">
+            Start tracking by logging an expense with natural language or setting a category spending limit.
         </p>
         <div style="display: flex; gap: var(--space-sm); justify-content: center; flex-wrap: wrap;">
-            <a href="{{ url_for('expenses.index') }}" class="btn btn--primary">
-                🪄 Quick Add Expense
-            </a>
+            <button type="button" class="btn btn--primary js-open-cmd">
+                Log Expense (Ctrl+K)
+            </button>
             <a href="{{ url_for('budgets.index', month=month) }}" class="btn btn--secondary">
-                🎯 Configure Budgets
+                Configure Budgets
             </a>
         </div>
     </div>
     {% endif %}
 
-    <!-- ── Visual Analytics Charts ────────────────────── -->
-    <div class="charts-grid" style="display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--space-lg); margin-bottom: var(--space-xl);">
+    <!-- ── Terminal Split Stage Grid ────────────────────── -->
+    <div class="terminal-stage-grid">
 
-        <!-- Chart 1: Category Breakdown Donut (DASH-02) -->
-        <div class="glass-panel chart-card" style="grid-column: span 5; padding: var(--space-lg); border-radius: var(--radius-lg); min-height: 420px; display: flex; flex-direction: column;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md);">
-                <div>
-                    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 2px;">Category Distribution</h3>
-                    <p class="text-muted" style="font-size: var(--font-size-xs); margin: 0;">Spending percentage by category</p>
+        <!-- Left Column: Trajectory and Limit Comparisons -->
+        <div style="display: flex; flex-direction: column; gap: var(--space-lg); min-width: 0;">
+            
+            <!-- Chart 1: Spending Trajectory Line (DASH-03) -->
+            <div class="terminal-card" style="min-height: 380px; display: flex; flex-direction: column;">
+                <div class="terminal-card-header">
+                    <div>
+                        <h3 class="terminal-card-title">Spending Trajectory</h3>
+                        <span class="terminal-card-meta">6-month chronological expense velocity</span>
+                    </div>
+                    <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">6M TREND</span>
                 </div>
-                <span class="badge" style="background: rgba(99, 102, 241, 0.15); color: var(--accent-start); font-size: var(--font-size-xs); padding: 3px 8px; border-radius: 999px;">
-                    Donut
-                </span>
-            </div>
-
-            <div style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; min-height: 280px;">
-                <canvas id="categoryDonutChart"></canvas>
-                <div id="donut-empty-notice" style="display: none; text-align: center; color: var(--text-muted); font-size: var(--font-size-sm);">
-                    <span style="font-size: 2rem; display: block; margin-bottom: 6px;">🥧</span>
-                    No expense data for this month
+                <div style="position: relative; flex: 1; min-height: 280px;">
+                    <canvas id="trendLineChart"></canvas>
                 </div>
             </div>
+
+            <!-- Chart 2: Budget vs. Actual Comparison (DASH-04) -->
+            <div class="terminal-card" style="min-height: 380px; display: flex; flex-direction: column;">
+                <div class="terminal-card-header">
+                    <div>
+                        <h3 class="terminal-card-title">Budget vs. Actual Outflow</h3>
+                        <span class="terminal-card-meta">Comparison of configured thresholds vs. recorded spend</span>
+                    </div>
+                </div>
+                <div style="position: relative; flex: 1; min-height: 280px;">
+                    <canvas id="budgetBarChart"></canvas>
+                    <div id="bar-empty-notice" style="display: none; text-align: center; color: var(--text-muted); font-size: var(--font-size-xs); padding: var(--space-2xl) 0;">
+                        No active budgets or expenses recorded for comparison in this period
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Chart 2: 6-Month Spending Trend Line (DASH-03) -->
-        <div class="glass-panel chart-card" style="grid-column: span 7; padding: var(--space-lg); border-radius: var(--radius-lg); min-height: 420px; display: flex; flex-direction: column;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md);">
+        <!-- Right Column: Category Distribution & Deterministic Advisory -->
+        <div style="display: flex; flex-direction: column; gap: var(--space-lg); min-width: 0;">
+            
+            <!-- Chart 3: Category Distribution Donut (DASH-02) -->
+            <div class="terminal-card" style="min-height: 340px; display: flex; flex-direction: column;">
+                <div class="terminal-card-header">
+                    <div>
+                        <h3 class="terminal-card-title">Category Distribution</h3>
+                        <span class="terminal-card-meta">Percentage share of total spend</span>
+                    </div>
+                </div>
+                <div style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; min-height: 220px;">
+                    <canvas id="categoryDonutChart"></canvas>
+                    <div id="donut-empty-notice" style="display: none; text-align: center; color: var(--text-muted); font-size: var(--font-size-xs);">
+                        No expense data recorded for this month
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terminal Intelligence Brief (Deterministic AI Insights) -->
+            <div class="terminal-card">
+                <div class="terminal-card-header">
+                    <div>
+                        <h3 class="terminal-card-title">Spending Intelligence</h3>
+                        <span class="terminal-card-meta">Deterministic comparison with {{ insights.prev_month_label }}</span>
+                    </div>
+                </div>
+
+                <!-- Observations Sub-deck -->
+                <div style="margin-bottom: var(--space-md);">
+                    <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 600; margin-bottom: 6px;">
+                        Key Observations
+                    </div>
+                    {% if insights.observations %}
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            {% for obs in insights.observations %}
+                                <div style="padding: 8px 10px; background: var(--bg-ground); border: 1px solid var(--border-hairline); border-radius: var(--radius-sm); font-size: var(--font-size-xs);">
+                                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 2px;">
+                                        {{ obs.title }}
+                                    </div>
+                                    <div style="color: var(--text-secondary); line-height: 1.4;">
+                                        {{ obs.text }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div style="color: var(--text-muted); font-size: var(--font-size-xs);">
+                            No month-over-month observations available for this period.
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Actionable Guidance Sub-deck -->
                 <div>
-                    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 2px;">Spending Trajectory</h3>
-                    <p class="text-muted" style="font-size: var(--font-size-xs); margin: 0;">6-month historical expense trend</p>
+                    <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 600; margin-bottom: 6px;">
+                        Actionable Guidance
+                    </div>
+                    {% if insights.savings_tips %}
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            {% for tip in insights.savings_tips %}
+                                {% if tip.priority == 'high' %}
+                                    {% set tag_color = 'var(--danger)' %}
+                                    {% set tag_bg = 'var(--danger-bg)' %}
+                                {% elif tip.priority == 'medium' %}
+                                    {% set tag_color = 'var(--warning)' %}
+                                    {% set tag_bg = 'var(--warning-bg)' %}
+                                {% else %}
+                                    {% set tag_color = 'var(--text-secondary)' %}
+                                    {% set tag_bg = 'var(--bg-raised)' %}
+                                {% endif %}
+                                <div style="padding: 8px 10px; background: var(--bg-ground); border: 1px solid var(--border-hairline); border-radius: var(--radius-sm); font-size: var(--font-size-xs);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                                        <span style="font-weight: 600; color: var(--text-primary);">{{ tip.title }}</span>
+                                        <span style="font-size: 9px; font-weight: 700; text-transform: uppercase; padding: 1px 5px; border-radius: var(--radius-sm); background: {{ tag_bg }}; color: {{ tag_color }}; font-family: var(--font-mono);">
+                                            {{ tip.priority }}
+                                        </span>
+                                    </div>
+                                    <div style="color: var(--text-secondary); line-height: 1.4;">
+                                        {{ tip.text }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div style="color: var(--text-muted); font-size: var(--font-size-xs);">
+                            No budget recommendations active.
+                        </div>
+                    {% endif %}
                 </div>
-                <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: var(--success); font-size: var(--font-size-xs); padding: 3px 8px; border-radius: 999px;">
-                    6 Months
-                </span>
+
             </div>
 
-            <div style="position: relative; flex: 1; min-height: 280px;">
-                <canvas id="trendLineChart"></canvas>
-            </div>
-        </div>
-
-        <!-- Chart 3: Budget vs. Actual Bar Chart (DASH-04) -->
-        <div class="glass-panel chart-card" style="grid-column: span 12; padding: var(--space-lg); border-radius: var(--radius-lg); min-height: 420px; display: flex; flex-direction: column;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md); flex-wrap: wrap; gap: var(--space-xs);">
-                <div>
-                    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 2px;">Budget vs. Actual Spending</h3>
-                    <p class="text-muted" style="font-size: var(--font-size-xs); margin: 0;">Direct comparison of monthly limits versus recorded expenditures per category</p>
-                </div>
-                <div style="display: flex; gap: var(--space-md); font-size: var(--font-size-xs);">
-                    <span style="display: flex; align-items: center; gap: 6px;">
-                        <span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: rgba(99, 102, 241, 0.85);"></span>
-                        Budget Limit
-                    </span>
-                    <span style="display: flex; align-items: center; gap: 6px;">
-                        <span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: rgba(16, 185, 129, 0.85);"></span>
-                        Actual Spend
-                    </span>
-                </div>
-            </div>
-
-            <div style="position: relative; flex: 1; min-height: 300px;">
-                <canvas id="budgetBarChart"></canvas>
-                <div id="bar-empty-notice" style="display: none; text-align: center; color: var(--text-muted); font-size: var(--font-size-sm); padding: var(--space-2xl) 0;">
-                    <span style="font-size: 2rem; display: block; margin-bottom: 6px;">📊</span>
-                    No active budgets or expenses recorded for comparison in this period
-                </div>
-            </div>
         </div>
 
     </div>

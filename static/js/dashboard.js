@@ -23,14 +23,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // ── Global Chart.js Dark Theme Configuration ────────
     if (typeof Chart !== 'undefined') {
         Chart.defaults.color = '#94a3b8';
-        Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, sans-serif";
-        Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(15, 23, 42, 0.92)';
-        Chart.defaults.plugins.tooltip.borderColor = 'rgba(255, 255, 255, 0.12)';
+        Chart.defaults.font.family = "'Inter', system-ui, -apple-system, sans-serif";
+        Chart.defaults.plugins.tooltip.backgroundColor = '#12161f';
+        Chart.defaults.plugins.tooltip.borderColor = '#1e2638';
         Chart.defaults.plugins.tooltip.borderWidth = 1;
         Chart.defaults.plugins.tooltip.padding = 10;
-        Chart.defaults.plugins.tooltip.cornerRadius = 8;
-        Chart.defaults.plugins.tooltip.titleFont = { size: 13, weight: 'bold' };
-        Chart.defaults.plugins.tooltip.bodyFont = { size: 12 };
+        Chart.defaults.plugins.tooltip.cornerRadius = 4;
+        Chart.defaults.plugins.tooltip.titleFont = { size: 12, weight: '600' };
+        Chart.defaults.plugins.tooltip.bodyFont = { size: 12, family: "'Geist Mono', Consolas, monospace" };
     } else {
         console.warn('Chart.js library is not loaded.');
         return;
@@ -45,31 +45,38 @@ document.addEventListener('DOMContentLoaded', function () {
             donutCtx.style.display = 'none';
             if (donutEmptyNotice) donutEmptyNotice.style.display = 'block';
         } else {
+            // Architectural subdued categorical palette
+            const terminalPalette = [
+                '#f1f5f9', '#94a3b8', '#64748b', '#475569', '#38bdf8', '#0ea5e9', '#334155', '#1e293b'
+            ];
+            const sliceColors = category_distribution.amounts.map((_, i) => terminalPalette[i % terminalPalette.length]);
+
             new Chart(donutCtx, {
                 type: 'doughnut',
                 data: {
                     labels: category_distribution.labels,
                     datasets: [{
                         data: category_distribution.amounts,
-                        backgroundColor: category_distribution.colors,
-                        borderColor: '#0f172a',
+                        backgroundColor: sliceColors,
+                        borderColor: '#0c0e12',
                         borderWidth: 2,
-                        hoverOffset: 8
+                        hoverOffset: 4
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    cutout: '68%',
+                    cutout: '76%',
                     plugins: {
                         legend: {
                             position: 'bottom',
                             labels: {
-                                color: '#cbd5e1',
-                                padding: 14,
+                                color: '#94a3b8',
+                                padding: 12,
                                 font: { size: 11, weight: '500' },
                                 usePointStyle: true,
-                                pointStyle: 'circle'
+                                pointStyle: 'circle',
+                                boxWidth: 6
                             }
                         },
                         tooltip: {
@@ -91,11 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // ── Chart 2: 6-Month Spending Trend Line (DASH-03) ──
     const lineCtx = document.getElementById('trendLineChart');
     if (lineCtx) {
-        const ctx2d = lineCtx.getContext('2d');
-        const gradient = ctx2d.createLinearGradient(0, 0, 0, 260);
-        gradient.addColorStop(0, 'rgba(99, 102, 241, 0.45)');
-        gradient.addColorStop(1, 'rgba(99, 102, 241, 0.0)');
-
         new Chart(lineCtx, {
             type: 'line',
             data: {
@@ -103,17 +105,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 datasets: [{
                     label: 'Monthly Spend',
                     data: spending_trends.amounts,
-                    borderColor: '#6366f1',
-                    borderWidth: 3,
-                    backgroundColor: gradient,
-                    fill: true,
-                    tension: 0.35,
-                    pointBackgroundColor: '#a855f7',
-                    pointBorderColor: '#ffffff',
-                    pointBorderWidth: 1.5,
-                    pointRadius: 4,
-                    pointHoverRadius: 7,
-                    pointHoverBackgroundColor: '#6366f1'
+                    borderColor: '#f1f5f9',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0.1,
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: '#ffffff',
+                    pointHoverBorderColor: '#0c0e12',
+                    pointHoverBorderWidth: 2
                 }]
             },
             options: {
@@ -122,21 +122,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 scales: {
                     x: {
                         grid: {
-                            color: 'rgba(255, 255, 255, 0.05)'
+                            display: false
                         },
                         ticks: {
-                            color: '#94a3b8',
+                            color: '#64748b',
                             font: { size: 11 }
                         }
                     },
                     y: {
                         beginAtZero: true,
                         grid: {
-                            color: 'rgba(255, 255, 255, 0.05)'
+                            color: '#1e2638',
+                            drawTicks: false
                         },
                         ticks: {
-                            color: '#94a3b8',
-                            font: { size: 11 },
+                            color: '#64748b',
+                            font: { size: 11, family: "'Geist Mono', monospace" },
                             callback: function (val) {
                                 return '₹' + val.toLocaleString('en-IN');
                             }
@@ -169,16 +170,15 @@ document.addEventListener('DOMContentLoaded', function () {
             barCtx.style.display = 'none';
             if (barEmptyNotice) barEmptyNotice.style.display = 'block';
         } else {
-            // Highlight exceeded budgets with alert red
             const actualColors = budget_vs_actual.actual_amounts.map((spend, i) => {
                 const limit = budget_vs_actual.budget_amounts[i] || 0;
                 if (limit > 0 && spend > limit) {
-                    return 'rgba(239, 68, 68, 0.88)'; // Exceeded Red
+                    return '#ef4444'; // Exceeded Red
                 }
                 if (limit > 0 && spend >= limit * 0.8) {
-                    return 'rgba(245, 158, 11, 0.88)'; // Warning Amber
+                    return '#f59e0b'; // Warning Amber
                 }
-                return 'rgba(16, 185, 129, 0.88)';     // Healthy Emerald
+                return '#38bdf8';     // Normal Sky Accent
             });
 
             new Chart(barCtx, {
@@ -189,18 +189,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         {
                             label: 'Budget Limit',
                             data: budget_vs_actual.budget_amounts,
-                            backgroundColor: 'rgba(99, 102, 241, 0.75)',
-                            borderColor: '#6366f1',
+                            backgroundColor: '#1a2233',
+                            borderColor: '#25324a',
                             borderWidth: 1,
-                            borderRadius: 6
+                            borderRadius: 2
                         },
                         {
                             label: 'Actual Spend',
                             data: budget_vs_actual.actual_amounts,
                             backgroundColor: actualColors,
-                            borderColor: 'rgba(255, 255, 255, 0.2)',
-                            borderWidth: 1,
-                            borderRadius: 6
+                            borderWidth: 0,
+                            borderRadius: 2
                         }
                     ]
                 },
@@ -213,18 +212,19 @@ document.addEventListener('DOMContentLoaded', function () {
                                 display: false
                             },
                             ticks: {
-                                color: '#cbd5e1',
-                                font: { size: 11, weight: '500' }
+                                color: '#94a3b8',
+                                font: { size: 11 }
                             }
                         },
                         y: {
                             beginAtZero: true,
                             grid: {
-                                color: 'rgba(255, 255, 255, 0.05)'
+                                color: '#1e2638',
+                                drawTicks: false
                             },
                             ticks: {
-                                color: '#94a3b8',
-                                font: { size: 11 },
+                                color: '#64748b',
+                                font: { size: 11, family: "'Geist Mono', monospace" },
                                 callback: function (val) {
                                     return '₹' + val.toLocaleString('en-IN');
                                 }
@@ -236,10 +236,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             position: 'top',
                             align: 'end',
                             labels: {
-                                color: '#cbd5e1',
+                                color: '#94a3b8',
                                 font: { size: 11, weight: '500' },
                                 usePointStyle: true,
-                                pointStyle: 'circle'
+                                pointStyle: 'circle',
+                                boxWidth: 6
                             }
                         },
                         tooltip: {

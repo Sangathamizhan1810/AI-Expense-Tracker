@@ -106,8 +106,16 @@
                 {{ kpis.budget_utilization }}%
             </div>
             <!-- Mini progress bar -->
+            {% set util_pct = [kpis.budget_utilization, 100]|min %}
+            {% if kpis.budget_utilization >= 100 %}
+                {% set bar_bg = 'var(--danger)' %}
+            {% elif kpis.budget_utilization >= 80 %}
+                {% set bar_bg = 'var(--warning)' %}
+            {% else %}
+                {% set bar_bg = 'var(--success)' %}
+            {% endif %}
             <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; margin-bottom: 6px;">
-                <div style="height: 100%; width: {{ [kpis.budget_utilization, 100]|min }}%; background: {% if kpis.budget_utilization >= 100 %}var(--danger){% elif kpis.budget_utilization >= 80 %}var(--warning){% else %}var(--success){% endif %}; border-radius: 999px;"></div>
+                <div style="height: 100%; width: {{ util_pct }}%; background: {{ bar_bg }}; border-radius: 999px;"></div>
             </div>
             <div style="font-size: var(--font-size-xs); color: var(--text-secondary);">
                 {{ kpis.active_budgets_count }} categor{{ 'ies' if kpis.active_budgets_count != 1 else 'y' }} configured
@@ -202,14 +210,27 @@
 
                 {% if insights.savings_tips %}
                     {% for tip in insights.savings_tips %}
-                        <div class="tip-card glass-panel" style="padding: var(--space-md); border-radius: var(--radius-md); display: flex; align-items: flex-start; gap: var(--space-sm); background: rgba(255, 255, 255, 0.03); border-left: 3px solid {% if tip.priority == 'high' %}var(--danger){% elif tip.priority == 'medium' %}var(--warning){% else %}var(--accent-start){% endif %};">
+                        {% if tip.priority == 'high' %}
+                            {% set tip_border = 'var(--danger)' %}
+                            {% set badge_bg = 'rgba(239, 68, 68, 0.2)' %}
+                            {% set badge_color = 'var(--danger)' %}
+                        {% elif tip.priority == 'medium' %}
+                            {% set tip_border = 'var(--warning)' %}
+                            {% set badge_bg = 'rgba(245, 158, 11, 0.2)' %}
+                            {% set badge_color = 'var(--warning)' %}
+                        {% else %}
+                            {% set tip_border = 'var(--accent-start)' %}
+                            {% set badge_bg = 'rgba(99, 102, 241, 0.2)' %}
+                            {% set badge_color = 'var(--accent-start)' %}
+                        {% endif %}
+                        <div class="tip-card glass-panel" style="padding: var(--space-md); border-radius: var(--radius-md); display: flex; align-items: flex-start; gap: var(--space-sm); background: rgba(255, 255, 255, 0.03); border-left: 3px solid {{ tip_border }};">
                             <span style="font-size: 1.25rem; line-height: 1;">{{ tip.icon }}</span>
                             <div style="flex: 1;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
                                     <span style="font-size: var(--font-size-xs); font-weight: 700; color: var(--text-primary);">
                                         {{ tip.title }}
                                     </span>
-                                    <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 1px 6px; border-radius: 999px; background: {% if tip.priority == 'high' %}rgba(239, 68, 68, 0.2); color: var(--danger);{% elif tip.priority == 'medium' %}rgba(245, 158, 11, 0.2); color: var(--warning);{% else %}rgba(99, 102, 241, 0.2); color: var(--accent-start);{% endif %}">
+                                    <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 1px 6px; border-radius: 999px; background: {{ badge_bg }}; color: {{ badge_color }};">
                                         {{ tip.priority }}
                                     </span>
                                 </div>

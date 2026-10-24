@@ -78,7 +78,14 @@
                 </span>
             </div>
             <div style="text-align: right;">
-                <span style="font-size: var(--font-size-xl); font-weight: 800; color: {% if summary.overall_percentage >= 100 %}var(--danger){% elif summary.overall_percentage >= 80 %}var(--warning){% else %}var(--text-accent){% endif %};">
+                {% if summary.overall_percentage >= 100 %}
+                    {% set pct_color = 'var(--danger)' %}
+                {% elif summary.overall_percentage >= 80 %}
+                    {% set pct_color = 'var(--warning)' %}
+                {% else %}
+                    {% set pct_color = 'var(--text-accent)' %}
+                {% endif %}
+                <span style="font-size: var(--font-size-xl); font-weight: 800; color: {{ pct_color }};">
                     {{ summary.overall_percentage }}%
                 </span>
                 <span class="text-muted" style="font-size: var(--font-size-xs); display: block;">total utilized</span>

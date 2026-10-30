@@ -6,6 +6,14 @@
     <meta name="description" content="ExpenseAI — High-performance financial intelligence terminal with offline machine learning categorization and budget enforcement.">
     <title>{% block title %}ExpenseAI{% endblock %} — Financial Terminal</title>
 
+    <!-- Immediate Theme Resolver (Zero-FOUC) -->
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('expenseai_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+
     <!-- Typography: Inter & Geist Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -133,6 +141,24 @@
                 </div>
 
                 <div class="app-topbar-right">
+                    <button type="button" class="theme-toggle-btn js-theme-toggle" id="theme-toggle-btn" aria-label="Toggle light or dark theme" title="Toggle theme">
+                        <!-- Moon icon for dark mode -->
+                        <svg class="theme-toggle-icon theme-toggle-icon--moon" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                        <!-- Sun icon for light mode -->
+                        <svg class="theme-toggle-icon theme-toggle-icon--sun" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                    </button>
                     <a href="{{ url_for('expenses.add') }}" class="btn btn--primary" style="padding: 0.4rem 0.9rem; font-size: 12px;">
                         + New Record
                     </a>
@@ -152,6 +178,24 @@
                 </a>
 
                 <div class="nav-menu" id="nav-menu">
+                    <button type="button" class="theme-toggle-btn js-theme-toggle" id="public-theme-toggle-btn" aria-label="Toggle light or dark theme" title="Toggle theme">
+                        <!-- Moon icon for dark mode -->
+                        <svg class="theme-toggle-icon theme-toggle-icon--moon" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                        <!-- Sun icon for light mode -->
+                        <svg class="theme-toggle-icon theme-toggle-icon--sun" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                    </button>
                     <a href="{{ url_for('auth.login') }}" class="nav-link">Sign In</a>
                     <a href="{{ url_for('auth.register') }}" class="btn btn--primary" style="padding: 0.45rem 1.1rem;">Get Started</a>
                 </div>
@@ -223,72 +267,136 @@
             <div class="cmd-palette-panel">
                 <!-- Modal Header -->
                 <div class="cmd-palette-header">
-                    <div class="cmd-palette-title-group">
-                        <div class="cmd-palette-glyph">
-                            <svg viewBox="0 0 24 24" style="width: 15px; height: 15px; stroke: #38bdf8; fill: none; stroke-width: 2.2;">
-                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 id="quick-log-title" class="cmd-palette-title">Quick Expense Entry</h3>
-                            <p class="cmd-palette-subtitle">Natural language detection & auto-categorization</p>
-                        </div>
-                    </div>
+                    <h3 id="quick-log-title" class="cmd-palette-title">Quick add</h3>
                     <button type="button" class="cmd-palette-close js-close-cmd" aria-label="Close dialog">&times;</button>
                 </div>
 
                 <!-- Modal Form -->
                 <form id="cmd-palette-form" action="{{ url_for('expenses.ai_quick_add') }}" method="POST">
+                    <input type="hidden" name="sentence" id="cmd-hidden-sentence">
+                    <input type="hidden" name="amount" id="cmd-hidden-amount">
+                    <input type="hidden" name="category_id" id="cmd-hidden-category-id">
+                    <input type="hidden" name="note" id="cmd-hidden-note">
+                    <input type="hidden" name="expense_date" id="cmd-hidden-date">
+
                     <div class="cmd-palette-body">
-                        <!-- Input Field -->
-                        <div class="cmd-input-container">
-                            <svg class="cmd-input-icon" viewBox="0 0 24 24">
-                                <circle cx="11" cy="11" r="8"/>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                            </svg>
+                        <!-- Split Input Field (Left: Alphabet, Right: Numerical) -->
+                        <div class="cmd-input-container cmd-split-container">
                             <input
                                 type="text"
-                                name="sentence"
-                                id="cmd-palette-input"
-                                class="cmd-palette-input"
-                                placeholder="e.g. Swiggy 350 lunch, Uber 420 to office..."
+                                name="desc_display"
+                                id="cmd-input-desc"
+                                class="cmd-split-input cmd-split-input--desc"
+                                placeholder="Expense (e.g. Swiggy)"
                                 autocomplete="off"
-                                required
                             >
-                            <button type="button" id="cmd-clear-btn" class="cmd-clear-btn" aria-label="Clear input" style="display: none;">&times;</button>
+                            <div class="cmd-input-divider"></div>
+                            <input
+                                type="text"
+                                name="amt_display"
+                                id="cmd-input-amt"
+                                class="cmd-split-input cmd-split-input--amt"
+                                placeholder="₹ Amount"
+                                inputmode="decimal"
+                                autocomplete="off"
+                            >
+                            <button type="button" id="cmd-clear-btn" class="cmd-clear-btn" aria-label="Clear inputs" style="display: none;">&times;</button>
                         </div>
 
-                        <!-- Quick Suggestion Chips -->
-                        <div class="cmd-suggestions">
+                        <!-- Quick Add Button (Visible only when both fields are filled) -->
+                        <button type="button" id="cmd-quick-add-btn" class="cmd-quick-add-btn" style="display: none;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                                <path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/>
+                            </svg>
+                            <span>Quick add</span>
+                        </button>
+
+                        <!-- Quick Suggestion Chips (Visible only when inputs are empty) -->
+                        <div class="cmd-suggestions" id="cmd-suggestions">
                             <span class="cmd-suggestions-label">Try:</span>
-                            <button type="button" class="cmd-suggest-chip js-suggest" data-text="Swiggy 350 lunch">Swiggy 350</button>
-                            <button type="button" class="cmd-suggest-chip js-suggest" data-text="Uber 420 airport">Uber 420</button>
-                            <button type="button" class="cmd-suggest-chip js-suggest" data-text="Grocery 1450 store">Grocery 1450</button>
-                            <button type="button" class="cmd-suggest-chip js-suggest" data-text="Electricity 2200 bill">Electricity 2200</button>
+                            <button type="button" class="cmd-suggest-chip js-suggest" data-desc="Swiggy" data-amt="350">Swiggy 350</button>
+                            <button type="button" class="cmd-suggest-chip js-suggest" data-desc="Uber" data-amt="420">Uber 420</button>
+                            <button type="button" class="cmd-suggest-chip js-suggest" data-desc="Grocery" data-amt="1450">Grocery 1450</button>
+                            <button type="button" class="cmd-suggest-chip js-suggest" data-desc="Electricity" data-amt="2200">Electricity 2200</button>
                         </div>
 
-                        <!-- Live AI Detection Feedback Box -->
-                        <div class="cmd-preview-card">
-                            <div class="cmd-preview-card-header">
-                                <span class="cmd-preview-card-title">Live AI Detection</span>
-                                <span id="cmd-parse-status" class="cmd-status-badge">Awaiting input</span>
+                        <!-- Parsed Result (Below input) -->
+                        <div class="cmd-result-container" id="cmd-result-container" style="display: none;">
+                            <!-- Fallback Notice: Shown only when Gemini limit reached -->
+                            <div class="cmd-fallback-notice" id="cmd-fallback-notice" style="display: none;">
+                                Gemini limit reached, showing an offline suggestion
                             </div>
-                            <div class="cmd-preview-strip" id="cmd-preview-strip">
-                                <span class="cmd-preview-placeholder">Type an amount and note above to see live category detection.</span>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Modal Actions Footer (Zero Keyboard Shortcuts) -->
-                    <div class="cmd-palette-footer">
-                        <div class="cmd-footer-note">
-                            <span>Offline ML categorization</span>
+                            <div class="cmd-result-content">
+                                <div class="cmd-amount-row">
+                                    <span class="cmd-result-amount" id="cmd-result-amount">₹0.00</span>
+                                    <span class="cmd-sparkle-icon" title="Suggested by Gemini" aria-label="Suggested by Gemini">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                            <path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="cmd-result-note" id="cmd-result-note"></div>
+
+                                <!-- Editable Pills: Category & Date -->
+                                <div class="cmd-pills-row">
+                                    <!-- Category Pill -->
+                                    <div class="cmd-pill-wrapper">
+                                        <label class="cmd-pill" for="cmd-category-select" title="Change category">
+                                            <svg class="cmd-pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                                                <circle cx="7" cy="7" r="1"/>
+                                            </svg>
+                                            <span class="cmd-pill-text" id="cmd-category-text">Food</span>
+                                            <svg class="cmd-pill-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="6 9 12 15 18 9"/>
+                                            </svg>
+                                            <select id="cmd-category-select" class="cmd-pill-select" aria-label="Select category">
+                                                <option value="1">Food</option>
+                                                <option value="2">Travel</option>
+                                                <option value="3">Shopping</option>
+                                                <option value="4">Bills</option>
+                                                <option value="5">Entertainment</option>
+                                                <option value="6">Health</option>
+                                                <option value="7">Education</option>
+                                                <option value="8">Other</option>
+                                            </select>
+                                        </label>
+                                    </div>
+
+                                    <!-- Date Pill -->
+                                    <div class="cmd-pill-wrapper">
+                                        <label class="cmd-pill" for="cmd-date-input" title="Change date">
+                                            <svg class="cmd-pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                                <line x1="3" y1="10" x2="21" y2="10"/>
+                                            </svg>
+                                            <span class="cmd-pill-text" id="cmd-date-text">Today</span>
+                                            <svg class="cmd-pill-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="6 9 12 15 18 9"/>
+                                            </svg>
+                                            <input type="date" id="cmd-date-input" class="cmd-pill-date" aria-label="Select date">
+                                        </label>
+                                    </div>
+
+                                    <!-- Low Confidence Indicator (Shown only when confidence is low) -->
+                                    <span class="cmd-pill cmd-pill--confidence" id="cmd-confidence-pill" style="display: none;"></span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="cmd-footer-actions">
-                            <button type="button" class="btn btn--secondary js-close-cmd" style="padding: 0.45rem 1rem; font-size: 13px;">Cancel</button>
-                            <button type="submit" id="cmd-submit-btn" class="btn btn--primary" style="padding: 0.45rem 1.25rem; font-size: 13px; font-weight: 600;">
-                                Save Expense
-                            </button>
+
+                        <!-- One Primary Full-Width Button -->
+                        <button type="submit" id="cmd-submit-btn" class="cmd-primary-btn" disabled>
+                            Save expense
+                        </button>
+
+                        <!-- Secondary Plain Text Links Below -->
+                        <div class="cmd-secondary-links">
+                            <button type="button" class="cmd-text-link js-close-cmd">Cancel</button>
+                            <span class="cmd-link-dot">&bull;</span>
+                            <a href="{{ url_for('expenses.add') }}" id="cmd-manual-entry-btn" class="cmd-text-link">Enter manually</a>
                         </div>
                     </div>
                 </form>

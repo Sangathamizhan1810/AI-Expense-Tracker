@@ -14,6 +14,9 @@ A phased journey to build the AI-Based Expense Tracker information system from f
 - [x] **Phase 6: Spending Insights Engine, UAT & Documentation** - Deterministic rule-based insights, savings tips, comprehensive test case verification (Cases 1–13), and Mermaid architectural diagrams.
 - [x] **Phase 7: Immersive Anti-Slop UI Architecture & Multi-Device Terminal Overhaul** - Complete visual revamp to Concept A (Modern Financial Terminal) in Architectural Dark, removing AI slop tells (emojis, glassmorphism, rainbow charts) and establishing multi-device responsiveness (Mobile, Tablet, Desktop).
 
+- [x] **Phase 8: Dual-Theme Architecture (Daylight Financial Terminal & Real-Time Sync)** - High-contrast Architectural Daylight theme alongside existing Dark Terminal, SVG toggle control, zero-FOUC persistence, and reactive Chart.js synchronization.
+- [ ] **Phase 9: High-Voltage Obsidian & Neon-Lime UI Overhaul** - Exact recreation of the reference design with obsidian dot-matrix canvas, neon-lime hero KPI cards, compact left rail icon navigation, radial budget gauge, canvas gradient bar charts, dual-spline trendlines, velocity equalizer, and dark queue table.
+
 ---
 
 ## Phase Details
@@ -138,10 +141,39 @@ Plans:
 
 ---
 
+### Phase 8: Dual-Theme Architecture (Daylight Financial Terminal & Real-Time Sync)
+**Goal**: Implement an Architectural Daylight (Light Mode) theme alongside the existing Dark Terminal, equipped with a topbar/navbar SVG toggle, zero-FOUC persistence, and reactive Chart.js palette synchronization.  
+**Depends on**: Phase 7  
+**Requirements**: UI-05 (Architectural Daylight Theme), UI-06 (Zero-FOUC Real-time Toggle & Chart Sync)  
+**Success Criteria**:
+  1. Default theme is Dark on initial visit; switches cleanly to Light mode via Topbar/Navbar SVG toggle.
+  2. Zero-FOUC: no flash of white/dark on multi-page navigation across Ledger, Budgets, and Dashboard.
+  3. Strict anti-slop daylight aesthetic: #f8fafc ground, #ffffff cards, 1px hairlines, tabular numerals, <3% chroma.
+  4. Chart.js charts dynamically update gridlines and strokes on toggle without requiring page refresh.  
+**Plans**: 1 plan
+
+### Phase 9: High-Voltage Obsidian & Neon-Lime UI Overhaul
+**Goal**: Recreate the reference design's aesthetic: obsidian canvas with dot-matrix texture, neon-lime hero cards, left-rail icon navigation, topbar utilities, semicircular budget gauge, gradient histogram, dual-spline line chart, activity equalizer, and queue table.  
+**Depends on**: Phase 8  
+**Requirements**: UI-NEON-01, UI-NEON-02, UI-NEON-03, UI-NEON-04, UI-NEON-05  
+**Success Criteria**:
+  1. Obsidian canvas with dot matrix pattern and neon-lime primary tokens.
+  2. Fixed compact left rail navigation with active squircle state and utility links.
+  3. Header with user profile capsule, date navigator pill, and display greeting.
+  4. 3 full neon-lime hero metric cards with inverted dark typography and micro-pills.
+  5. 5 interactive widgets: semicircular gauge, gradient bar chart, dual spline curve, velocity equalizer, and styled queue table.
+  6. 100% pass on all existing 56 automated tests + new Phase 9 test suite.  
+**Plans**: 1 plan
+
+Plans:
+- [ ] 09-01: High-Voltage Obsidian & Neon-Lime UI Overhaul
+
+---
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9
 
 | Phase | Plans Complete | Status | Completed |
 |---|---|---|---|
@@ -152,3 +184,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 5. Interactive Analytics Dashboard | 1/1 | Complete | 2026-10-23 |
 | 6. Insights Engine & Verification | 2/2 | Complete | 2026-10-23 |
 | 7. Immersive Anti-Slop UI & Multi-Device Terminal | 2/2 | Complete | 2026-10-24 |
+| 8. Dual-Theme Architecture | 1/1 | Complete | 2026-10-24 |
+| 9. Obsidian & Neon-Lime UI Overhaul | 0/1 | Planned | Pending Approval |
+

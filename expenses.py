@@ -254,14 +254,16 @@ def ai_parse():
     """
     Parse a natural language expense sentence via AJAX/Fetch API.
     Returns JSON structure containing parsed amount, category, confidence, and date.
+    Supports prefer_gemini option (defaults to True on Quick-add requests).
     """
     data = request.get_json(silent=True) or request.form
     sentence = data.get('sentence', '').strip()
+    prefer_gemini = data.get('prefer_gemini', True)
 
     if not sentence:
         return jsonify({'success': False, 'error': 'Please provide an expense description.'}), 400
 
-    parsed = parse_expense_sentence(sentence)
+    parsed = parse_expense_sentence(sentence, prefer_gemini=prefer_gemini)
     return jsonify({
         'success': True,
         'parsed': parsed
@@ -276,16 +278,26 @@ def ai_quick_add():
     """
     sentence = request.form.get('sentence', '').strip()
     override_category_id = request.form.get('category_id')
+    form_amount = request.form.get('amount')
+    form_note = request.form.get('note')
 
     if not sentence:
         flash('Please enter a sentence to record an expense.', 'error')
         return redirect(url_for('expenses.index'))
 
-    parsed = parse_expense_sentence(sentence)
+    parsed = parse_expense_sentence(sentence, prefer_gemini=True)
+    
+    # Use explicitly submitted form values if available from Quick-add, else parser results
     amount = parsed['amount']
+    if form_amount:
+        try:
+            amount = float(form_amount)
+        except (ValueError, TypeError):
+            pass
+
     category_id = int(override_category_id) if override_category_id and override_category_id.isdigit() else parsed['category_id']
     category_name = parsed['category_name']
-    note = parsed['description']
+    note = form_note.strip() if form_note else parsed['description']
     expense_date = request.form.get('expense_date') or parsed['expense_date']
 
     if amount is None or amount <= 0:
@@ -301,8 +313,9 @@ def ai_quick_add():
             note=note
         )
         conf_pct = int(parsed['confidence'] * 100)
+        source_label = "Gemini AI" if parsed.get('model_source') == 'gemini_ai' else "Offline NLP"
         flash(
-            f"✨ AI Quick-Add: Recorded ₹{amount:.2f} for {category_name} ({conf_pct}% confidence)!",
+            f"✨ AI Quick-Add: Recorded ₹{amount:.2f} for {category_name} ({conf_pct}% confidence via {source_label})!",
             'success'
         )
     except ValueError as e:

@@ -20,12 +20,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const { kpis, category_distribution, spending_trends, budget_vs_actual } = dashboardData;
 
-    // ── Global Chart.js Dark Theme Configuration ────────
+    // ── Chart.js Dual-Theme Color Adapter ───────────────
+    function getThemeColors(theme) {
+        const isLight = theme === 'light';
+        return {
+            textColor: isLight ? '#475569' : '#94a3b8',
+            mutedColor: isLight ? '#64748b' : '#64748b',
+            gridColor: isLight ? '#e2e8f0' : '#222b3d',
+            tooltipBg: isLight ? '#090d16' : '#141924',
+            tooltipBorder: isLight ? '#334155' : '#222b3d',
+            donutSliceBorder: isLight ? '#ffffff' : '#0c0e12',
+            donutPalette: isLight ? [
+                '#0f172a', '#334155', '#64748b', '#94a3b8', '#0284c7', '#38bdf8', '#cbd5e1', '#94a3b8'
+            ] : [
+                '#f1f5f9', '#94a3b8', '#64748b', '#475569', '#38bdf8', '#0ea5e9', '#334155', '#1e293b'
+            ],
+            lineStroke: isLight ? '#090d16' : '#f1f5f9',
+            linePointHoverBg: isLight ? '#090d16' : '#ffffff',
+            linePointHoverBorder: isLight ? '#ffffff' : '#0c0e12',
+            budgetLimitBg: isLight ? '#e2e8f0' : '#1a2233',
+            budgetLimitBorder: isLight ? '#cbd5e1' : '#25324a'
+        };
+    }
+
+    const initialTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    let themeColors = getThemeColors(initialTheme);
+
+    // ── Global Chart.js Theme Configuration ─────────────
     if (typeof Chart !== 'undefined') {
-        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.color = themeColors.textColor;
         Chart.defaults.font.family = "'Inter', system-ui, -apple-system, sans-serif";
-        Chart.defaults.plugins.tooltip.backgroundColor = '#141924';
-        Chart.defaults.plugins.tooltip.borderColor = '#222b3d';
+        Chart.defaults.plugins.tooltip.backgroundColor = themeColors.tooltipBg;
+        Chart.defaults.plugins.tooltip.borderColor = themeColors.tooltipBorder;
         Chart.defaults.plugins.tooltip.borderWidth = 1;
         Chart.defaults.plugins.tooltip.padding = 10;
         Chart.defaults.plugins.tooltip.cornerRadius = 4;
@@ -36,6 +62,10 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
+    let donutChart = null;
+    let lineChart = null;
+    let barChart = null;
+
     // ── Chart 1: Category Breakdown Donut (DASH-02) ─────
     const donutCtx = document.getElementById('categoryDonutChart');
     const donutEmptyNotice = document.getElementById('donut-empty-notice');
@@ -45,20 +75,16 @@ document.addEventListener('DOMContentLoaded', function () {
             donutCtx.style.display = 'none';
             if (donutEmptyNotice) donutEmptyNotice.style.display = 'block';
         } else {
-            // Architectural subdued categorical palette
-            const terminalPalette = [
-                '#f1f5f9', '#94a3b8', '#64748b', '#475569', '#38bdf8', '#0ea5e9', '#334155', '#1e293b'
-            ];
-            const sliceColors = category_distribution.amounts.map((_, i) => terminalPalette[i % terminalPalette.length]);
+            const sliceColors = category_distribution.amounts.map((_, i) => themeColors.donutPalette[i % themeColors.donutPalette.length]);
 
-            new Chart(donutCtx, {
+            donutChart = new Chart(donutCtx, {
                 type: 'doughnut',
                 data: {
                     labels: category_distribution.labels,
                     datasets: [{
                         data: category_distribution.amounts,
                         backgroundColor: sliceColors,
-                        borderColor: '#0c0e12',
+                        borderColor: themeColors.donutSliceBorder,
                         borderWidth: 2,
                         hoverOffset: 4
                     }]
@@ -71,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         legend: {
                             position: 'bottom',
                             labels: {
-                                color: '#94a3b8',
+                                color: themeColors.textColor,
                                 padding: 12,
                                 font: { size: 11, weight: '500' },
                                 usePointStyle: true,
@@ -98,21 +124,21 @@ document.addEventListener('DOMContentLoaded', function () {
     // ── Chart 2: 6-Month Spending Trend Line (DASH-03) ──
     const lineCtx = document.getElementById('trendLineChart');
     if (lineCtx) {
-        new Chart(lineCtx, {
+        lineChart = new Chart(lineCtx, {
             type: 'line',
             data: {
                 labels: spending_trends.months,
                 datasets: [{
                     label: 'Monthly Spend',
                     data: spending_trends.amounts,
-                    borderColor: '#f1f5f9',
+                    borderColor: themeColors.lineStroke,
                     borderWidth: 2,
                     fill: false,
                     tension: 0.1,
                     pointRadius: 0,
                     pointHoverRadius: 5,
-                    pointHoverBackgroundColor: '#ffffff',
-                    pointHoverBorderColor: '#0c0e12',
+                    pointHoverBackgroundColor: themeColors.linePointHoverBg,
+                    pointHoverBorderColor: themeColors.linePointHoverBorder,
                     pointHoverBorderWidth: 2
                 }]
             },
@@ -125,18 +151,18 @@ document.addEventListener('DOMContentLoaded', function () {
                             display: false
                         },
                         ticks: {
-                            color: '#64748b',
+                            color: themeColors.mutedColor,
                             font: { size: 11 }
                         }
                     },
                     y: {
                         beginAtZero: true,
                         grid: {
-                            color: '#222b3d',
+                            color: themeColors.gridColor,
                             drawTicks: false
                         },
                         ticks: {
-                            color: '#64748b',
+                            color: themeColors.mutedColor,
                             font: { size: 11, family: "'Geist Mono', monospace" },
                             callback: function (val) {
                                 return '₹' + val.toLocaleString('en-IN');
@@ -178,10 +204,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (limit > 0 && spend >= limit * 0.8) {
                     return '#f59e0b'; // Warning Amber
                 }
-                return '#38bdf8';     // Normal Sky Accent
+                return '#0284c7';     // Normal Sky Accent
             });
 
-            new Chart(barCtx, {
+            barChart = new Chart(barCtx, {
                 type: 'bar',
                 data: {
                     labels: budget_vs_actual.categories,
@@ -189,8 +215,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         {
                             label: 'Budget Limit',
                             data: budget_vs_actual.budget_amounts,
-                            backgroundColor: '#1a2233',
-                            borderColor: '#25324a',
+                            backgroundColor: themeColors.budgetLimitBg,
+                            borderColor: themeColors.budgetLimitBorder,
                             borderWidth: 1,
                             borderRadius: 2
                         },
@@ -212,18 +238,18 @@ document.addEventListener('DOMContentLoaded', function () {
                                 display: false
                             },
                             ticks: {
-                                color: '#94a3b8',
+                                color: themeColors.textColor,
                                 font: { size: 11 }
                             }
                         },
                         y: {
                             beginAtZero: true,
                             grid: {
-                                color: '#222b3d',
+                                color: themeColors.gridColor,
                                 drawTicks: false
                             },
                             ticks: {
-                                color: '#64748b',
+                                color: themeColors.mutedColor,
                                 font: { size: 11, family: "'Geist Mono', monospace" },
                                 callback: function (val) {
                                     return '₹' + val.toLocaleString('en-IN');
@@ -236,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             position: 'top',
                             align: 'end',
                             labels: {
-                                color: '#94a3b8',
+                                color: themeColors.textColor,
                                 font: { size: 11, weight: '500' },
                                 usePointStyle: true,
                                 pointStyle: 'circle',
@@ -257,6 +283,61 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     }
+
+    // ── Dynamic Theme Synchronization Listener ─────────
+    window.addEventListener('themechange', function (e) {
+        const nextTheme = e.detail && e.detail.theme ? e.detail.theme : 'dark';
+        const colors = getThemeColors(nextTheme);
+
+        // Update Global Defaults
+        Chart.defaults.color = colors.textColor;
+        Chart.defaults.plugins.tooltip.backgroundColor = colors.tooltipBg;
+        Chart.defaults.plugins.tooltip.borderColor = colors.tooltipBorder;
+
+        // 1. Update Donut Chart
+        if (donutChart) {
+            donutChart.data.datasets[0].borderColor = colors.donutSliceBorder;
+            if (category_distribution.amounts && category_distribution.amounts.length > 0) {
+                donutChart.data.datasets[0].backgroundColor = category_distribution.amounts.map(
+                    (_, i) => colors.donutPalette[i % colors.donutPalette.length]
+                );
+            }
+            if (donutChart.options.plugins && donutChart.options.plugins.legend) {
+                donutChart.options.plugins.legend.labels.color = colors.textColor;
+            }
+            donutChart.options.plugins.tooltip.backgroundColor = colors.tooltipBg;
+            donutChart.options.plugins.tooltip.borderColor = colors.tooltipBorder;
+            donutChart.update();
+        }
+
+        // 2. Update Trend Line Chart
+        if (lineChart) {
+            lineChart.data.datasets[0].borderColor = colors.lineStroke;
+            lineChart.data.datasets[0].pointHoverBackgroundColor = colors.linePointHoverBg;
+            lineChart.data.datasets[0].pointHoverBorderColor = colors.linePointHoverBorder;
+            lineChart.options.scales.x.ticks.color = colors.mutedColor;
+            lineChart.options.scales.y.grid.color = colors.gridColor;
+            lineChart.options.scales.y.ticks.color = colors.mutedColor;
+            lineChart.options.plugins.tooltip.backgroundColor = colors.tooltipBg;
+            lineChart.options.plugins.tooltip.borderColor = colors.tooltipBorder;
+            lineChart.update();
+        }
+
+        // 3. Update Budget Bar Chart
+        if (barChart) {
+            barChart.data.datasets[0].backgroundColor = colors.budgetLimitBg;
+            barChart.data.datasets[0].borderColor = colors.budgetLimitBorder;
+            barChart.options.scales.x.ticks.color = colors.textColor;
+            barChart.options.scales.y.grid.color = colors.gridColor;
+            barChart.options.scales.y.ticks.color = colors.mutedColor;
+            if (barChart.options.plugins && barChart.options.plugins.legend) {
+                barChart.options.plugins.legend.labels.color = colors.textColor;
+            }
+            barChart.options.plugins.tooltip.backgroundColor = colors.tooltipBg;
+            barChart.options.plugins.tooltip.borderColor = colors.tooltipBorder;
+            barChart.update();
+        }
+    });
 
     // ── Month Picker & Navigation Controls ──────────────
     const monthInput = document.getElementById('dashboard-month-input');

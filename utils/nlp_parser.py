@@ -9,6 +9,7 @@ invokes the ML model for category prediction.
 import re
 from datetime import date
 from utils.nlp_classifier import predict_category, get_category_id_by_name
+from utils.gemini_service import classify_with_gemini
 
 
 def extract_amount(text):
@@ -80,36 +81,83 @@ def _clean_residual_text(text):
     return text
 
 
-def parse_expense_sentence(sentence, confidence_threshold=0.5):
+def parse_expense_sentence(sentence, confidence_threshold=0.5, prefer_gemini=True):
     """
     Parse natural language sentence:
     1. Extract numeric amount
     2. Extract description
-    3. Predict category via ML classifier
-    4. Resolve database category_id
+    3. If prefer_gemini=True:
+       - Query Gemini API first for real-world knowledge
+       - If Gemini quota is exceeded, flag quota_exceeded and fallback to offline trained NLP
+       - If Gemini succeeds, use Gemini classification
+       - If Gemini is unconfigured/offline, fallback to offline trained NLP
+    4. If prefer_gemini=False:
+       - Predict category directly via offline ML classifier
+    5. Resolve database category_id
     Returns structured dict ready for UI consumption or DB persistence.
     """
     sentence = (sentence or '').strip()
     amount, description = extract_amount(sentence)
-
-    # Use description or full sentence for classification
     text_to_classify = description if description else sentence
-    prediction = predict_category(text_to_classify, confidence_threshold=confidence_threshold)
-
-    category_name = prediction['category']
-    category_id = get_category_id_by_name(category_name)
-
-    # Clean description for display / storage: capitalize nicely if available
     display_description = description if description else sentence
+
+    category_name = 'Other'
+    predicted_category = 'Other'
+    confidence = 0.5
+    is_low_confidence = False
+    model_source = 'offline_nlp'
+    quota_exceeded = False
+    warning_notice = None
+
+    gemini_used = False
+
+    if prefer_gemini:
+        gemini_result, quota_hit = classify_with_gemini(sentence)
+        if quota_hit:
+            quota_exceeded = True
+            warning_notice = "Gemini model limit is over — answer derived from offline trained model."
+            # Fall back to offline trained model
+            prediction = predict_category(text_to_classify, confidence_threshold=confidence_threshold)
+            category_name = prediction['category']
+            predicted_category = prediction['predicted_category']
+            confidence = prediction['confidence']
+            is_low_confidence = prediction['is_low_confidence']
+            model_source = 'offline_nlp'
+            gemini_used = True
+        elif gemini_result and gemini_result.get('category'):
+            category_name = gemini_result['category']
+            predicted_category = gemini_result['category']
+            confidence = gemini_result.get('confidence', 0.95)
+            is_low_confidence = False
+            model_source = 'gemini_ai'
+            if amount is None and gemini_result.get('amount') is not None:
+                amount = gemini_result['amount']
+            if gemini_result.get('description'):
+                display_description = gemini_result['description']
+            gemini_used = True
+
+    if not gemini_used:
+        # Predict using offline trained NLP
+        prediction = predict_category(text_to_classify, confidence_threshold=confidence_threshold)
+        category_name = prediction['category']
+        predicted_category = prediction['predicted_category']
+        confidence = prediction['confidence']
+        is_low_confidence = prediction['is_low_confidence']
+        model_source = 'offline_nlp'
+
+    category_id = get_category_id_by_name(category_name)
 
     return {
         'raw_input': sentence,
         'amount': amount,
         'description': display_description,
         'category_name': category_name,
-        'predicted_category': prediction['predicted_category'],
+        'predicted_category': predicted_category,
         'category_id': category_id,
-        'confidence': prediction['confidence'],
-        'is_low_confidence': prediction['is_low_confidence'],
+        'confidence': confidence,
+        'is_low_confidence': is_low_confidence,
+        'model_source': model_source,
+        'quota_exceeded': quota_exceeded,
+        'warning_notice': warning_notice,
         'expense_date': date.today().isoformat()
     }

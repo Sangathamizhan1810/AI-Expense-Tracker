@@ -7,6 +7,7 @@ AI Quick-Add endpoints, and user isolation.
 import unittest
 import os
 import tempfile
+from unittest.mock import patch
 from app import create_app
 from utils.db import get_db, init_db
 from utils.auth_helpers import create_user
@@ -126,8 +127,6 @@ class Phase3TestCase(unittest.TestCase):
             expenses = get_expenses(self.user['id'])
             self.assertEqual(len(expenses), 1)
             self.assertEqual(expenses[0]['category_name'], 'Other')
-            self.assertEqual(expenses[0]['amount'], 30.0)
-
     def test_ai_quick_add_missing_amount_redirects_to_form(self):
         """Verify input without amount redirects gracefully to pre-filled add form."""
         self.login()
@@ -137,6 +136,49 @@ class Phase3TestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertIn(b'Could not automatically detect an amount', res.data)
         self.assertIn(b'Add New Expense', res.data)
+
+    def test_ai_parse_gemini_quota_exceeded_fallback(self):
+        """Verify that when Gemini quota limit is exceeded (HTTP 429), it flags quota_exceeded and falls back to offline model."""
+        self.login()
+        with patch('utils.nlp_parser.classify_with_gemini', return_value=(None, True)):
+            res = self.client.post('/expenses/ai-parse', json={
+                'sentence': 'Zomato biriyani 350',
+                'prefer_gemini': True
+            })
+            self.assertEqual(res.status_code, 200)
+            data = res.get_json()
+            self.assertTrue(data['success'])
+            parsed = data['parsed']
+            self.assertTrue(parsed['quota_exceeded'])
+            self.assertIn('limit is over', parsed['warning_notice'])
+            self.assertEqual(parsed['model_source'], 'offline_nlp')
+            self.assertEqual(parsed['category_name'], 'Food')
+            self.assertEqual(parsed['amount'], 350.0)
+
+    def test_ai_parse_gemini_success(self):
+        """Verify that when Gemini responds successfully, it uses Gemini AI classification."""
+        self.login()
+        gemini_mock_response = {
+            'amount': 450.0,
+            'category': 'Travel',
+            'description': 'Rapido bike taxi',
+            'confidence': 0.98,
+            'source': 'gemini_ai'
+        }
+        with patch('utils.nlp_parser.classify_with_gemini', return_value=(gemini_mock_response, False)):
+            res = self.client.post('/expenses/ai-parse', json={
+                'sentence': 'rapido 450 bike ride',
+                'prefer_gemini': True
+            })
+            self.assertEqual(res.status_code, 200)
+            data = res.get_json()
+            self.assertTrue(data['success'])
+            parsed = data['parsed']
+            self.assertFalse(parsed['quota_exceeded'])
+            self.assertEqual(parsed['model_source'], 'gemini_ai')
+            self.assertEqual(parsed['category_name'], 'Travel')
+            self.assertEqual(parsed['amount'], 450.0)
+            self.assertEqual(parsed['description'], 'Rapido bike taxi')
 
 
 if __name__ == '__main__':

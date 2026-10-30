@@ -8,6 +8,13 @@
         "@opengsd/gsd-core",
         "gsd-mcp-server"
       ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ]
     }
   }
 }

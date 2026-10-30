@@ -77,5 +77,20 @@ class ModelTestCase(unittest.TestCase):
         self.assertLess(avg_latency_ms, 50.0)
 
 
+    def test_gemini_quota_exceeded_fallback(self):
+        """Verify that when Gemini daily limit is over, the fallback notice is attached."""
+        from unittest.mock import patch
+        from utils.nlp_parser import parse_expense_sentence
+
+        # Mock classify_with_gemini returning (None, True) to simulate HTTP 429 quota exceeded
+        with patch('utils.nlp_parser.classify_with_gemini', return_value=(None, True)):
+            result = parse_expense_sentence("mysterious unknown dish 500")
+            self.assertTrue(result['quota_exceeded'])
+            self.assertIn("Gemini model limit is over", result['warning_notice'])
+            self.assertEqual(result['model_source'], 'local_ml')
+            self.assertEqual(result['amount'], 500.0)
+
+
 if __name__ == '__main__':
     unittest.main()
+

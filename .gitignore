@@ -50,6 +50,7 @@ instance/
 # Node
 node_modules/
 npm-debug.log*
+.playwright-mcp/
 
 # OS files
 .DS_Store

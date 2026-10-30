@@ -89,12 +89,20 @@ def predict_category(text, confidence_threshold=0.5):
 
 def get_category_id_by_name(category_name):
     """Look up database ID for a given category name."""
-    db = get_db()
-    cursor = db.execute("SELECT id FROM categories WHERE name = ? COLLATE NOCASE", (category_name,))
-    row = cursor.fetchone()
-    if row:
-        return row['id']
-    # Fallback to Other
-    cursor = db.execute("SELECT id FROM categories WHERE name = 'Other'")
-    fallback_row = cursor.fetchone()
-    return fallback_row['id'] if fallback_row else 1
+    STATIC_MAP = {
+        'food': 1, 'travel': 2, 'shopping': 3, 'bills': 4,
+        'entertainment': 5, 'health': 6, 'education': 7, 'other': 8
+    }
+    try:
+        db = get_db()
+        cursor = db.execute("SELECT id FROM categories WHERE name = ? COLLATE NOCASE", (category_name,))
+        row = cursor.fetchone()
+        if row:
+            return row['id']
+        # Fallback to Other
+        cursor = db.execute("SELECT id FROM categories WHERE name = 'Other'")
+        fallback_row = cursor.fetchone()
+        return fallback_row['id'] if fallback_row else 8
+    except RuntimeError:
+        # Outside Flask application context (CLI, scripts, standalone tests)
+        return STATIC_MAP.get(str(category_name).lower(), 8)

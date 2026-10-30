@@ -50,6 +50,14 @@
 - [x] **INS-03**: Generates actionable savings tips based on budget utilization.
 - [x] **INS-04**: Graceful state handling showing "Not enough data yet" for new accounts without prior-month history.
 
+### Obsidian & Neon-Lime UI Overhaul (Phase 9)
+
+- [ ] **UI-NEON-01**: Obsidian dot-matrix canvas (`#090a0d` with radial dot grid) and neon-lime primary tokens (`#d4ff59`).
+- [ ] **UI-NEON-02**: Compact fixed left-rail navigation (~72px width) with active squircle neon indicator and bottom utility actions.
+- [ ] **UI-NEON-03**: Topbar utility cluster (page title, date switcher pill `< Today, Sep 25 >`, notification badge, user profile chip) and `Hello [User]` display greeting with neon CTA button.
+- [ ] **UI-NEON-04**: Top 3 hero KPI metric cards rendered in solid neon lime with dark text and micro-change pill badges.
+- [ ] **UI-NEON-05**: Five interactive widgets: semicircular budget consumption gauge, monthly gradient histogram bar chart, dual bezier spline trendlines, daily spend velocity equalizer, and dark recent transactions queue table.
+
 ## v2 Requirements (Deferred)
 
 - **V2-01**: Receipt and invoice OCR image scanning with Gemini Vision or Tesseract.

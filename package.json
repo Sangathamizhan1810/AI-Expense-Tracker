@@ -1,5 +1,10 @@
 {
   "devDependencies": {
     "playwright": "^1.64.1"
+  },
+  "dependencies": {
+    "docx": "^9.15.0",
+    "pdf-img-convert": "^2.0.0",
+    "pureimage": "^0.4.20"
   }
 }
